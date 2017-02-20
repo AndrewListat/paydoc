@@ -20,7 +20,7 @@ class MainAsset extends AssetBundle
     public $css = [
         'template_admin/assets/css/AdminLTE.min.css',
         'template_admin/assets/css/skins/_all-skins.min.css',
-
+        'sweetalert2/sweetalert2.css',
     ];
     public $js = [
         'template_admin/plugins/slimScroll/jquery.slimscroll.min.js',
@@ -28,8 +28,7 @@ class MainAsset extends AssetBundle
         'template_admin/assets/js/app.min.js',
         'template_admin/assets/js/demo.js',
         'template_admin/bootstrap/js/bootstrap.min.js',
-
-
+        'sweetalert2/sweetalert2.js',
     ];
     public $depends = [
         'yii\web\YiiAsset',

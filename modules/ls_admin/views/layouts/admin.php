@@ -32,7 +32,7 @@ MainAsset::register($this);
         <!-- Ionicons -->
         <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
     </head>
-    <body class="hold-transition skin-red sidebar-mini">
+    <body class="hold-transition skin-blue sidebar-mini">
     <?php $this->beginBody() ?>
 
     <div class="wrapper">
@@ -121,6 +121,13 @@ MainAsset::register($this);
                         </a>
                     </li>
                 </ul>-->
+                <ul class="sidebar-menu">
+                    <li class="treeview">
+                        <a href="<?=Url::toRoute('default/document');?>">
+                            <i class="fa fa-files-o"></i> <span>Создание документа</span>
+                        </a>
+                    </li>
+                </ul>
             </section>
             <!-- /.sidebar -->
         </aside>

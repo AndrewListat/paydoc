@@ -2,6 +2,11 @@
 
 namespace app\modules\ls_admin\controllers;
 
+use app\modules\ls_admin\models\Document;
+use app\modules\ls_admin\models\DocumentItem;
+use app\modules\ls_admin\models\DocumentItemSearch;
+use app\modules\ls_admin\models\Partner;
+use app\modules\ls_admin\models\ProductSearch;
 use app\modules\ls_admin\models\User;
 use Yii;
 use yii\filters\AccessControl;
@@ -94,9 +99,36 @@ class DefaultController extends Controller
         return $this->redirect(['/admin/signin']);
     }
 
-    public function actionDel()
+    public function actionDocument()
     {
+        $document = new Document();
+
+        $kontrahent = new Partner();
+
+        $documentItems = new DocumentItemSearch(['order_id'=> 0-Yii::$app->user->id]);
+        $documentItemsDataProvider = $documentItems->search(Yii::$app->request->queryParams);
+
+        if (isset($_POST['add_partner'])){
+            if ($kontrahent->load(Yii::$app->request->post()))
+                if ($kontrahent->save()){
+                    $document->partner_id = $kontrahent->id;
+                    Yii::$app->session->setFlash('modalKontrahent');
+                }
+        }
 
 
+        $productSearch = new ProductSearch();
+        $productDataProvider = $productSearch->search(Yii::$app->request->queryParams);
+
+
+
+        return $this->render('document',[
+            'document' => $document,
+            'kontrahent' => $kontrahent,
+            'documentItems' => $documentItems,
+            'documentItemsDataProvider' => $documentItemsDataProvider,
+            'productSearch' => $productSearch,
+            'productDataProvider' => $productDataProvider,
+        ]);
     }
 }
