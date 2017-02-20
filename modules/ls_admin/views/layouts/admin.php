@@ -66,7 +66,7 @@ MainAsset::register($this);
                             </a>
                         </li>
                          Tasks: style can be found in dropdown.less -->
-                        <li><a href="<?=Url::toRoute('default/logout');?>"><span class="glyphicon glyphicon-off" aria-hidden="true"></span> Выйти</a></li>
+                        <li><a href="<?=Url::toRoute('default/logout');?>"><span class="glyphicon glyphicon-off" aria-hidden="true"></span> Выход</a></li>
 
                     </ul>
 
@@ -99,7 +99,7 @@ MainAsset::register($this);
                             <li><a href="<?=Url::toRoute('company/index');?>"><i class="fa fa-circle-o"></i> Сompany</a></li>
                             <li><a href="<?=Url::toRoute('partner/index');?>"><i class="fa fa-circle-o"></i> Partner</a></li>
                             <li><a href="<?=Url::toRoute('product/index');?>"><i class="fa fa-circle-o"></i> Product</a></li>
-                            <li><a href="<?=Url::toRoute('partner/index');?>"><i class="fa fa-circle-o"></i> Type mail</a></li>
+                            <li><a href="<?=Url::toRoute('typemail/index');?>"><i class="fa fa-circle-o"></i> Type mail</a></li>
                             <li><a href="<?=Url::toRoute('partner/index');?>"><i class="fa fa-circle-o"></i> Type price</a></li>
                             <li><a href="<?=Url::toRoute('partner/index');?>"><i class="fa fa-circle-o"></i> Type storage</a></li>
                             <li><a href="<?=Url::toRoute('partner/index');?>"><i class="fa fa-circle-o"></i> Document</a></li>
