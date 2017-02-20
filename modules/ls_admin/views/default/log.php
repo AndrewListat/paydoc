@@ -28,7 +28,7 @@ $this->params['breadcrumbs'][] = $this->title;
                             'options' => ['class' => 'form-horizontal'],
                         ]) ?>
                         <div class="form-group ">
-                            <label for="login" class="sr-only">Логін</label>
+                            <label for="login" class="sr-only">Email</label>
                             <input type="email" class="form-control" name="email" id="email_value"
                                    placeholder="Email" tabindex="1" value="" required/>
                         </div>
@@ -39,12 +39,12 @@ $this->params['breadcrumbs'][] = $this->title;
                         </div>
                         <div class="checkbox">
                             <label class="control-label" for="remember_me">
-                                <input type="checkbox" name="rememberMe" id="remember_me" class="" value="1" tabindex="3"/> Запамятати
+                                <input type="checkbox" name="rememberMe" id="remember_me" class="" value="1" tabindex="3"/> Запомнить
                             </label>
                         </div>
                         <br/>
                         <div class="form-group ">
-                            <button type="submit" class="btn btn-lg btn-primary">Вхід</button>
+                            <button type="submit" class="btn btn-lg btn-primary">Вход</button>
                         </div>
                     <?php ActiveForm::end() ?>
                 </div>

@@ -51,6 +51,7 @@ $config = [
             'showScriptName' => false,
             'rules' => [
                 'elfinder/<action>' => 'elfinder/<action>',
+                'admin' => 'ls_admin/default/index',
                 'admin/<action>' => 'ls_admin/default/<action>',
                 'admin/<controller:\w+>/<action:\w+>' => 'ls_admin/<controller>/<action>',
                 'api/<action:\w+>' => 'api/<action>',

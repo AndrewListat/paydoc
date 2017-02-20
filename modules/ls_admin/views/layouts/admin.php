@@ -85,17 +85,35 @@ MainAsset::register($this);
                 <ul class="sidebar-menu">
                     <li class="treeview">
                         <a href="<?=Url::toRoute('default/index');?>">
-                            <i class="fa fa-folder-open"></i> <span>Home</span>
+                            <i class="fa fa-dashboard"></i> <span>Dashboard</span>
                         </a>
                     </li>
                 </ul>
                 <ul class="sidebar-menu">
                     <li class="treeview">
-                        <a href="<?=Url::toRoute('user/index');?>">
+                        <a href="#">
+                            <i class="fa fa-folder"></i> <span>База данных</span>
+                            <i class="fa fa-angle-left pull-right"></i>
+                        </a>
+                        <ul class="treeview-menu" style="display: none;">
+                            <li><a href="<?=Url::toRoute('company/index');?>"><i class="fa fa-circle-o"></i> Сompany</a></li>
+                            <li><a href="pages/examples/profile.html"><i class="fa fa-circle-o"></i> Partner</a></li>
+                            <li><a href="pages/examples/login.html"><i class="fa fa-circle-o"></i> Product</a></li>
+                            <li><a href="pages/examples/register.html"><i class="fa fa-circle-o"></i> Type mail</a></li>
+                            <li><a href="pages/examples/lockscreen.html"><i class="fa fa-circle-o"></i> Type price</a></li>
+                            <li><a href="pages/examples/404.html"><i class="fa fa-circle-o"></i> Type storage</a></li>
+                            <li><a href="pages/examples/500.html"><i class="fa fa-circle-o"></i> Document</a></li>
+                            <li><a href="pages/examples/blank.html"><i class="fa fa-circle-o"></i> Status document</a></li>
+                        </ul>
+                    </li>
+                </ul>
+               <!-- <ul class="sidebar-menu">
+                    <li class="treeview">
+                        <a href="<?/*=Url::toRoute('user/index');*/?>">
                             <i class="fa fa-folder-open"></i> <span>Users</span>
                         </a>
                     </li>
-                </ul>
+                </ul>-->
                 <ul class="sidebar-menu">
                     <li class="treeview">
                         <a href="<?=Url::toRoute('pages/index');?>">

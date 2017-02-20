@@ -18,7 +18,7 @@ class DefaultController extends Controller
         if (!\Yii::$app->user->isGuest) {
             return $this->render('index');
         }else {
-            return $this->redirect(['/ls_admin/signin']);
+            return $this->redirect(['/admin/signin']);
         }
     }
     public function actionSignin()
@@ -26,7 +26,7 @@ class DefaultController extends Controller
         $error=false;
         $this->layout = 'main';
         if (!\Yii::$app->user->isGuest) {
-            return $this->redirect(['/ls_admin/index']);
+            return $this->redirect(['/admin/index']);
         }
 
         $model = new LoginForm();
@@ -38,7 +38,7 @@ class DefaultController extends Controller
             $model->rememberMe = Yii::$app->request->post('rememberMe');
             if ($model->login()) {
 
-                return $this->redirect(['/ls_admin/index']);
+                return $this->redirect(['/admin/index']);
             }
             if ($model->validate()){
                 $error=false;
@@ -69,7 +69,7 @@ class DefaultController extends Controller
                 if ($user = $model->reg()):
                     if ($user->status === User::STATUS_ACTIVE):
                         if (Yii::$app->getUser()->login($user)):
-                            return $this->redirect(['/ls_admin/index']);
+                            return $this->redirect(['/admin/index']);
                         endif;
                     endif;
                 endif;
@@ -91,7 +91,7 @@ class DefaultController extends Controller
     public function actionLogout()
     {
         Yii::$app->user->logout();
-        return $this->redirect(['/ls_admin/signin']);
+        return $this->redirect(['/admin/signin']);
     }
 
     public function actionDel()
