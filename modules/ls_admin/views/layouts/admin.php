@@ -100,7 +100,7 @@ MainAsset::register($this);
                             <li><a href="<?=Url::toRoute('partner/index');?>"><i class="fa fa-circle-o"></i> Partner</a></li>
                             <li><a href="<?=Url::toRoute('product/index');?>"><i class="fa fa-circle-o"></i> Product</a></li>
                             <li><a href="<?=Url::toRoute('typemail/index');?>"><i class="fa fa-circle-o"></i> Type mail</a></li>
-                            <li><a href="<?=Url::toRoute('partner/index');?>"><i class="fa fa-circle-o"></i> Type price</a></li>
+                            <li><a href="<?=Url::toRoute('typeprice/index');?>"><i class="fa fa-circle-o"></i> Type price</a></li>
                             <li><a href="<?=Url::toRoute('partner/index');?>"><i class="fa fa-circle-o"></i> Type storage</a></li>
                             <li><a href="<?=Url::toRoute('partner/index');?>"><i class="fa fa-circle-o"></i> Document</a></li>
                             <li><a href="<?=Url::toRoute('partner/index');?>"><i class="fa fa-circle-o"></i> Status document</a></li>
