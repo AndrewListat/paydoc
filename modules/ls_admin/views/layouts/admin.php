@@ -98,12 +98,12 @@ MainAsset::register($this);
                         <ul class="treeview-menu" style="display: none;">
                             <li><a href="<?=Url::toRoute('company/index');?>"><i class="fa fa-circle-o"></i> Сompany</a></li>
                             <li><a href="<?=Url::toRoute('partner/index');?>"><i class="fa fa-circle-o"></i> Partner</a></li>
-                            <li><a href="pages/examples/login.html"><i class="fa fa-circle-o"></i> Product</a></li>
-                            <li><a href="pages/examples/register.html"><i class="fa fa-circle-o"></i> Type mail</a></li>
-                            <li><a href="pages/examples/lockscreen.html"><i class="fa fa-circle-o"></i> Type price</a></li>
-                            <li><a href="pages/examples/404.html"><i class="fa fa-circle-o"></i> Type storage</a></li>
-                            <li><a href="pages/examples/500.html"><i class="fa fa-circle-o"></i> Document</a></li>
-                            <li><a href="pages/examples/blank.html"><i class="fa fa-circle-o"></i> Status document</a></li>
+                            <li><a href="<?=Url::toRoute('product/index');?>"><i class="fa fa-circle-o"></i> Product</a></li>
+                            <li><a href="<?=Url::toRoute('partner/index');?>"><i class="fa fa-circle-o"></i> Type mail</a></li>
+                            <li><a href="<?=Url::toRoute('partner/index');?>"><i class="fa fa-circle-o"></i> Type price</a></li>
+                            <li><a href="<?=Url::toRoute('partner/index');?>"><i class="fa fa-circle-o"></i> Type storage</a></li>
+                            <li><a href="<?=Url::toRoute('partner/index');?>"><i class="fa fa-circle-o"></i> Document</a></li>
+                            <li><a href="<?=Url::toRoute('partner/index');?>"><i class="fa fa-circle-o"></i> Status document</a></li>
                         </ul>
                     </li>
                 </ul>
