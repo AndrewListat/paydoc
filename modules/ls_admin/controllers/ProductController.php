@@ -5,6 +5,7 @@ namespace app\modules\ls_admin\controllers;
 use Yii;
 use app\modules\ls_admin\models\Product;
 use app\modules\ls_admin\models\ProductSearch;
+use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -28,6 +29,15 @@ class ProductController extends Controller
                     'delete' => ['POST'],
                 ],
             ],
+          'access' => [
+            'class' => AccessControl::className(),
+            'rules' => [
+              [
+                'allow' => true,
+                'roles' => ['@'],
+              ],
+            ],
+          ],
         ];
     }
 

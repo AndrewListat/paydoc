@@ -5,6 +5,7 @@ namespace app\modules\ls_admin\controllers;
 use Yii;
 use app\modules\ls_admin\models\TypePrice;
 use app\modules\ls_admin\models\TypePriceSearch;
+use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -27,6 +28,15 @@ class TypepriceController extends Controller
                     'delete' => ['POST'],
                 ],
             ],
+          'access' => [
+            'class' => AccessControl::className(),
+            'rules' => [
+              [
+                'allow' => true,
+                'roles' => ['@'],
+              ],
+            ],
+          ],
         ];
     }
 

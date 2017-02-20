@@ -5,6 +5,7 @@ namespace app\modules\ls_admin\controllers;
 use Yii;
 use app\modules\ls_admin\models\Company;
 use app\modules\ls_admin\models\CompanySearch;
+use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -27,6 +28,15 @@ class CompanyController extends Controller
                     'delete' => ['POST'],
                 ],
             ],
+          'access' => [
+            'class' => AccessControl::className(),
+            'rules' => [
+              [
+                'allow' => true,
+                'roles' => ['@'],
+              ],
+            ],
+          ],
         ];
     }
 

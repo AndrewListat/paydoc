@@ -103,7 +103,7 @@ MainAsset::register($this);
                             <li><a href="<?=Url::toRoute('typeprice/index');?>"><i class="fa fa-circle-o"></i> Type price</a></li>
                             <li><a href="<?=Url::toRoute('typestorage/index');?>"><i class="fa fa-circle-o"></i> Type storage</a></li>
                             <li><a href="<?=Url::toRoute('document/index');?>"><i class="fa fa-circle-o"></i> Document</a></li>
-                            <li><a href="<?=Url::toRoute('partner/index');?>"><i class="fa fa-circle-o"></i> Status document</a></li>
+                            <li><a href="<?=Url::toRoute('statusdocument/index');?>"><i class="fa fa-circle-o"></i> Status document</a></li>
                         </ul>
                     </li>
                 </ul>

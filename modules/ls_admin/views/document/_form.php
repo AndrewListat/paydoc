@@ -26,7 +26,7 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'paid')->textInput() ?>
 
-    <?= $form->field($model, 'status_id')->textInput() ?>
+    <?= $form->field($model, 'status_id')->dropDownList(\yii\helpers\ArrayHelper::map(\app\modules\ls_admin\models\StatusDocument::find()->all(),'id','name')) ?>
 
     <?= $form->field($model, 'note')->textarea(['rows' => 6]) ?>
 

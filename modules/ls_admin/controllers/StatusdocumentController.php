@@ -3,17 +3,17 @@
 namespace app\modules\ls_admin\controllers;
 
 use Yii;
-use app\modules\ls_admin\models\Document;
-use app\modules\ls_admin\models\DocumentSearch;
+use app\modules\ls_admin\models\StatusDocument;
+use app\modules\ls_admin\models\StatusDocumentSearch;
 use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
- * DocumentController implements the CRUD actions for Document model.
+ * StatusdocumentController implements the CRUD actions for StatusDocument model.
  */
-class DocumentController extends Controller
+class StatusdocumentController extends Controller
 {
     /**
      * @inheritdoc
@@ -28,25 +28,25 @@ class DocumentController extends Controller
                     'delete' => ['POST'],
                 ],
             ],
-          'access' => [
-            'class' => AccessControl::className(),
-            'rules' => [
-              [
-                'allow' => true,
-                'roles' => ['@'],
+            'access' => [
+              'class' => AccessControl::className(),
+              'rules' => [
+                [
+                  'allow' => true,
+                  'roles' => ['@'],
+                ],
               ],
             ],
-          ],
         ];
     }
 
     /**
-     * Lists all Document models.
+     * Lists all StatusDocument models.
      * @return mixed
      */
     public function actionIndex()
     {
-        $searchModel = new DocumentSearch();
+        $searchModel = new StatusDocumentSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
@@ -56,7 +56,7 @@ class DocumentController extends Controller
     }
 
     /**
-     * Displays a single Document model.
+     * Displays a single StatusDocument model.
      * @param integer $id
      * @return mixed
      */
@@ -68,13 +68,13 @@ class DocumentController extends Controller
     }
 
     /**
-     * Creates a new Document model.
+     * Creates a new StatusDocument model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
     public function actionCreate()
     {
-        $model = new Document();
+        $model = new StatusDocument();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
@@ -86,7 +86,7 @@ class DocumentController extends Controller
     }
 
     /**
-     * Updates an existing Document model.
+     * Updates an existing StatusDocument model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
      * @return mixed
@@ -105,7 +105,7 @@ class DocumentController extends Controller
     }
 
     /**
-     * Deletes an existing Document model.
+     * Deletes an existing StatusDocument model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
@@ -118,15 +118,15 @@ class DocumentController extends Controller
     }
 
     /**
-     * Finds the Document model based on its primary key value.
+     * Finds the StatusDocument model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return Document the loaded model
+     * @return StatusDocument the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = Document::findOne($id)) !== null) {
+        if (($model = StatusDocument::findOne($id)) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
