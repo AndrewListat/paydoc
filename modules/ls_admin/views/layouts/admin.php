@@ -101,7 +101,7 @@ MainAsset::register($this);
                             <li><a href="<?=Url::toRoute('product/index');?>"><i class="fa fa-circle-o"></i> Product</a></li>
                             <li><a href="<?=Url::toRoute('typemail/index');?>"><i class="fa fa-circle-o"></i> Type mail</a></li>
                             <li><a href="<?=Url::toRoute('typeprice/index');?>"><i class="fa fa-circle-o"></i> Type price</a></li>
-                            <li><a href="<?=Url::toRoute('partner/index');?>"><i class="fa fa-circle-o"></i> Type storage</a></li>
+                            <li><a href="<?=Url::toRoute('typestorage/index');?>"><i class="fa fa-circle-o"></i> Type storage</a></li>
                             <li><a href="<?=Url::toRoute('partner/index');?>"><i class="fa fa-circle-o"></i> Document</a></li>
                             <li><a href="<?=Url::toRoute('partner/index');?>"><i class="fa fa-circle-o"></i> Status document</a></li>
                         </ul>
@@ -114,13 +114,13 @@ MainAsset::register($this);
                         </a>
                     </li>
                 </ul>-->
-                <ul class="sidebar-menu">
+                <!--<ul class="sidebar-menu">
                     <li class="treeview">
-                        <a href="<?=Url::toRoute('pages/index');?>">
+                        <a href="<?/*=Url::toRoute('pages/index');*/?>">
                             <i class="fa fa-folder-open"></i> <span>Pages</span>
                         </a>
                     </li>
-                </ul>
+                </ul>-->
             </section>
             <!-- /.sidebar -->
         </aside>
