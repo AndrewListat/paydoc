@@ -97,7 +97,7 @@ MainAsset::register($this);
                         </a>
                         <ul class="treeview-menu" style="display: none;">
                             <li><a href="<?=Url::toRoute('company/index');?>"><i class="fa fa-circle-o"></i> Сompany</a></li>
-                            <li><a href="pages/examples/profile.html"><i class="fa fa-circle-o"></i> Partner</a></li>
+                            <li><a href="<?=Url::toRoute('partner/index');?>"><i class="fa fa-circle-o"></i> Partner</a></li>
                             <li><a href="pages/examples/login.html"><i class="fa fa-circle-o"></i> Product</a></li>
                             <li><a href="pages/examples/register.html"><i class="fa fa-circle-o"></i> Type mail</a></li>
                             <li><a href="pages/examples/lockscreen.html"><i class="fa fa-circle-o"></i> Type price</a></li>
