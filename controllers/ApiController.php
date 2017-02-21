@@ -164,7 +164,7 @@ class ApiController extends Controller{
             if ($user){
                 Yii::$app->mailer->compose()
                     ->setFrom('from@domain.com')
-                    ->setTo('to@domain.com')
+                    ->setTo($_POST['email'])
                     ->setSubject('Код входа на сайт')
                     ->setHtmlBody('Код: '.$user->password)
                     ->send();
