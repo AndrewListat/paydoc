@@ -24,8 +24,17 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'service')->textInput() ?>
 
+    <?= $form->field($productPrice, 'price')->textInput() ?>
+
+    <?= $form->field($productPrice, 'type_prices_id')->dropDownList(\yii\helpers\ArrayHelper::map(\app\modules\ls_admin\models\TypePrice::find()->all(),'id','name'))->label('Тип валюты') ?>
+
+    <?= $form->field($productStock, 'stock')->textInput() ?>
+
+    <?= $form->field($productStock, 'storage_id')->dropDownList(\yii\helpers\ArrayHelper::map(\app\modules\ls_admin\models\TypeStorage::find()->all(),'id','name'))->label('Тип склада') ?>
+
+
     <div class="form-group">
-        <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+        <?= Html::submitButton($model->isNewRecord ? 'Создать' : 'Обновить', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

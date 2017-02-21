@@ -21,7 +21,8 @@ class DefaultController extends Controller
     public function actionIndex()
     {
         if (!\Yii::$app->user->isGuest) {
-            return $this->render('index');
+            return $this->redirect(['/admin/document/index']);
+//            return $this->render('index');
         }else {
             return $this->redirect(['/admin/signin']);
         }
@@ -102,11 +103,20 @@ class DefaultController extends Controller
     public function actionDocument()
     {
         $document = new Document();
+        $document->status_id=0;
+        $document->paid=0;
 
         $kontrahent = new Partner();
 
         $documentItems = new DocumentItemSearch(['order_id'=> 0-Yii::$app->user->id]);
         $documentItemsDataProvider = $documentItems->search(Yii::$app->request->queryParams);
+
+        $temp = DocumentItem::findAll(['order_id'=> 0-Yii::$app->user->id]);
+
+        $document->total=0;
+        foreach ($temp as $item){
+            $document->total += $item->price * $item->quantity;
+        }
 
         if (isset($_POST['add_partner'])){
             if ($kontrahent->load(Yii::$app->request->post()))
@@ -116,10 +126,16 @@ class DefaultController extends Controller
                 }
         }
 
-
         $productSearch = new ProductSearch();
         $productDataProvider = $productSearch->search(Yii::$app->request->queryParams);
 
+        if (isset($_POST['add_document'])){
+            if ($document->load(Yii::$app->request->post()))
+                if ($document->save()){
+                    DocumentItem::updateAll(['order_id' => $document->id], ['order_id' => 0-Yii::$app->user->id]);
+                    return $this->redirect('document/index');
+                }
+        }
 
 
         return $this->render('document',[

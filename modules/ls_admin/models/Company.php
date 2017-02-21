@@ -41,6 +41,7 @@ class Company extends \yii\db\ActiveRecord
             [['name'], 'string', 'max' => 1000],
             [['tel', 'payment_account'], 'string', 'max' => 20],
             [['bik'], 'string', 'max' => 10],
+            ['mail_address', 'email'],
         ];
     }
 
@@ -51,16 +52,16 @@ class Company extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'INN' => 'Inn',
-            'KPP' => 'Kpp',
-            'name' => 'Name',
-            'type_partner' => 'Type Partner',
-            'business_address' => 'Business Address',
-            'mail_address' => 'Mail Address',
-            'tel' => 'Tel',
-            'bik' => 'Bik',
-            'payment_account' => 'Payment Account',
-            'note' => 'Note',
+            'INN' => 'ИНН',
+            'KPP' => 'КПП',
+            'name' => 'Наименование',
+            'type_partner' => 'Юр. / физ. лицо',
+            'business_address' => 'Юридический адрес',
+            'mail_address' => 'Почтовый адрес',
+            'tel' => 'Тел.',
+            'bik' => 'Бик банка',
+            'payment_account' => 'Расчетный счет',
+            'note' => 'Комментарий',
         ];
     }
 }

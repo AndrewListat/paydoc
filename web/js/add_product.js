@@ -19,12 +19,28 @@ function add_product(id) {
         }
     });
 }
+
 function delete_product(id) {
     $.post( "/api/delete_product",{ id:id }, function( data ) {
         console.log(data);
         if (data){
             $.pjax.defaults.timeout = false;
             $.pjax.reload({container:"#productItems"});
+        }
+    });
+}
+
+function add_product_up(id, doc_id) {
+    $.post( "/api/add_product_up",{ id:id, count: $('#count-'+id).val(),doc_id:doc_id }, function( data ) {
+        console.log(data);
+        if (data){
+            $.pjax.defaults.timeout = false;
+            $.pjax.reload({container:"#productItems"});
+            swal(
+                'Товар добавлен!',
+                '',
+                'success'
+            )
         }
     });
 }

@@ -7,7 +7,7 @@ use yii\grid\GridView;
 /* @var $searchModel app\modules\ls_admin\models\ProductSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Products';
+$this->title = 'Номенклатура';
 ?>
 <div class="product-index">
 
@@ -15,25 +15,33 @@ $this->title = 'Products';
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
-        <?= Html::a('Create Product', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Создать номенклатуру', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
-    <?= GridView::widget([
+    <div class="box">
+        <?= GridView::widget([
         'dataProvider' => $dataProvider,
-        'filterModel' => $searchModel,
+//        'filterModel' => $searchModel,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
-            'id',
             'name',
-            'sky',
-            'group',
-            'unit',
+            'price.price',
+            [
+                'attribute'=>'price.type.name',
+                'label'=>'Тип валюты',
+            ],
+
+
+//            'sky',
+//            'group',
+//            'unit',
             'date_added',
             'date_modified',
-            'note:ntext',
-            'service',
+//            'note:ntext',
+//            'service',
 
             ['class' => 'yii\grid\ActionColumn'],
         ],
     ]); ?>
+    </div>
 </div>

@@ -42,9 +42,9 @@ class TypePrice extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'name' => 'Name',
-            'NDS' => 'Nds',
-            'currency' => 'Currency',
+            'name' => 'Наименование',
+            'NDS' => 'НДС',
+            'currency' => 'Валюта',
         ];
     }
 }

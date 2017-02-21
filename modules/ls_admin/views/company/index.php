@@ -7,7 +7,7 @@ use yii\grid\GridView;
 /* @var $searchModel app\modules\ls_admin\models\CompanySearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Companies';
+$this->title = 'Организации';
 
 ?>
 <div class="company-index">
@@ -16,11 +16,11 @@ $this->title = 'Companies';
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
-        <?= Html::a('Create Company', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Создать организацию', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
-        'filterModel' => $searchModel,
+//        'filterModel' => $searchModel,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 

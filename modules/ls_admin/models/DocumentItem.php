@@ -42,9 +42,13 @@ class DocumentItem extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'product_id' => 'Product ID',
-            'quantity' => 'Quantity',
-            'price' => 'Price',
+            'quantity' => 'Количество',
+            'price' => 'Цена',
             'order_id' => 'Order ID',
         ];
+    }
+    public function getProduct()
+    {
+        return $this->hasOne(Product::className(), ['id' => 'product_id']);
     }
 }

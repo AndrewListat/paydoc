@@ -50,15 +50,25 @@ class Product extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'name' => 'Name',
-            'sky' => 'Sky',
+            'name' => 'Наименование',
+            'sky' => 'Артикул',
             'group' => 'Group',
             'unit' => 'Unit',
-            'date_added' => 'Date Added',
-            'date_modified' => 'Date Modified',
-            'note' => 'Note',
+            'date_added' => 'Дата добавления',
+            'date_modified' => 'Дата модификации',
+            'note' => 'Описание',
             'service' => 'Service',
         ];
+    }
+
+    public function getPrice()
+    {
+        return $this->hasOne(ProductPrice::className(), ['product_id' => 'id']);
+    }
+
+    public function getStock()
+    {
+        return $this->hasOne(ProductStock::className(), ['product_id' => 'id']);
     }
 
     public function beforeSave($insert){

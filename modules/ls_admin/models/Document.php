@@ -34,7 +34,7 @@ class Document extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['data_document', 'nomber_1c', 'delivery_address', 'partner_id', 'company_id', 'total', 'paid', 'status_id', 'note'], 'required'],
+            [['nomber_1c', 'delivery_address', 'partner_id', 'company_id', 'total', 'paid', 'status_id', 'note'], 'required'],
             [['data_document'], 'safe'],
             [['delivery_address', 'note'], 'string'],
             [['partner_id', 'company_id', 'total', 'paid', 'status_id'], 'integer'],
@@ -48,16 +48,16 @@ class Document extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => 'ID',
-            'data_document' => 'Data Document',
-            'nomber_1c' => 'Nomber 1c',
-            'delivery_address' => 'Delivery Address',
+            'id' => 'Номер',
+            'data_document' => 'Дата',
+            'nomber_1c' => 'Номер из 1С',
+            'delivery_address' => 'Адрес доставки',
             'partner_id' => 'Partner ID',
             'company_id' => 'Company ID',
-            'total' => 'Total',
-            'paid' => 'Paid',
-            'status_id' => 'Status ID',
-            'note' => 'Note',
+            'total' => 'Сумма документа',
+            'paid' => 'Оплачено',
+            'status_id' => 'Статус',
+            'note' => 'Комментарий',
         ];
     }
 
@@ -68,5 +68,14 @@ class Document extends \yii\db\ActiveRecord
     public function getCompany()
     {
       return $this->hasOne(Company::className(), ['id' => 'company_id']);
+    }
+    public function getStatus()
+    {
+        return $this->hasOne(StatusDocument::className(), ['id' => 'status_id']);
+    }
+
+    public function beforeSave($insert){
+        $this->data_document = Yii::$app->formatter->asDate('now', 'yyyy-MM-dd');
+        return parent::beforeSave($insert);
     }
 }

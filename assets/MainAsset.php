@@ -21,6 +21,7 @@ class MainAsset extends AssetBundle
         'template_admin/assets/css/AdminLTE.min.css',
         'template_admin/assets/css/skins/_all-skins.min.css',
         'sweetalert2/sweetalert2.css',
+        'css/site.css',
     ];
     public $js = [
         'template_admin/plugins/slimScroll/jquery.slimscroll.min.js',

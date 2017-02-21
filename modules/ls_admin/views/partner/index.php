@@ -7,7 +7,7 @@ use yii\grid\GridView;
 /* @var $searchModel app\modules\ls_admin\models\PartnerSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Partners';
+$this->title = 'Контрагенты';
 ?>
 <div class="partner-index">
 
@@ -15,9 +15,10 @@ $this->title = 'Partners';
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
-        <?= Html::a('Create Partner', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Создать контрагента', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
-    <?= GridView::widget([
+    <div class="box">
+        <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'columns' => [
@@ -38,4 +39,5 @@ $this->title = 'Partners';
             ['class' => 'yii\grid\ActionColumn'],
         ],
     ]); ?>
+    </div>
 </div>

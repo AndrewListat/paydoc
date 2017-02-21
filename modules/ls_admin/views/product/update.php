@@ -5,7 +5,7 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model app\modules\ls_admin\models\Product */
 
-$this->title = 'Update Product: ' . $model->name;
+$this->title = 'Номенклатура: ' . $model->name;
 ?>
 <div class="product-update">
 
@@ -17,6 +17,8 @@ $this->title = 'Update Product: ' . $model->name;
 
     <?= $this->render('_form', [
         'model' => $model,
+        'productPrice' => $productPrice,
+        'productStock' => $productStock,
     ]) ?>
 
 </div>

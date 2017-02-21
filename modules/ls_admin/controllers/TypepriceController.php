@@ -46,10 +46,31 @@ class TypepriceController extends Controller
      */
     public function actionIndex()
     {
+        $newModel = new TypePrice();
+        if (Yii::$app->request->post()){
+            if ($newModel->load(Yii::$app->request->post())){
+                if ($newModel->save()){
+                    $newModel = new TypePrice();
+                }
+            }
+        }
+
+        if(isset($_POST['up_store']) && isset($_POST['up_id'])){
+            $upModel = TypePrice::findOne($_POST['up_id']);
+            if($upModel){
+                $upModel->name=$_POST['up_name'];
+                $upModel->NDS=$_POST['up_nds'];
+                $upModel->currency=$_POST['up_currency'];
+                $upModel->save();
+            }
+
+        }
+
         $searchModel = new TypePriceSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
+            'newModel' => $newModel,
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);

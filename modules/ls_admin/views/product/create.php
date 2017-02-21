@@ -6,7 +6,7 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model app\modules\ls_admin\models\Product */
 
-$this->title = 'Create Product';
+$this->title = 'Создание номенклатуры';
 ?>
 <div class="product-create">
 
@@ -18,6 +18,8 @@ $this->title = 'Create Product';
 
     <?= $this->render('_form', [
         'model' => $model,
+        'productPrice' => $productPrice,
+        'productStock' => $productStock,
     ]) ?>
 
 </div>

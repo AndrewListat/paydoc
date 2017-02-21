@@ -6,7 +6,7 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model app\modules\ls_admin\models\Partner */
 
-$this->title = 'Create Partner';
+$this->title = 'Создание контрагента';
 ?>
 <div class="partner-create">
 

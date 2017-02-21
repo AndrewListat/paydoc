@@ -2,6 +2,10 @@
 
 namespace app\modules\ls_admin\controllers;
 
+use app\modules\ls_admin\models\DocumentItem;
+use app\modules\ls_admin\models\DocumentItemSearch;
+use app\modules\ls_admin\models\Partner;
+use app\modules\ls_admin\models\ProductSearch;
 use Yii;
 use app\modules\ls_admin\models\Document;
 use app\modules\ls_admin\models\DocumentSearch;
@@ -48,6 +52,7 @@ class DocumentController extends Controller
     {
         $searchModel = new DocumentSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $dataProvider->sort=false;
 
         return $this->render('index', [
             'searchModel' => $searchModel,
@@ -62,6 +67,7 @@ class DocumentController extends Controller
      */
     public function actionView($id)
     {
+
         return $this->render('view', [
             'model' => $this->findModel($id),
         ]);
@@ -93,15 +99,46 @@ class DocumentController extends Controller
      */
     public function actionUpdate($id)
     {
-        $model = $this->findModel($id);
+        $document = $this->findModel($id);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
-        } else {
-            return $this->render('update', [
-                'model' => $model,
-            ]);
+        $kontrahent = new Partner();
+
+        $documentItems = new DocumentItemSearch(['order_id'=> $document->id]);
+        $documentItemsDataProvider = $documentItems->search(Yii::$app->request->queryParams);
+
+        $temp = DocumentItem::findAll(['order_id'=> $document->id]);
+        $document->total=0;
+        foreach ($temp as $item){
+            $document->total += $item->price * $item->quantity;
         }
+
+        if (isset($_POST['add_partner'])){
+            if ($kontrahent->load(Yii::$app->request->post()))
+                if ($kontrahent->save()){
+                    $document->partner_id = $kontrahent->id;
+                    Yii::$app->session->setFlash('modalKontrahent');
+                }
+        }
+
+        $productSearch = new ProductSearch();
+        $productDataProvider = $productSearch->search(Yii::$app->request->queryParams);
+
+        if (isset($_POST['add_document'])){
+            if ($document->load(Yii::$app->request->post()))
+                if ($document->save()){
+                    return $this->redirect('document/index');
+                }
+        }
+
+
+        return $this->render('update',[
+            'document' => $document,
+            'kontrahent' => $kontrahent,
+            'documentItems' => $documentItems,
+            'documentItemsDataProvider' => $documentItemsDataProvider,
+            'productSearch' => $productSearch,
+            'productDataProvider' => $productDataProvider,
+        ]);
     }
 
     /**

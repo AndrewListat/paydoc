@@ -46,10 +46,30 @@ class StatusdocumentController extends Controller
      */
     public function actionIndex()
     {
+        $newModel = new StatusDocument();
+
+        if (Yii::$app->request->post()){
+            if ($newModel->load(Yii::$app->request->post())){
+                if ($newModel->save()){
+                    $newModel = new StatusDocument();
+                }
+            }
+        }
+
+        if(isset($_POST['up_store']) && isset($_POST['up_id'])){
+            $upModel = StatusDocument::findOne($_POST['up_id']);
+            if($upModel){
+                $upModel->name=$_POST['up_name'];
+                $upModel->save();
+            }
+
+        }
+
         $searchModel = new StatusDocumentSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
+            'newModel' => $newModel,
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);

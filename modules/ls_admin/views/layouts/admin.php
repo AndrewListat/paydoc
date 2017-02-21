@@ -82,32 +82,21 @@ MainAsset::register($this);
             <section class="sidebar">
 
                 <!-- sidebar menu: : style can be found in sidebar.less -->
-                <ul class="sidebar-menu">
+                <!--<ul class="sidebar-menu">
                     <li class="treeview">
-                        <a href="<?=Url::toRoute('default/index');?>">
+                        <a href="<?/*=Url::toRoute('default/index');*/?>">
                             <i class="fa fa-dashboard"></i> <span>Dashboard</span>
                         </a>
                     </li>
-                </ul>
-                <ul class="sidebar-menu">
-                    <li class="treeview">
-                        <a href="#">
-                            <i class="fa fa-folder"></i> <span>База данных</span>
-                            <i class="fa fa-angle-left pull-right"></i>
-                        </a>
-                        <ul class="treeview-menu" style="display: none;">
-                            <li><a href="<?=Url::toRoute('company/index');?>"><i class="fa fa-circle-o"></i> Сompany</a></li>
-                            <li><a href="<?=Url::toRoute('partner/index');?>"><i class="fa fa-circle-o"></i> Partner</a></li>
-                            <li><a href="<?=Url::toRoute('product/index');?>"><i class="fa fa-circle-o"></i> Product</a></li>
-                            <li><a href="<?=Url::toRoute('typemail/index');?>"><i class="fa fa-circle-o"></i> Type mail</a></li>
-                            <li><a href="<?=Url::toRoute('typeprice/index');?>"><i class="fa fa-circle-o"></i> Type price</a></li>
-                            <li><a href="<?=Url::toRoute('typestorage/index');?>"><i class="fa fa-circle-o"></i> Type storage</a></li>
-                            <li><a href="<?=Url::toRoute('document/index');?>"><i class="fa fa-circle-o"></i> Document</a></li>
-                            <li><a href="<?=Url::toRoute('statusdocument/index');?>"><i class="fa fa-circle-o"></i> Status document</a></li>
-                        </ul>
-                    </li>
-                </ul>
+                </ul>-->
                <!-- <ul class="sidebar-menu">
+                    <li class="treeview">
+                        <a href="<?/*=Url::toRoute('user/index');*/?>">
+                            <i class="fa fa-folder-open"></i> <span>Users</span>
+                        </a>
+                    </li>
+                </ul>-->
+                <!-- <ul class="sidebar-menu">
                     <li class="treeview">
                         <a href="<?/*=Url::toRoute('user/index');*/?>">
                             <i class="fa fa-folder-open"></i> <span>Users</span>
@@ -124,7 +113,56 @@ MainAsset::register($this);
                 <ul class="sidebar-menu">
                     <li class="treeview">
                         <a href="<?=Url::toRoute('default/document');?>">
-                            <i class="fa fa-files-o"></i> <span>Создание документа</span>
+                            <i class="fa fa-file-o"></i> <span>Новый документ</span>
+                        </a>
+                    </li>
+                </ul>
+                <ul class="sidebar-menu">
+                    <li class="treeview">
+                        <a href="<?=Url::toRoute('document/index');?>">
+                            <i class="fa fa-files-o"></i> <span>Документы</span>
+                        </a>
+                    </li>
+                </ul>
+                <ul class="sidebar-menu">
+                    <li class="treeview">
+                        <a href="<?=Url::toRoute('company/index');?>">
+                            <i class="fa fa-clone"></i> <span>Организации</span>
+                        </a>
+                    </li>
+                </ul>
+                <ul class="sidebar-menu">
+                    <li class="treeview">
+                        <a href="<?=Url::toRoute('partner/index');?>">
+                            <i class="fa fa-users"></i> <span>Контрагенты</span>
+                        </a>
+                    </li>
+                </ul>
+                <ul class="sidebar-menu">
+                    <li class="treeview">
+                        <a href="<?=Url::toRoute('product/index');?>">
+                            <i class="fa fa-suitcase"></i> <span>Номенклатура</span>
+                        </a>
+                    </li>
+                </ul>
+                <ul class="sidebar-menu">
+                    <li class="treeview">
+                        <a href="<?=Url::toRoute('typestorage/index');?>">
+                            <i class="fa fa-building"></i> <span>Склады</span>
+                        </a>
+                    </li>
+                </ul>
+                <ul class="sidebar-menu">
+                    <li class="treeview">
+                        <a href="<?=Url::toRoute('typeprice/index');?>">
+                            <i class="fa fa-usd"></i> <span>Типы Цен</span>
+                        </a>
+                    </li>
+                </ul>
+                <ul class="sidebar-menu">
+                    <li class="treeview">
+                        <a href="<?=Url::toRoute('statusdocument/index');?>">
+                            <i class="fa fa-cogs"></i> <span>Настройка</span>
                         </a>
                     </li>
                 </ul>

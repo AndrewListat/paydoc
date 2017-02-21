@@ -5,7 +5,7 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model app\modules\ls_admin\models\Partner */
 
-$this->title = 'Update Partner: ' . $model->name;
+$this->title = 'Контрагент: ' . $model->name;
 ?>
 <div class="partner-update">
 

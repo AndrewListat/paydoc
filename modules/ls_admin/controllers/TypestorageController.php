@@ -46,11 +46,33 @@ class TypestorageController extends Controller
      */
     public function actionIndex()
     {
+
+
+        $store = new TypeStorage();
+
+        if (Yii::$app->request->post()){
+            if ($store->load(Yii::$app->request->post())){
+                if ($store->save()){
+                    $store = new TypeStorage();
+                }
+            }
+        }
+
+        if(isset($_POST['up_store']) && isset($_POST['up_id'])){
+            $upModel = TypeStorage::findOne($_POST['up_id']);
+            if($upModel){
+                $upModel->name=$_POST['up_name'];
+                $upModel->save();
+            }
+
+        }
+
         $searchModel = new TypeStorageSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
             'searchModel' => $searchModel,
+            'store' => $store,
             'dataProvider' => $dataProvider,
         ]);
     }
