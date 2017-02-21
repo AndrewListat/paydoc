@@ -20,6 +20,7 @@ use yii\behaviors\TimestampBehavior;
  * @property string $auth_key
  * @property integer $created_at
  * @property integer $updated_ut
+ * @property integer $partner_id
  */
 class User extends \yii\db\ActiveRecord implements IdentityInterface
 {

@@ -9,7 +9,9 @@ namespace app\controllers;
 use app\commands\Dadata;
 use app\modules\ls_admin\models\Document;
 use app\modules\ls_admin\models\DocumentItem;
+use app\modules\ls_admin\models\LoginForm;
 use app\modules\ls_admin\models\Partner;
+use app\modules\ls_admin\models\User;
 use kartik\mpdf\Pdf;
 use Yii;
 use yii\db\Query;
@@ -154,6 +156,34 @@ class ApiController extends Controller{
 
         // return the pdf output as per the destination setting
         return $pdf->render();
+    }
+
+    public function actionLogin(){
+        if (isset($_POST['email'])){
+            $user = User::findOne(['email'=>$_POST['email']]);
+            if ($user){
+                Yii::$app->mailer->compose()
+                    ->setFrom('from@domain.com')
+                    ->setTo('to@domain.com')
+                    ->setSubject('Код входа на сайт')
+                    ->setHtmlBody('Код: '.$user->password)
+                    ->send();
+                return true;
+            } else {
+                return false;
+            }
+        }
+    }
+
+    public function actionLogin_kod(){
+        $model = new LoginForm();
+
+        $model->email = $_POST['email'];
+        $model->password = $_POST['kod'];
+        if ($model->login()) {
+            return true;
+        }
+        return false;
     }
 
 }

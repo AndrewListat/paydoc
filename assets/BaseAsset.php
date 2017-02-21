@@ -20,7 +20,9 @@ class BaseAsset extends AssetBundle
     public $css = [
     ];
     public $js = [
-        'js/add_product.js'
+        'js/add_product.js',
+        'js/pjack.js',
+        'js/jquerysession.js',
     ];
     public $depends = [
         'yii\web\YiiAsset',

@@ -29,10 +29,19 @@ $config = [
             // send all mails to a file by default. You have to set
             // 'useFileTransport' to false and configure a transport
             // for the mailer to send real emails.
-            'transport' => [
+            /*'transport' => [
                 'class' => 'Swift_MailTransport',
             ],
+            'useFileTransport' => false,*/
             'useFileTransport' => false,
+            'transport' => [
+                'class' => 'Swift_SmtpTransport',
+                'host' => 'smtp.gmail.com',
+                'username' => 'listat.an@gmail.com',
+                'password' => 'Listat_Greed',
+                'port' => '465',
+                'encryption' => 'ssl',
+            ],
         ],
         'log' => [
             'traceLevel' => YII_DEBUG ? 3 : 0,

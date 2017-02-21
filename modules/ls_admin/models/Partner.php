@@ -65,4 +65,42 @@ class Partner extends \yii\db\ActiveRecord
             'note' => 'Комментарий',
         ];
     }
+    public function afterSave($insert, $changedAttributes){
+        parent::afterSave($insert, $changedAttributes);
+
+        if (Yii::$app->user->isGuest){
+            $model = new RegForm();
+                $model->username = $this->name;
+                $model->lastname = 'Last '.$this->name;
+                $model->password = Yii::$app->getSecurity()->generateRandomString(5);
+                $model->login = 'user_'.time();
+                $model->email = $this->mail_address;
+                $model->role = 'user';
+                $model->partner_id = $this->id;
+                if ( $model->validate()):
+                    if ($user = $model->reg()):
+                        if ($user->status === User::STATUS_ACTIVE):
+                             Yii::$app->getUser()->login($user);
+                        endif;
+                    endif;
+                endif;
+        } elseif (Yii::$app->user->identity['role']== 'admin'){
+            $model = new RegForm();
+            $model->username = $this->name;
+            $model->lastname = 'Last '.$this->name;
+            $model->password = Yii::$app->getSecurity()->generateRandomString(5);
+            $model->login = 'user_'.time();
+            $model->email = $this->mail_address;
+            $model->role = 'user';
+            $model->partner_id = $this->id;
+            if ( $model->validate()):
+                if ($user = $model->reg()):
+                    if ($user->status === User::STATUS_ACTIVE):
+                        Yii::$app->getUser()->login($user);
+                    endif;
+                endif;
+            endif;
+        }
+
+    }
 }

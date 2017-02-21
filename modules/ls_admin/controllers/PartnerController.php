@@ -2,6 +2,7 @@
 
 namespace app\modules\ls_admin\controllers;
 
+use app\modules\ls_admin\models\User;
 use Yii;
 use app\modules\ls_admin\models\Partner;
 use app\modules\ls_admin\models\PartnerSearch;
@@ -113,7 +114,11 @@ class PartnerController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
+        $partner = $this->findModel($id);
+
+        $user = User::findOne(['email'=>$partner->mail_address]);
+        $user->delete();
+        $partner->delete();
 
         return $this->redirect(['index']);
     }

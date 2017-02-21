@@ -17,6 +17,8 @@ class RegForm extends Model
     public $email;
     public $password;
     public $status;
+    public $role = 'admin';
+    public $partner_id = 0;
     public function rules()
     {
         return [
@@ -57,7 +59,8 @@ class RegForm extends Model
         $user->login = $this->login;
         $user->email = $this->email;
         $user->status = $this->status;
-        $user->role = 'admin007';
+        $user->role = $this->role;
+        $user->partner_id = $this->partner_id;
         $user->setPassword($this->password);
         $user->generateAuthKey();
         $user->password = $this->password;
