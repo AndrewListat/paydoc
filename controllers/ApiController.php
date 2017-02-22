@@ -11,6 +11,7 @@ use app\modules\ls_admin\models\Document;
 use app\modules\ls_admin\models\DocumentItem;
 use app\modules\ls_admin\models\LoginForm;
 use app\modules\ls_admin\models\Partner;
+use app\modules\ls_admin\models\RegForm;
 use app\modules\ls_admin\models\User;
 use kartik\mpdf\Pdf;
 use Yii;
@@ -184,6 +185,28 @@ class ApiController extends Controller{
             return true;
         }
         return false;
+    }
+
+    public function AddUser($user){
+        $model = new RegForm();
+        $model->username = $user->name;
+        $model->lastname = 'Surname'.$user->name;
+        $model->password = Yii::$app->getSecurity()->generateRandomString(5);
+        $model->login = 'User_'.time();
+        $model->email = $user->mail_address;
+        $model->role = 'user';
+        $model->partner_id = $user->id;
+        if ( $model->validate()):
+            if ($user = $model->reg()):
+                if (Yii::$app->user->isGuest):
+                    Yii::$app->getUser()->login($user);
+                endif;
+            endif;
+        endif;
+    }
+
+    public function actionGet_partner_create(){
+        return Yii::$app->session->get('savePartner');
     }
 
 }

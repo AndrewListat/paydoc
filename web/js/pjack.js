@@ -2,19 +2,21 @@
 
 $("document").ready(function(){
     $("#new_partner").on("pjax:end", function() {
-               $.pjax.defaults.timeout = false;
-               $.pjax.reload({container:"#partnerId"});
+        $.get('/api/get_partner_create', function ($data) {
+            if($data){
+                $.pjax.defaults.timeout = false;
+                $.pjax.reload({container:"#partnerId"});
+                $('#myModal').modal("hide");
+                swal(
+                    'Контрагент создан!',
+                    '',
+                    'success'
+                )
+            }
+        });
 
-        // $.get('/api/get_partner_create', function () {
-        //     $("#partnerId").select2("data", {id: 1, text: 'sdsd'});
-        // });
-        $('#myModal').modal("hide");
     //            $("#agenda-prospect_id").select2("data", {id: results.prospect_id, text: results.prospect_nome});
-        swal(
-                  'Контрагент создан!',
-                  '',
-                  'success'
-        )
+
     });
 });
 

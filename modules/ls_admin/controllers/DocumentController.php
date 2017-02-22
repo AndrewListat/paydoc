@@ -116,7 +116,9 @@ class DocumentController extends Controller
             if ($kontrahent->load(Yii::$app->request->post()))
                 if ($kontrahent->save()){
                     $document->partner_id = $kontrahent->id;
-                    Yii::$app->session->setFlash('modalKontrahent');
+                    Yii::$app->session->set('savePartner',true);
+                }else{
+                    Yii::$app->session->set('savePartner',false);
                 }
         }
 

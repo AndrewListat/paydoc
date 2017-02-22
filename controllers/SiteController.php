@@ -160,8 +160,9 @@ class SiteController extends Controller
         $document->status_id=0;
         $document->paid=0;
 
-        if (Yii::$app->session->get('partner_create')){
-            $document->partner_id = Yii::$app->session->get('partner_id');
+
+        if (!Yii::$app->user->isGuest){
+            $document->partner_id = Yii::$app->user->identity['partner_id'];
         }
 
         $kontrahent = new Partner();
@@ -180,8 +181,9 @@ class SiteController extends Controller
             if ($kontrahent->load(Yii::$app->request->post()))
                 if ($kontrahent->save()){
                     $document->partner_id = $kontrahent->id;
-                    Yii::$app->session->set('partner_create',true);
-                    Yii::$app->session->set('partner_id',$kontrahent->id);
+                    Yii::$app->session->set('savePartner',true);
+                }else{
+                    Yii::$app->session->set('savePartner',false);
                 }
         }
 

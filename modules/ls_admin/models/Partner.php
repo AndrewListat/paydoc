@@ -67,12 +67,12 @@ class Partner extends \yii\db\ActiveRecord
     }
     public function afterSave($insert, $changedAttributes){
         parent::afterSave($insert, $changedAttributes);
-
+        $model = new RegForm();
         if (Yii::$app->user->isGuest){
-            $model = new RegForm();
+
                 $model->username = $this->name;
                 $model->lastname = 'Last '.$this->name;
-                $model->password = Yii::$app->getSecurity()->generateRandomString(5);
+                $model->password = Yii::$app->getSecurity()->generateRandomString(6);
                 $model->login = 'user_'.time();
                 $model->email = $this->mail_address;
                 $model->role = 'user';
@@ -88,7 +88,19 @@ class Partner extends \yii\db\ActiveRecord
             $model = new RegForm();
             $model->username = $this->name;
             $model->lastname = 'Last '.$this->name;
-            $model->password = Yii::$app->getSecurity()->generateRandomString(5);
+            $model->password = Yii::$app->getSecurity()->generateRandomString(6);
+            $model->login = 'user_'.time();
+            $model->email = $this->mail_address;
+            $model->role = 'user';
+            $model->partner_id = $this->id;
+            if ( $model->validate()):
+                if ($user = $model->reg()):
+                endif;
+            endif;
+        }else{
+            $model->username = $this->name;
+            $model->lastname = 'Last '.$this->name;
+            $model->password = Yii::$app->getSecurity()->generateRandomString(6);
             $model->login = 'user_'.time();
             $model->email = $this->mail_address;
             $model->role = 'user';
