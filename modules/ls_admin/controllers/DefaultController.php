@@ -208,8 +208,13 @@ class DefaultController extends Controller
                 }
         }
 
-        $productSearch = new ProductSearch();
-        $productDataProvider = $productSearch->search(Yii::$app->request->queryParams);
+        if (isset($_GET['cat_id'])){
+            $productSearch = new ProductSearch(['parent_id'=>$_GET['cat_id']]);
+            $productDataProvider = $productSearch->search(Yii::$app->request->queryParams);
+        } else {
+            $productSearch = new ProductSearch(['parent_id'=>0]);
+            $productDataProvider = $productSearch->search(Yii::$app->request->queryParams);
+        }
 
         if (isset($_POST['add_document'])){
             if ($document->load(Yii::$app->request->post()))
@@ -223,6 +228,18 @@ class DefaultController extends Controller
                             break;
                         case 'dohovor_b':
                             $this->redirect('/api/doc_pdf?id='.$document->id.'&type=dohovor_b');
+                            break;
+                        case 'rah_b':
+                            $this->redirect('/api/doc_pdf?id='.$document->id.'&type=rah_b');
+                            break;
+                        case 'act_z':
+                            $this->redirect('/api/doc_pdf?id='.$document->id.'&type=act_z');
+                            break;
+                        case 'dohovor_z':
+                            $this->redirect('/api/doc_pdf?id='.$document->id.'&type=dohovor_z');
+                            break;
+                        case 'rah_z':
+                            $this->redirect('/api/doc_pdf?id='.$document->id.'&type=rah_z');
                             break;
                     }
                     Yii::$app->session->set('id_doc_create', false);

@@ -285,6 +285,18 @@ class SiteController extends Controller
                         case 'dohovor_b':
                             $this->redirect('/api/doc_pdf?id='.$document->id.'&type=dohovor_b');
                             break;
+                        case 'rah_b':
+                            $this->redirect('/api/doc_pdf?id='.$document->id.'&type=rah_b');
+                            break;
+                        case 'act_z':
+                            $this->redirect('/api/doc_pdf?id='.$document->id.'&type=act_z');
+                            break;
+                        case 'dohovor_z':
+                            $this->redirect('/api/doc_pdf?id='.$document->id.'&type=dohovor_z');
+                            break;
+                        case 'rah_z':
+                            $this->redirect('/api/doc_pdf?id='.$document->id.'&type=rah_z');
+                            break;
                     }
                     Yii::$app->session->set('id_doc_create', false);
 

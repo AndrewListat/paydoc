@@ -26,52 +26,7 @@ $this->title = 'Счет на оплату № '. $id_doc .' от ' . Yii::$app-
             <h3><?= Html::encode($this->title) ?></h3>
         </div>
         <div class="col-md-5">
-            <?php echo Html::submitButton('<img class="left" width="30px" src="/images/filetype_pdf.png" />', [
-                'class'=>'btn btn-default pull-right',
-                'style'=>'margin: 5px',
-                'name'=>'add_document',
-                'data-toggle'=>'tooltip',
-                'title'=>'Счет на оплата без печати'
-            ]);?>
-            <?php echo Html::submitButton('<img class="left" width="30px" src="/images/filetype_pdf.png" />',  [
-                'class'=>'btn btn-default pull-right',
-                'style'=>'margin: 5px',
-                'name'=>'add_document',
-                'data-toggle'=>'tooltip',
-                'title'=>'Счет на оплату с печатью'
-            ]);?>
-            <?php echo Html::submitButton('<img class="left" width="30px" src="/images/filetype_pdf.png" />', [
-                'class'=>'btn btn-default pull-right',
-                'style'=>'margin: 5px',
-                'name'=>'add_document',
-                'data-toggle'=>'tooltip',
-                'value'=>'act_b',
-                'title'=>'Акт о передачи права без печати'
-            ]);?>
-            <?php echo Html::submitButton('<img class="left" width="30px" src="/images/filetype_pdf.png" />',  [
-                'class'=>'btn btn-default pull-right',
-                'style'=>'margin: 5px',
-                'name'=>'add_document',
-                'data-toggle'=>'tooltip',
-                'value'=>'act_z',
-                'title'=>'Акт о передачи права с печать'
-            ]);?>
-            <?php echo Html::submitButton('<img class="left" width="30px" src="/images/filetype_pdf.png" />',  [
-                'class'=>'btn btn-default pull-right',
-                'style'=>'margin: 5px',
-                'name'=>'add_document',
-                'data-toggle'=>'tooltip',
-                'value'=>'dohovor_b',
-                'title'=>'Договор без печати'
-            ]);?>
-            <?php echo Html::submitButton('<img class="left" width="30px" src="/images/filetype_pdf.png" />',  [
-                'class'=>'btn btn-default pull-right',
-                'style'=>'margin: 5px',
-                'name'=>'add_document',
-                'data-toggle'=>'tooltip',
-                'value'=>'dohovor_z',
-                'title'=>'Договор c печати'
-            ]);?>
+            <?=\app\widgets\ButtonPdfWidget::widget()?>
         </div>
     </div>
 
@@ -318,3 +273,27 @@ $this->title = 'Счет на оплату № '. $id_doc .' от ' . Yii::$app-
 
     </div>
 </div>
+<script>
+    $(document).ready(function() {
+
+
+
+        $.getJSON('/api/get_category1',function (data) {
+            $('#tree_cat').treeview({data: data});
+        });
+
+        $(document).on('click','.node-tree_cat',function () {
+            console.log( $('#tree_cat').treeview('getSelected'));
+            var select_el = $('#tree_cat').treeview('getSelected');
+            if (select_el.length){
+                console.log('ok',select_el[0].cat_id);
+                console.log('ok');
+                $.pjax.defaults.timeout = false;
+                $.pjax.reload({container: "#admin-crud-id", url: "/admin/document?cat_id="+select_el[0].cat_id});
+            }else{
+                console.log('err')
+            }
+        });
+
+    });
+</script>

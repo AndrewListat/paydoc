@@ -3,6 +3,7 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use kartik\widgets\Select2; // or kartik\select2\Select2
 use yii\web\JsExpression;
+use app\widgets\ButtonPdfWidget;
 \app\assets\BaseAsset::register($this);
 /**
  * Created by PhpStorm.
@@ -23,52 +24,7 @@ $this->title = 'Счет на оплату № '. $id_doc .' от ' . Yii::$app-
             <h3><?= Html::encode($this->title) ?></h3>
         </div>
         <div class="col-md-5">
-            <?php echo Html::submitButton('<img class="left" width="30px" src="/images/filetype_pdf.png" />', [
-                'class'=>'btn btn-default pull-right',
-                'style'=>'margin: 5px',
-                'name'=>'add_document',
-                'data-toggle'=>'tooltip',
-                'title'=>'Счет на оплата без печати'
-            ]);?>
-            <?php echo Html::submitButton('<img class="left" width="30px" src="/images/filetype_pdf.png" />',  [
-                'class'=>'btn btn-default pull-right',
-                'style'=>'margin: 5px',
-                'name'=>'add_document',
-                'data-toggle'=>'tooltip',
-                'title'=>'Счет на оплату с печатью'
-            ]);?>
-            <?php echo Html::submitButton('<img class="left" width="30px" src="/images/filetype_pdf.png" />', [
-                'class'=>'btn btn-default pull-right',
-                'style'=>'margin: 5px',
-                'name'=>'add_document',
-                'data-toggle'=>'tooltip',
-                'value'=>'act_b',
-                'title'=>'Акт о передачи права без печати'
-            ]);?>
-            <?php echo Html::submitButton('<img class="left" width="30px" src="/images/filetype_pdf.png" />',  [
-                'class'=>'btn btn-default pull-right',
-                'style'=>'margin: 5px',
-                'name'=>'add_document',
-                'data-toggle'=>'tooltip',
-                'value'=>'act_z',
-                'title'=>'Акт о передачи права с печать'
-            ]);?>
-            <?php echo Html::submitButton('<img class="left" width="30px" src="/images/filetype_pdf.png" />',  [
-                'class'=>'btn btn-default pull-right',
-                'style'=>'margin: 5px',
-                'name'=>'add_document',
-                'data-toggle'=>'tooltip',
-                'value'=>'dohovor_b',
-                'title'=>'Договор без печати'
-            ]);?>
-            <?php echo Html::submitButton('<img class="left" width="30px" src="/images/filetype_pdf.png" />',  [
-                'class'=>'btn btn-default pull-right',
-                'style'=>'margin: 5px',
-                'name'=>'add_document',
-                'data-toggle'=>'tooltip',
-                'value'=>'dohovor_z',
-                'title'=>'Договор c печати'
-            ]);?>
+            <?=ButtonPdfWidget::widget()?>
         </div>
     </div>
 

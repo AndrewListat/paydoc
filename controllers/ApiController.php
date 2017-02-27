@@ -133,16 +133,34 @@ class ApiController extends Controller{
             case 'act_b':
                 $content = $this->renderPartial('pdf_act_b',[
                     'document'=>$document,
+                    'image' => false,
                 ]);
                 $orint = true;
                 $filename = 'Акт о передачи права без печати № '. $document->id .' от '. Yii::$app->formatter->asDate($document->data_document).'.pdf';
                 break;
-            case 'rah':
+            case 'rah_b':
                 $orint = false;
                 $content = $this->renderPartial('pdf_rah',[
                     'document'=>$document,
+                    'image' => false,
                 ]);
-                $filename = 'Акт о передачи права без печати № '. $document->id .' от '. Yii::$app->formatter->asDate($document->data_document).'.pdf';
+                $filename = 'Счет на оплату без печати № '. $document->id .' от '. Yii::$app->formatter->asDate($document->data_document).'.pdf';
+                break;
+            case 'act_z':
+                $content = $this->renderPartial('pdf_act_b',[
+                    'document'=>$document,
+                    'image' => true,
+                ]);
+                $orint = true;
+                $filename = 'Акт о передачи права c печати № '. $document->id .' от '. Yii::$app->formatter->asDate($document->data_document).'.pdf';
+                break;
+            case 'rah_z':
+                $orint = false;
+                $content = $this->renderPartial('pdf_rah',[
+                    'document'=>$document,
+                    'image' => true,
+                ]);
+                $filename = 'Счет на оплату c печати № '. $document->id .' от '. Yii::$app->formatter->asDate($document->data_document).'.pdf';
                 break;
         }
 
@@ -281,7 +299,7 @@ class ApiController extends Controller{
     public function actionGet_category1(){
         \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
 
-        $out[] = ['text'=>'Главная', 'cat_id'=> 0, 'state' => ['checked' => true] , 'selectedIcon' => "glyphicon glyphicon-check", 'icon' => "glyphicon glyphicon-unchecked", 'nodes'=>[]];
+        $out[] = ['text'=>'Главная', 'cat_id'=> 0, 'state' => ['checked' => true] ,'selectable' => true, 'selectedIcon' => "glyphicon glyphicon-check", 'icon' => "glyphicon glyphicon-unchecked", 'nodes'=>[]];
 
 
         $out[0]['nodes'] = $this->parent_cat1(0);

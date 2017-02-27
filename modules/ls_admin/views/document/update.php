@@ -10,7 +10,11 @@ use yii\web\JsExpression;
  * Date: 20.02.2017
  * Time: 12:24
  */
+$id_doc = ($document->nomber_1c) ? $document->nomber_1c : $document->id;
 
+Yii::$app->session->set('id_doc_create_f',$document->id);
+
+$this->title = 'Счет на оплату № '. $id_doc .' от ' . Yii::$app->formatter->asDate($document->data_document);
 ?>
 
 <div class="pages-index">
@@ -19,55 +23,10 @@ use yii\web\JsExpression;
 
     <div class="row">
         <div class="col-md-7">
-
+            <h3><?= Html::encode($this->title) ?></h3>
         </div>
         <div class="col-md-5">
-            <?php echo Html::submitButton('<img class="left" width="30px" src="/images/filetype_pdf.png" />', [
-                'class'=>'btn btn-default pull-right',
-                'style'=>'margin: 5px',
-                'name'=>'add_document',
-                'data-toggle'=>'tooltip',
-                'title'=>'Счет на оплата без печати'
-            ]);?>
-            <?php echo Html::submitButton('<img class="left" width="30px" src="/images/filetype_pdf.png" />',  [
-                'class'=>'btn btn-default pull-right',
-                'style'=>'margin: 5px',
-                'name'=>'add_document',
-                'data-toggle'=>'tooltip',
-                'title'=>'Счет на оплату с печатью'
-            ]);?>
-            <?php echo Html::submitButton('<img class="left" width="30px" src="/images/filetype_pdf.png" />', [
-                'class'=>'btn btn-default pull-right',
-                'style'=>'margin: 5px',
-                'name'=>'add_document',
-                'data-toggle'=>'tooltip',
-                'value'=>'act_b',
-                'title'=>'Акт о передачи права без печати'
-            ]);?>
-            <?php echo Html::submitButton('<img class="left" width="30px" src="/images/filetype_pdf.png" />',  [
-                'class'=>'btn btn-default pull-right',
-                'style'=>'margin: 5px',
-                'name'=>'add_document',
-                'data-toggle'=>'tooltip',
-                'value'=>'act_z',
-                'title'=>'Акт о передачи права с печать'
-            ]);?>
-            <?php echo Html::submitButton('<img class="left" width="30px" src="/images/filetype_pdf.png" />',  [
-                'class'=>'btn btn-default pull-right',
-                'style'=>'margin: 5px',
-                'name'=>'add_document',
-                'data-toggle'=>'tooltip',
-                'value'=>'dohovor_b',
-                'title'=>'Договор без печати'
-            ]);?>
-            <?php echo Html::submitButton('<img class="left" width="30px" src="/images/filetype_pdf.png" />',  [
-                'class'=>'btn btn-default pull-right',
-                'style'=>'margin: 5px',
-                'name'=>'add_document',
-                'data-toggle'=>'tooltip',
-                'value'=>'dohovor_z',
-                'title'=>'Договор c печати'
-            ]);?>
+            <?=\app\widgets\ButtonPdfWidget::widget()?>
         </div>
     </div>
 
@@ -147,7 +106,7 @@ use yii\web\JsExpression;
                 [
                     'class' => 'yii\grid\CheckboxColumn',
                     // you may configure additional properties here
-                    'checkboxOptions'=>['id'=>'checkboxes', 'onclick'=>'show_delete_bt()'],
+                    'checkboxOptions'=>['class'=>'checkboxes', 'onclick'=>'show_delete_bt()'],
                     'footer'=>'<button type="button" id="delete_prod" onclick="delete_products()" class="btn btn-primary" >Удалить</button>'
                 ],
 //                'id',
@@ -191,7 +150,7 @@ use yii\web\JsExpression;
 
     <?= $form->field($document, 'note')->textInput() ?>
 
-    <?= Html::a('Закрыть', '/' , ['class' =>  'btn btn-danger']) ?>
+    <?= Html::a('Закрыть', '/admin' , ['class' =>  'btn btn-danger']) ?>
 
     <?php ActiveForm::end(); ?>
 </div>
@@ -262,6 +221,7 @@ use yii\web\JsExpression;
                 <h4 class="modal-title" id="myModalLabel">Продукты</h4>
             </div>
             <div class="modal-body">
+                <div id="tree_cat"></div>
                 <?php \yii\widgets\Pjax::begin(['id' => 'admin-crud-id', 'timeout' => false,
                     'enablePushState' => false,]); ?>
 
@@ -298,7 +258,7 @@ use yii\web\JsExpression;
 //                                'attribute'=>'parent_id',
                             'label'=>'#',
                             'content'=>function($data){
-                                return '<span class="glyphicon glyphicon-plus" aria-hidden="true" onclick="add_product_up('.$data->id.','.Yii::$app->session->get('id_doc_create').')"></span>';
+                                return '<span class="glyphicon glyphicon-plus" aria-hidden="true" onclick="add_product_up('.$data->id.','.Yii::$app->session->get('id_doc_create_f').')"></span>';
                             }
                         ],
 //                            ['class' => 'yii\grid\ActionColumn'],
@@ -313,3 +273,28 @@ use yii\web\JsExpression;
 
     </div>
 </div>
+
+<script>
+    $(document).ready(function() {
+
+
+
+        $.getJSON('/api/get_category1',function (data) {
+            $('#tree_cat').treeview({data: data});
+        });
+
+        $(document).on('click','.node-tree_cat',function () {
+            console.log( $('#tree_cat').treeview('getSelected'));
+            var select_el = $('#tree_cat').treeview('getSelected');
+            if (select_el.length){
+                console.log('ok',select_el[0].cat_id);
+                console.log('ok');
+                $.pjax.defaults.timeout = false;
+                $.pjax.reload({container: "#admin-crud-id", url: "/admin/document/update?id=<?=$_GET['id']?>&cat_id="+select_el[0].cat_id});
+            }else{
+                console.log('err')
+            }
+        });
+
+    });
+</script>
