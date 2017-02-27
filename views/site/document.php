@@ -10,7 +10,9 @@ use yii\web\JsExpression;
  * Date: 20.02.2017
  * Time: 12:24
  */
-$this->title = 'Создание cчет на оплату № '. $document->id .' от "' . Yii::$app->formatter->asDate(time()).'"';
+$id_doc = ($document->nomber_1c) ? $document->nomber_1c : $document->id;
+
+$this->title = 'Счет на оплату № '. $id_doc .' от ' . Yii::$app->formatter->asDate($document->data_document);
 ?>
 
 <div class="pages-index">
@@ -73,8 +75,6 @@ $this->title = 'Создание cчет на оплату № '. $document->id 
   <?= $form->field($document, 'id')->textInput(['maxlength' => true, 'disabled'=>true]) ?>
   <?= $form->field($document, 'id')->hiddenInput()->label(false) ?>
 
-  <?= $form->field($document, 'nomber_1c')->textInput(['maxlength' => true, 'disabled'=>true]) ?>
-
   <?= $form->field($document, 'status_id')->textInput(['maxlength' => true, 'disabled'=>true]) ?>
   <?= $form->field($document, 'data_document')->textInput(['maxlength' => true, 'disabled'=>true]) ?>
     <div class="row">
@@ -85,7 +85,7 @@ $this->title = 'Создание cчет на оплату № '. $document->id 
             echo $form->field($document, 'partner_id')->widget(Select2::classname(), [
                 'initValueText' => $cusName, // set the initial display text
 //                'pluginLoading' => false,
-                'disabled' => true,
+                'disabled' => !Yii::$app->user->isGuest,
                 'options' => ['placeholder' => 'Search for ...','id'=>'select2partner'],
                 'pluginOptions' => [
                     'allowClear' => true,
@@ -107,6 +107,7 @@ $this->title = 'Создание cчет на оплату № '. $document->id 
             ?>
             <?php \yii\widgets\Pjax::end()?>
         </div>
+        <?php if (Yii::$app->user->isGuest){?>
         <div class="col-md-2">
             <div class="form-group" style="padding-top: 24px">
                 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
@@ -114,6 +115,7 @@ $this->title = 'Создание cчет на оплату № '. $document->id 
                 </button>
             </div>
         </div>
+        <?php }?>
     </div>
 
     <?php
@@ -141,13 +143,19 @@ $this->title = 'Создание cчет на оплату № '. $document->id 
             'columns' => [
 
                 ['class' => 'yii\grid\SerialColumn'],
-
+                [
+                    'class' => 'yii\grid\CheckboxColumn',
+                    // you may configure additional properties here
+                    'checkboxOptions'=>['class'=>'checkboxes', 'onclick'=>'show_delete_bt()'],
+                    'footer'=>'<button type="button" id="delete_prod" onclick="delete_products()" class="btn btn-primary" >Удалить</button>'
+                ],
 //                'id',
     //            'product_id',
 
                 [
     //                'label' => 'Сума',
                     'attribute' => 'product.name',
+                    'footer'=>'<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myTovar">Добавить продукт</button>'
                 ],
                 'quantity',
 //                'price',
@@ -165,12 +173,7 @@ $this->title = 'Создание cчет на оплату № '. $document->id 
                     },
                     'footer' => $document->total ? 'Общая сумма: '.$document->total : '',
                 ],
-                [
-                    'class' => 'yii\grid\CheckboxColumn',
-                    // you may configure additional properties here
-                    'checkboxOptions'=>['id'=>'checkboxes'],
-                    'footer'=>'<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myTovar">Добавить продукт</button> <button type="button" id="delete_prod" onclick="delete_products()" style="display:none;" class="btn btn-primary" >Удалить</button>'
-                ],
+
                 /*[
                     'label'=>'',
                     'content'=>function($data){
@@ -214,6 +217,8 @@ $this->title = 'Создание cчет на оплату № '. $document->id 
                             </div>
                         </div>
 
+                        <?= $form->field($kontrahent, 'email')->textInput() ?>
+
                         <?= $form->field($kontrahent, 'KPP')->textInput() ?>
 
                         <?= $form->field($kontrahent, 'name')->textInput(['maxlength' => true]) ?>
@@ -229,6 +234,9 @@ $this->title = 'Создание cчет на оплату № '. $document->id 
                         ]) ?>
 
                         <?= $form->field($kontrahent, 'bik')->textInput(['maxlength' => true]) ?>
+
+                        <p>кор. счет: <span id="ks"></span></p>
+                        <p>Наименоание банка: <span id="name_bank"></span></p>
 
                         <?= $form->field($kontrahent, 'payment_account')->textInput(['maxlength' => true]) ?>
 

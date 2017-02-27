@@ -15,11 +15,13 @@ class DocumentSearch extends Document
     /**
      * @inheritdoc
      */
+    public $partner_name;
+
     public function rules()
     {
         return [
-            [['id', 'partner_id', 'company_id', 'total', 'paid', 'status_id'], 'integer'],
-            [['data_document', 'nomber_1c', 'delivery_address', 'note'], 'safe'],
+            [['id', 'partner_id', 'company_id', 'paid', 'status_id'], 'integer'],
+            [['data_document', 'nomber_1c','partner_name', ], 'safe'],
         ];
     }
 
@@ -41,7 +43,7 @@ class DocumentSearch extends Document
      */
     public function search($params)
     {
-        $query = Document::find();
+        $query = Document::find()->joinWith('partner');
 
         // add conditions that should always apply here
 
@@ -61,16 +63,18 @@ class DocumentSearch extends Document
         $query->andFilterWhere([
             'id' => $this->id,
             'data_document' => $this->data_document,
-            'partner_id' => $this->partner_id,
+//            'partner_id' => $this->partner_id,
             'company_id' => $this->company_id,
-            'total' => $this->total,
+//            'total' => $this->total,
             'paid' => $this->paid,
             'status_id' => $this->status_id,
         ]);
 
         $query->andFilterWhere(['like', 'nomber_1c', $this->nomber_1c])
-            ->andFilterWhere(['like', 'delivery_address', $this->delivery_address])
-            ->andFilterWhere(['like', 'note', $this->note]);
+            ->andFilterWhere(['like', 'prefix_partner.name', $this->partner_id]);
+//            ->andFilterWhere(['like', 'note', $this->note]);
+
+        $query->orderBy(['id'=>SORT_DESC]);
 
         return $dataProvider;
     }

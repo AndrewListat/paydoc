@@ -1,7 +1,7 @@
 <?php
 
 namespace app\modules\ls_admin\controllers;
-
+Yii::$app->session->set('id_doc_create', false);
 use app\modules\ls_admin\models\User;
 use Yii;
 use app\modules\ls_admin\models\Partner;

@@ -29,6 +29,8 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'mail_address')->textInput() ?>
 
+    <?= $form->field($model, 'email')->textInput() ?>
+
     <?= $form->field($model, 'tel')->textInput(['maxlength' => true])->widget(\yii\widgets\MaskedInput::className(),[
         'mask' => '(999) 999-9999'
     ]) ?>

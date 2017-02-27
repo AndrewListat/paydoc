@@ -14,6 +14,7 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
+
 /**
  * DocumentController implements the CRUD actions for Document model.
  */
@@ -50,9 +51,10 @@ class DocumentController extends Controller
      */
     public function actionIndex()
     {
+        Yii::$app->session->set('id_doc_create', false);
         $searchModel = new DocumentSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-        $dataProvider->sort=false;
+//        $dataProvider->sort=false;
 
         return $this->render('index', [
             'searchModel' => $searchModel,
@@ -133,7 +135,7 @@ class DocumentController extends Controller
         }
 
 
-        return $this->render('update',[
+        return $this->render('../default/document',[
             'document' => $document,
             'kontrahent' => $kontrahent,
             'documentItems' => $documentItems,

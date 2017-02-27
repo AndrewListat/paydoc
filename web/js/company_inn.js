@@ -1,11 +1,61 @@
 $(document).ready(function() {
 
-    $('#partner-inn').bind('paste', function (e) {
+    $('#partner-inn').on('paste', function (e) {
         console.log(e.originalEvent.clipboardData)
         console.log(e.originalEvent.clipboardData.getData('text').replace(/\s/g, ""));
         // e.originalEvent.clipboardData.setData('text', e.originalEvent.clipboardData.getData('text').replace(/\s/g, ""));
 
         // setTimeout(seveValue(e.originalEvent.clipboardData.getData('text')), 5000);
+        $('#btn_inn').prop('disabled', false);
+        var $this = $(this);
+        setTimeout(function () {
+            $this.val($this.val().replace(/[^0-9]/g, ''));
+            var promise = dadata_request($this.val());
+            promise
+                .done(function(response) {
+                    console.log(response);
+                    if (response.suggestions.length === 0) {
+                        swal(
+                            'По данному ИНН информации, не найдено!',
+                            '',
+                            'error'
+                        )
+                    }else {
+                        var party = response.suggestions[0].data;
+                        $('#partner-kpp').val(party.kpp);
+                        $("#partner-name").val(party.name.full_with_opf);
+                        $("#partner-business_address").val(party.address.value);
+                        $("#partner-mail_address").val(party.address.value);
+                    }
+
+                })
+                .fail(function(jqXHR, textStatus, errorThrown) {
+                    console.log(textStatus);
+                    console.log(errorThrown);
+                    swal(
+                        'По данному ИНН информации, не найдено!!',
+                        '',
+                        'error'
+                    )
+                });
+        }, 5);
+    });
+
+    $('#partner-bik').on('paste', function (e) {
+        console.log(e.originalEvent.clipboardData)
+        console.log(e.originalEvent.clipboardData.getData('text').replace(/\s/g, ""));
+        var $this = $(this);
+        setTimeout(function () {
+            $this.val($this.val().replace(/[^0-9]/g, ''));
+            if($this.val()){
+                $.post('/api/get_bank',{bik: $this.val()},function (res) {
+                    if (res.status){
+                        $('#ks').text(res.results.kor_rah);
+                        $('#name_bank').text(res.results.name_bank);
+                    }
+                })
+            }
+        }, 5);
     });
 
     $('#partner-inn').keyup(function () {
@@ -24,14 +74,13 @@ function seveValue(str) {
 }
 
 function search_company() {
-    console.log($('#partner-inn').val());
     var promise = dadata_request($('#partner-inn').val());
     promise
         .done(function(response) {
             console.log(response);
             if (response.suggestions.length === 0) {
                 swal(
-                    'Ничево не найдено!',
+                    'По данному ИНН информации, не найдено!',
                     '',
                     'error'
                 )
@@ -40,6 +89,7 @@ function search_company() {
                 $('#partner-kpp').val(party.kpp);
                 $("#partner-name").val(party.name.full_with_opf);
                 $("#partner-business_address").val(party.address.value);
+                $("#partner-mail_address").val(party.address.value);
             }
 
         })
@@ -47,7 +97,7 @@ function search_company() {
             console.log(textStatus);
             console.log(errorThrown);
             swal(
-                'Ничево не найдено!',
+                'По данному ИНН информации, не найдено!!',
                 '',
                 'error'
             )

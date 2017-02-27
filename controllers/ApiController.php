@@ -12,6 +12,7 @@ use app\modules\ls_admin\models\DocumentItem;
 use app\modules\ls_admin\models\LoginForm;
 use app\modules\ls_admin\models\Partner;
 use app\modules\ls_admin\models\RegForm;
+use app\modules\ls_admin\models\UiBanks;
 use app\modules\ls_admin\models\User;
 use kartik\mpdf\Pdf;
 use Yii;
@@ -74,7 +75,7 @@ class ApiController extends Controller{
             $documentItem->order_id = $_POST['doc_id'];
             $documentItem->product_id=$_POST['id'];
             $documentItem->quantity=$_POST['count'];
-            $documentItem->price = 5;
+            $documentItem->price = $_POST['price'];
             if ($documentItem->save())
                 return true;
             else
@@ -210,7 +211,7 @@ class ApiController extends Controller{
         $model->lastname = 'Surname'.$user->name;
         $model->password = Yii::$app->getSecurity()->generateRandomString(5);
         $model->login = 'User_'.time();
-        $model->email = $user->mail_address;
+        $model->email = $user->email;
         $model->role = 'user';
         $model->partner_id = $user->id;
         if ( $model->validate()):
@@ -224,6 +225,18 @@ class ApiController extends Controller{
 
     public function actionGet_partner_create(){
         return Yii::$app->session->get('savePartner');
+    }
+
+    public function actionGet_bank(){
+        \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+        $out = ['status'=>false, 'results' => ['kor_rah' => '', 'name_bank' => '']];
+
+        $bank = UiBanks::findOne(['bik'=>$_POST['bik']]);
+        if ($bank){
+            $out = ['status'=>true, 'results' => ['kor_rah' => $bank->ks, 'name_bank' => $bank->name]];
+        }
+
+        return $out;
     }
 
 }

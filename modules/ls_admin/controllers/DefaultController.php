@@ -2,6 +2,7 @@
 
 namespace app\modules\ls_admin\controllers;
 
+use app\modules\ls_admin\models\Company;
 use app\modules\ls_admin\models\Document;
 use app\modules\ls_admin\models\DocumentItem;
 use app\modules\ls_admin\models\DocumentItemSearch;
@@ -20,6 +21,7 @@ class DefaultController extends Controller
     public $layout = 'admin';
     public function actionIndex()
     {
+        Yii::$app->session->set('id_doc_create', false);
         if (!\Yii::$app->user->isGuest) {
             return $this->redirect(['/admin/document/index']);
 //            return $this->render('index');
@@ -100,7 +102,7 @@ class DefaultController extends Controller
         return $this->redirect(['/admin/signin']);
     }
 
-    public function actionDocument()
+    public function actionDocument1()
     {
         $document = new Document();
         $document->status_id=0;
@@ -136,6 +138,95 @@ class DefaultController extends Controller
                 if ($document->save()){
                     DocumentItem::updateAll(['order_id' => $document->id], ['order_id' => 0-Yii::$app->user->id]);
                     return $this->redirect('document/index');
+                }
+        }
+
+
+        return $this->render('document',[
+            'document' => $document,
+            'kontrahent' => $kontrahent,
+            'documentItems' => $documentItems,
+            'documentItemsDataProvider' => $documentItemsDataProvider,
+            'productSearch' => $productSearch,
+            'productDataProvider' => $productDataProvider,
+        ]);
+    }
+    public function actionDocument()
+    {
+        if ($_POST){
+            if(Yii::$app->session->get('id_doc_create')){
+                $document = Document::findOne(Yii::$app->session->get('id_doc_create'));
+                $document->load(Yii::$app->request->post());
+            }else{
+                $document = Document::findOne($_POST['Document']['id']);
+                $document->load(Yii::$app->request->post());
+            }
+
+        } else {
+            if (Yii::$app->session->get('id_doc_create')){
+                $document = Document::findOne(Yii::$app->session->get('id_doc_create'));
+            } else {
+                $company = Company::find()->one();
+                $document = new Document();
+                $document->status_id = 1;
+                $document->paid = 0;
+                $document->total = 0;
+                if ($company)
+                    $document->company_id = $company->id;
+                else
+                    $document->company_id = 0;
+                $document->partner_id = 0;
+                $document->save();
+                Yii::$app->session->set('id_doc_create', $document->id);
+            }
+        }
+
+        if (!Yii::$app->user->isGuest){
+            $document->partner_id = Yii::$app->user->identity['partner_id'];
+        }else{
+            $document->partner_id = null;
+        }
+
+        $kontrahent = new Partner();
+
+        $documentItems = new DocumentItemSearch(['order_id'=>$document->id]);
+        $documentItemsDataProvider = $documentItems->search(Yii::$app->request->queryParams);
+
+        $temp = DocumentItem::findAll(['order_id'=> $document->id]);
+
+        foreach ($temp as $item){
+            $document->total += $item->price * $item->quantity;
+        }
+
+        if (isset($_POST['add_partner'])){
+            if ($kontrahent->load(Yii::$app->request->post()))
+                if ($kontrahent->save()){
+                    $document->partner_id = $kontrahent->id;
+                    Yii::$app->session->set('savePartner',true);
+                }else{
+                    Yii::$app->session->set('savePartner',false);
+                }
+        }
+
+        $productSearch = new ProductSearch();
+        $productDataProvider = $productSearch->search(Yii::$app->request->queryParams);
+
+        if (isset($_POST['add_document'])){
+            if ($document->load(Yii::$app->request->post()))
+                if ($document->save()){
+//                    DocumentItem::updateAll(['order_id' => $document->id], ['order_id' => 0-Yii::$app->user->id]);
+//                    return $this->redirect('/index');
+
+                    switch ($_POST['add_document']){
+                        case 'act_b':
+                            $this->redirect('/api/doc_pdf?id='.$document->id.'&type=act_b');
+                            break;
+                        case 'dohovor_b':
+                            $this->redirect('/api/doc_pdf?id='.$document->id.'&type=dohovor_b');
+                            break;
+                    }
+                    Yii::$app->session->set('id_doc_create', false);
+
                 }
         }
 

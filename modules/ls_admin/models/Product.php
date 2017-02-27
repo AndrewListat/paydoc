@@ -16,6 +16,7 @@ use Yii;
  * @property string $date_modified
  * @property string $note
  * @property integer $service
+ * @property integer $onlyAdmin
  */
 class Product extends \yii\db\ActiveRecord
 {
@@ -34,7 +35,7 @@ class Product extends \yii\db\ActiveRecord
     {
         return [
             [['name', 'sky', 'group', 'unit', 'note', 'service'], 'required'],
-            [['group', 'service'], 'integer'],
+            [['group', 'service','onlyAdmin'], 'integer'],
             [['date_added', 'date_modified'], 'safe'],
             [['note'], 'string'],
             [['name'], 'string', 'max' => 256],
@@ -58,6 +59,7 @@ class Product extends \yii\db\ActiveRecord
             'date_modified' => 'Дата модификации',
             'note' => 'Описание',
             'service' => 'Service',
+            'onlyAdmin ' => 'onlyAdmin ',
         ];
     }
 

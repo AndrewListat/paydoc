@@ -18,17 +18,22 @@ Yii::$app->formatter->locale = 'ru-RU';
     <!-- <p>
         <?php /*Html::a('Create Document', ['create'], ['class' => 'btn btn-success']) */?>
     </p>-->
-    <a href="/document" class="btn btn-primary">Создать самостоятельно счет на оплату</a>
+    <a href="/document" class="btn btn-primary">Выставить новый счет</a>
     <div class="box">
         <?= GridView::widget([
             'dataProvider' => $dataProvider,
+            'rowOptions' => function ($model, $key, $index, $grid){
+                return [
+                    'ondblclick'=>'window.location = "/document_view?id='.$model->id.'"',
+                ];
+            },
 //        'filterModel' => $searchModel,
 //        'showFooter'=>TRUE,
             'columns' => [
-                ['class' => 'yii\grid\SerialColumn'],
+//                ['class' => 'yii\grid\SerialColumn'],
 
                 'id',
-                'nomber_1c',
+//                'nomber_1c',
                 [
                     'label'=>'Дата документа',
                     'content'=>function($document){
@@ -58,7 +63,7 @@ Yii::$app->formatter->locale = 'ru-RU';
 //                'status_id',
                 'note:ntext',
 //            ['class' => 'yii\grid\ActionColumn'],
-                [
+                /*[
                     'class' => 'yii\grid\ActionColumn',
 //                'header'=>'Действия',
                     'template' => '{update} {delete}',
@@ -74,7 +79,7 @@ Yii::$app->formatter->locale = 'ru-RU';
                                 '/document_delete?id='.$model->id);
                         },
                     ],
-                ],
+                ],*/
             ],
         ]); ?>
     </div>

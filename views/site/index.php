@@ -15,7 +15,7 @@ $this->title = 'My Yii Application';
                 </div>
             </div>
             <button type="button" id="login_email" data-knopka="bt_email" class="btn btn-primary">Получить пароль</button>
-            <a href="/document" class="btn btn-primary">Создать самостоятельно счет на оплату</a>
+            <a href="/document" class="btn btn-primary">Выставить новый счет</a>
         </div>
         <div id="write_kod" style="display: none">
             <div class="form-group">
@@ -26,7 +26,7 @@ $this->title = 'My Yii Application';
                 </div>
             </div>
             <button type="button" id="login_kod" class="btn btn-primary">Вход</button>
-            <a href="/document" class="btn btn-primary">Создать самостоятельно счет на оплату</a>
+            <a href="/document" class="btn btn-primary">Выставить новый счет</a>
         </div>
 
     </form>

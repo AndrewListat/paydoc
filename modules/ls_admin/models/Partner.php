@@ -11,6 +11,7 @@ use Yii;
  * @property integer $INN
  * @property integer $KPP
  * @property string $name
+ * @property string $email
  * @property integer $type_partner
  * @property string $business_address
  * @property string $mail_address
@@ -35,14 +36,15 @@ class Partner extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['INN', 'name', 'type_partner', 'business_address', 'mail_address', 'tel', 'bik', 'payment_account'], 'required'],
+            [['INN', 'name', 'type_partner', 'business_address', 'mail_address','email', 'tel', 'bik', 'payment_account'], 'required'],
             [['INN', 'KPP', 'type_partner'], 'integer'],
-            [['business_address', 'mail_address', 'note'], 'string'],
+            [['business_address', 'mail_address', 'note', 'name_bank', 'kor_rah'], 'string'],
             [['name'], 'string', 'max' => 1000],
             [['tel', 'payment_account'], 'string', 'max' => 20],
             [['bik'], 'string', 'max' => 10],
-            ['mail_address', 'email'],
-            ['mail_address', 'unique', 'message' => 'Эта почта уже зарегистрирована.'],
+            ['email', 'email'],
+            ['email', 'unique', 'message' => 'Этот email уже зарегистрирован, нужно востнановить пароль на главной странице по Этому Email'],
+            ['INN', 'unique', 'message' => 'Этот INN уже зарегистрирован, нужно востнановить пароль на главной странице по Email'],
         ];
     }
 
@@ -58,7 +60,8 @@ class Partner extends \yii\db\ActiveRecord
             'name' => 'Наименование',
             'type_partner' => 'Юр. / физ. лицо',
             'business_address' => 'Юридический адрес',
-            'mail_address' => 'Email',
+            'mail_address' => 'Почтовый адрес',
+            'email' => 'Email',
             'tel' => 'Тел.',
             'bik' => 'Бик банка',
             'payment_account' => 'Расчетный счет',
@@ -74,7 +77,7 @@ class Partner extends \yii\db\ActiveRecord
                 $model->lastname = 'Last '.$this->name;
                 $model->password = Yii::$app->getSecurity()->generateRandomString(6);
                 $model->login = 'user_'.time();
-                $model->email = $this->mail_address;
+                $model->email = $this->email;
                 $model->role = 'user';
                 $model->partner_id = $this->id;
                 if ( $model->validate()):
@@ -90,7 +93,7 @@ class Partner extends \yii\db\ActiveRecord
             $model->lastname = 'Last '.$this->name;
             $model->password = Yii::$app->getSecurity()->generateRandomString(6);
             $model->login = 'user_'.time();
-            $model->email = $this->mail_address;
+            $model->email = $this->email;
             $model->role = 'user';
             $model->partner_id = $this->id;
             if ( $model->validate()):
@@ -102,7 +105,7 @@ class Partner extends \yii\db\ActiveRecord
             $model->lastname = 'Last '.$this->name;
             $model->password = Yii::$app->getSecurity()->generateRandomString(6);
             $model->login = 'user_'.time();
-            $model->email = $this->mail_address;
+            $model->email = $this->email;
             $model->role = 'user';
             $model->partner_id = $this->id;
             if ( $model->validate()):

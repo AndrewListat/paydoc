@@ -2,6 +2,8 @@
 
 namespace app\modules\ls_admin\controllers;
 
+Yii::$app->session->set('id_doc_create', false);
+
 use Yii;
 use app\modules\ls_admin\models\Company;
 use app\modules\ls_admin\models\CompanySearch;

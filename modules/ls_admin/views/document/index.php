@@ -21,29 +21,51 @@ Yii::$app->formatter->locale = 'ru-RU';
     <div class="box">
         <?= GridView::widget([
             'dataProvider' => $dataProvider,
-//        'filterModel' => $searchModel,
+        'filterModel' => $searchModel,
 //        'showFooter'=>TRUE,
+            'rowOptions' => function ($model, $key, $index, $grid){
+                return [
+                    'ondblclick'=>'window.location = "/admin/document/update?id='.$model->id.'"',
+                ];
+            },
             'columns' => [
-                ['class' => 'yii\grid\SerialColumn'],
+//                ['class' => 'yii\grid\SerialColumn'],
 
                 'id',
                 'nomber_1c',
                 [
                         'label'=>'Дата документа',
+                        'attribute'=>'data_document',
                         'content'=>function($document){
                             return Yii::$app->formatter->asDate($document->data_document);
-                        }
+                        },
+                        'filter' => \kartik\widgets\DatePicker::widget([
+                            'model' => $searchModel,
+                            'attribute' => 'data_document',
+                            'type' => \kartik\widgets\DatePicker::TYPE_INPUT,
+                            'pluginOptions' => [
+                                'autoclose'=>true,
+                                'format' => 'yyyy-mm-dd'
+                            ]
+        ]),
                 ],
-                'delivery_address:ntext',
                 [
-                    'attribute'=>'partner.name',
+                    'attribute'=>'delivery_address',
+                    'enableSorting' => false,
+                ],
+                [
+                    'attribute' => 'partner_id',
+                    'value'=>'partner.name',
                     'label'=>'Контрагент',
                 ],
                 [
                     'attribute'=>'company.name',
                     'label'=>'Организация',
                 ],
-                'total',
+                [
+                    'attribute'=> 'total',
+                    'enableSorting' => false,
+                ],
                 [
                     'label'=>'Оплачено',
                     'content'=>function($data){
@@ -51,6 +73,7 @@ Yii::$app->formatter->locale = 'ru-RU';
                     }
                 ],
                 [
+                    'attribute'=> 'status_id',
                     'label'=>'Статус',
                     'content'=>function($data){
                         if ($data->status_id == 0){
@@ -58,15 +81,21 @@ Yii::$app->formatter->locale = 'ru-RU';
                         } else {
                             return $data->status['name'];
                         }
-                    }
+                    },
+                    'filter' => \yii\helpers\ArrayHelper::map(\app\modules\ls_admin\models\StatusDocument::find()->all(), 'id', 'name'),
+
                 ],
 //                'status_id',
-                'note:ntext',
+                [
+                    'attribute'=> 'note',
+                    'enableSorting' => false,
+                ],
+
 //            ['class' => 'yii\grid\ActionColumn'],
                 [
                     'class' => 'yii\grid\ActionColumn',
 //                'header'=>'Действия',
-                    'template' => '{update} {delete}',
+                    'template' => ' {delete}',
                 ],
             ],
         ]); ?>

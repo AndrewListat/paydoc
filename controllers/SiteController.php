@@ -2,6 +2,7 @@
 
 namespace app\controllers;
 
+use app\modules\ls_admin\models\Company;
 use app\modules\ls_admin\models\Document;
 use app\modules\ls_admin\models\DocumentItem;
 use app\modules\ls_admin\models\DocumentItemSearch;
@@ -62,6 +63,8 @@ class SiteController extends Controller
             $searchModel = new DocumentSearch(['partner_id'=>Yii::$app->user->identity['partner_id']]);
             $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
             $dataProvider->sort=false;
+
+            $dataProvider->pagination->pageSize=30;
 
             return $this->render('all_document', [
                 'searchModel' => $searchModel,
@@ -157,6 +160,52 @@ class SiteController extends Controller
         ]);
     }
 
+    public function actionDocument_view($id)
+    {
+        $document = Document::findOne($id);
+
+        $kontrahent = new Partner();
+
+        $documentItems = new DocumentItemSearch(['order_id'=> $document->id]);
+        $documentItemsDataProvider = $documentItems->search(Yii::$app->request->queryParams);
+
+        $temp = DocumentItem::findAll(['order_id'=> $document->id]);
+        $document->total=0;
+        foreach ($temp as $item){
+            $document->total += $item->price * $item->quantity;
+        }
+
+        if (isset($_POST['add_partner'])){
+            if ($kontrahent->load(Yii::$app->request->post()))
+                if ($kontrahent->save()){
+                    $document->partner_id = $kontrahent->id;
+                    Yii::$app->session->set('savePartner',true);
+                }else{
+                    Yii::$app->session->set('savePartner',false);
+                }
+        }
+
+        $productSearch = new ProductSearch();
+        $productDataProvider = $productSearch->search(Yii::$app->request->queryParams);
+
+        if (isset($_POST['add_document'])){
+            if ($document->load(Yii::$app->request->post()))
+                if ($document->save()){
+                    return $this->goHome();
+                }
+        }
+
+
+        return $this->render('document_view',[
+            'document' => $document,
+            'kontrahent' => $kontrahent,
+            'documentItems' => $documentItems,
+            'documentItemsDataProvider' => $documentItemsDataProvider,
+            'productSearch' => $productSearch,
+            'productDataProvider' => $productDataProvider,
+        ]);
+    }
+
     public function actionDocument()
     {
         if ($_POST){
@@ -172,11 +221,15 @@ class SiteController extends Controller
             if (Yii::$app->session->get('id_doc_create')){
                 $document = Document::findOne(Yii::$app->session->get('id_doc_create'));
             } else {
+                $company = Company::find()->one();
                 $document = new Document();
-                $document->status_id = 0;
+                $document->status_id = 1;
                 $document->paid = 0;
                 $document->total = 0;
-                $document->company_id = 0;
+                if ($company)
+                    $document->company_id = $company->id;
+                else
+                    $document->company_id = 0;
                 $document->partner_id = 0;
                 $document->save();
                 Yii::$app->session->set('id_doc_create', $document->id);
