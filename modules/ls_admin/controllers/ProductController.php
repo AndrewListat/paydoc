@@ -1,7 +1,7 @@
 <?php
 
 namespace app\modules\ls_admin\controllers;
-Yii::$app->session->set('id_doc_create', false);
+\Yii::$app->session->set('id_doc_create', false);
 use app\modules\ls_admin\models\ProductPrice;
 use app\modules\ls_admin\models\ProductStock;
 use Yii;

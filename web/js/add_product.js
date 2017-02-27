@@ -10,6 +10,23 @@ $(document).ready(function() {
             $('#delete_prod').hide();
         })*/
 
+    /*$.getJSON('/api/get_category1',function (data) {
+        $('#tree_cat').treeview({data: data});
+    });
+
+    $(document).on('click','.node-tree_cat',function () {
+        console.log( $('#tree_cat').treeview('getSelected'));
+        var select_el = $('#tree_cat').treeview('getSelected');
+        if (select_el.length){
+            console.log('ok',select_el[0].cat_id);
+            console.log('ok');
+            $.pjax.defaults.timeout = false;
+            $.pjax.reload({container: "#admin-crud-id", url: "/api/get_products"});
+        }else{
+            console.log('err')
+        }
+    });*/
+
 });
 
 function show_delete_bt() {

@@ -17,6 +17,7 @@ use Yii;
  * @property string $note
  * @property integer $service
  * @property integer $onlyAdmin
+ * @property integer $parent_id
  */
 class Product extends \yii\db\ActiveRecord
 {
@@ -34,8 +35,8 @@ class Product extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['name', 'sky', 'group', 'unit', 'note', 'service'], 'required'],
-            [['group', 'service','onlyAdmin'], 'integer'],
+            [['name', 'sky', 'group', 'unit', 'note', 'service','parent_id'], 'required'],
+            [['group', 'service','onlyAdmin','parent_id'], 'integer'],
             [['date_added', 'date_modified'], 'safe'],
             [['note'], 'string'],
             [['name'], 'string', 'max' => 256],

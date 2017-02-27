@@ -266,6 +266,7 @@ $this->title = 'Счет на оплату № '. $id_doc .' от ' . Yii::$app-
                 <h4 class="modal-title" id="myModalLabel">Продукты</h4>
             </div>
             <div class="modal-body">
+                <div id="tree_cat"></div>
                 <?php \yii\widgets\Pjax::begin(['id' => 'admin-crud-id', 'timeout' => false,
                     'enablePushState' => false,]); ?>
 

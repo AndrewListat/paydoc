@@ -262,6 +262,7 @@ $this->title = 'Счет на оплату № '. $id_doc .' от ' . Yii::$app-
                 <h4 class="modal-title" id="myModalLabel">Продукты</h4>
             </div>
             <div class="modal-body">
+                <div id="tree_cat"></div>
                 <?php \yii\widgets\Pjax::begin(['id' => 'admin-crud-id', 'timeout' => false,
                     'enablePushState' => false,]); ?>
 
@@ -306,3 +307,28 @@ $this->title = 'Счет на оплату № '. $id_doc .' от ' . Yii::$app-
 
     </div>
 </div>
+
+<script>
+    $(document).ready(function() {
+
+
+
+         $.getJSON('/api/get_category1',function (data) {
+            $('#tree_cat').treeview({data: data});
+         });
+
+         $(document).on('click','.node-tree_cat',function () {
+             console.log( $('#tree_cat').treeview('getSelected'));
+             var select_el = $('#tree_cat').treeview('getSelected');
+             if (select_el.length){
+                 console.log('ok',select_el[0].cat_id);
+                 console.log('ok');
+                 $.pjax.defaults.timeout = false;
+                 $.pjax.reload({container: "#admin-crud-id", url: "/document?cat_id="+select_el[0].cat_id});
+             }else{
+                console.log('err')
+             }
+         });
+
+    });
+</script>

@@ -6,6 +6,12 @@ use yii\widgets\ActiveForm;
 /* @var $this yii\web\View */
 /* @var $model app\modules\ls_admin\models\Product */
 /* @var $form yii\widgets\ActiveForm */
+
+
+
+$category = \yii\helpers\ArrayHelper::map(\app\modules\ls_admin\models\Product::find()->where(['group'=>1])->all(),'id','name');
+$category[0] =  "Главная";
+
 ?>
 
 <div class="product-form">
@@ -16,7 +22,11 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'sky')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'group')->textInput() ?>
+    <?= $form->field($model, 'group')->dropDownList(['0'=>'Товар','1'=>'Категория']) ?>
+
+
+        <?= $form->field($model, 'parent_id')->hiddenInput()->label('Категория') ?>
+        <div id="tree"></div>
 
     <?= $form->field($model, 'unit')->textInput(['maxlength' => true]) ?>
 

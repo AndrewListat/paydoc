@@ -20,10 +20,12 @@ class AppAsset extends AssetBundle
     public $css = [
         'css/site.css',
         'sweetalert2/sweetalert2.css',
+        'css/bootstrap-treeview.css'
     ];
     public $js = [
         'frontend/js/login.js',
         'sweetalert2/sweetalert2.js',
+        'js/bootstrap-treeview.js',
         'js/company_inn.js',
     ];
     public $depends = [

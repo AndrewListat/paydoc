@@ -11,6 +11,7 @@ use app\modules\ls_admin\models\Document;
 use app\modules\ls_admin\models\DocumentItem;
 use app\modules\ls_admin\models\LoginForm;
 use app\modules\ls_admin\models\Partner;
+use app\modules\ls_admin\models\Product;
 use app\modules\ls_admin\models\RegForm;
 use app\modules\ls_admin\models\UiBanks;
 use app\modules\ls_admin\models\User;
@@ -18,6 +19,7 @@ use kartik\mpdf\Pdf;
 use Yii;
 use yii\db\Query;
 use yii\filters\AccessControl;
+use yii\helpers\ArrayHelper;
 use yii\web\Controller;
 use yii\filters\VerbFilter;
 
@@ -237,6 +239,91 @@ class ApiController extends Controller{
         }
 
         return $out;
+    }
+
+    public function actionGet_category(){
+        \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+        $out[] = ['text'=>'Главная', 'cat_id'=> 0, 'selectedIcon' => "glyphicon glyphicon-check", 'icon' => "glyphicon glyphicon-unchecked", 'nodes'=>[]];
+
+        $categories = Product::findAll(['group'=>1]);
+
+        $row = [];
+        foreach ($categories as $category){
+            if ($category->parent_id == 0){
+                $out[0]['nodes'][] = ['text'=>$category->name, 'cat_id'=> $category->id, 'selectedIcon' => "glyphicon glyphicon-check", 'icon' => "glyphicon glyphicon-unchecked"];
+            }else{
+                foreach ($out[0]['nodes'] as $des){
+                    if ($des['cat_id']==$category->parent_id){
+                        $rrr[] = $this->parent_cat($category->parent_id);
+                        $des['nodes'][]= ['text'=>$category->name, 'cat_id'=> $category->id, 'selectedIcon' => "glyphicon glyphicon-check", 'icon' => "glyphicon glyphicon-unchecked",'nodes'=>$rrr];
+                    }
+                }
+            }
+        }
+
+        return $out;
+    }
+
+    public function parent_cat($id){
+        $cats = Product::findAll(['id'=>$id]);
+        $array = [];
+        foreach ($cats as $cat){
+            if ($cat->parent_id == 0){
+                return ['text'=>$cat->name, 'cat_id'=> $cat->id, 'selectedIcon' => "glyphicon glyphicon-check", 'icon' => "glyphicon glyphicon-unchecked"];
+            }else{
+                $rrr[] = $this->parent_cat($cat->parent_id);
+                $array = ['text'=>$cat->name, 'cat_id'=> $cat->id, 'selectedIcon' => "glyphicon glyphicon-check", 'icon' => "glyphicon glyphicon-unchecked",'nodes'=>$rrr];
+            }
+        }
+        return $array;
+    }
+
+    public function actionGet_category1(){
+        \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+
+        $out[] = ['text'=>'Главная', 'cat_id'=> 0, 'state' => ['checked' => true] , 'selectedIcon' => "glyphicon glyphicon-check", 'icon' => "glyphicon glyphicon-unchecked", 'nodes'=>[]];
+
+
+        $out[0]['nodes'] = $this->parent_cat1(0);
+        $categories = Product::find()->select(['id','name','parent_id'])->where(['group'=>1])->orderBy(['parent_id'=>SORT_ASC])->asArray()->all();
+        $result = ArrayHelper::map($categories, 'id', 'name', 'parent_id');
+
+        /*foreach ($result as $key => $value){
+            foreach ($value as $index => $item){
+                echo $index;
+                echo $item;
+            }
+            var_dump($key);
+            var_dump($value);
+        }*/
+
+//        $this->parent_cat1(0);
+
+
+        return $out;
+
+    }
+
+    public function parent_cat1($id){
+        $categories = Product::find()->select(['id','name','parent_id'])->where(['group'=>1])->orderBy(['parent_id'=>SORT_ASC])->asArray()->all();
+
+        $result = ArrayHelper::map($categories, 'id', 'name', 'parent_id');
+
+//        var_dump($result);
+
+        $array = [];
+        if (array_key_exists($id, $result)) {
+            foreach ($result[$id] as $key => $name){
+//                var_dump($key);
+//                var_dump($name);
+                if (array_key_exists($key, $result)){
+                    $array[]= ['text'=>$name, 'cat_id'=> $key, 'selectedIcon' => "glyphicon glyphicon-check", 'icon' => "glyphicon glyphicon-unchecked",'nodes'=> $this->parent_cat1($key)];
+                } else {
+                    $array[]= ['text'=>$name, 'cat_id'=> $key, 'selectedIcon' => "glyphicon glyphicon-check", 'icon' => "glyphicon glyphicon-unchecked"];
+                }
+            }
+        }
+        return $array;
     }
 
 }

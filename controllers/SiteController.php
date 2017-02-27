@@ -263,8 +263,14 @@ class SiteController extends Controller
                 }
         }
 
-        $productSearch = new ProductSearch();
-        $productDataProvider = $productSearch->search(Yii::$app->request->queryParams);
+        if (isset($_GET['cat_id'])){
+            $productSearch = new ProductSearch(['parent_id'=>$_GET['cat_id']]);
+            $productDataProvider = $productSearch->search(Yii::$app->request->queryParams);
+        } else {
+            $productSearch = new ProductSearch(['parent_id'=>0]);
+            $productDataProvider = $productSearch->search(Yii::$app->request->queryParams);
+        }
+
 
         if (isset($_POST['add_document'])){
             if ($document->load(Yii::$app->request->post()))
