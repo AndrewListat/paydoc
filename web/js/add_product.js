@@ -2,6 +2,19 @@
  * Created by Listat on 20.02.2017.
  */
 $(document).ready(function() {
+    $("#checkboxes").change(function () {
+        var temp = false;
+        $('#checkboxes').each(function() {
+            if(this.checked){
+                temp=true;
+            }
+        });
+        if(temp)
+            $('#delete_prod').show();
+        else
+            $('#delete_prod').hide();
+
+    })
 
 });
 
@@ -28,6 +41,21 @@ function delete_product(id) {
             $.pjax.reload({container:"#productItems"});
         }
     });
+}
+
+function delete_products() {
+    var delete_p = false;
+    $('#checkboxes').each(function() {
+        if(this.checked){
+            $.post( "/api/delete_product",{ id:$(this).val() });
+            delete_p=true;
+        }
+    });
+
+    if (delete_p){
+        $.pjax.defaults.timeout = false;
+        $.pjax.reload({container:"#productItems"});
+    }
 }
 
 function add_product_up(id, doc_id) {

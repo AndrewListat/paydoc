@@ -30,6 +30,7 @@ class MainAsset extends AssetBundle
         'template_admin/assets/js/demo.js',
         'template_admin/bootstrap/js/bootstrap.min.js',
         'sweetalert2/sweetalert2.js',
+        'js/company_inn.js',
     ];
     public $depends = [
         'yii\web\YiiAsset',

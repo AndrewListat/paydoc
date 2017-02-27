@@ -18,6 +18,7 @@ Yii::$app->formatter->locale = 'ru-RU';
     <!-- <p>
         <?php /*Html::a('Create Document', ['create'], ['class' => 'btn btn-success']) */?>
     </p>-->
+    <a href="/document" class="btn btn-primary">Создать самостоятельно счет на оплату</a>
     <div class="box">
         <?= GridView::widget([
             'dataProvider' => $dataProvider,
@@ -79,11 +80,3 @@ Yii::$app->formatter->locale = 'ru-RU';
     </div>
 
 </div>
-<script>
-    function update_paid(id) {
-        var status = $('#update_paid_id_'+id).is(':checked');
-        $.post( "/api/update_paid",{ id: id, status: status }, function( data ) {
-            console.log(data)
-        });
-    }
-</script>

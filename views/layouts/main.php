@@ -27,17 +27,16 @@ AppAsset::register($this);
 <div class="wrap">
     <?php
     NavBar::begin([
-        'brandLabel' => 'My Company',
+        'brandLabel' => '',
         'brandUrl' => Yii::$app->homeUrl,
         'options' => [
             'class' => 'navbar-inverse navbar-fixed-top',
+            'style' => 'background-color: white; border-color: white;'
         ],
     ]);
     echo Nav::widget([
-        'options' => ['class' => 'navbar-nav navbar-right'],
+        'options' => ['class' => ''],
         'items' => [
-            ['label' => 'Home', 'url' => ['/site/index']],
-            ['label' => 'Создать самостоятельно счет на оплату', 'url' => ['/site/document']],
             Yii::$app->user->isGuest ? (
                 ''
             ) : (
@@ -45,7 +44,7 @@ AppAsset::register($this);
                 . Html::beginForm(['/site/logout'], 'post', ['class' => 'navbar-form'])
                 . Html::submitButton(
                     'Logout ',
-                    ['class' => 'btn btn-link']
+                    ['class' => 'btn btn-danger']
                 )
                 . Html::endForm()
                 . '</li>'
@@ -62,14 +61,6 @@ AppAsset::register($this);
         <?= $content ?>
     </div>
 </div>
-
-<footer class="footer">
-    <div class="container">
-        <p class="pull-left">&copy; My Company <?= date('Y') ?></p>
-
-        <p class="pull-right"><?= Yii::powered() ?></p>
-    </div>
-</footer>
 
 <?php $this->endBody() ?>
 </body>

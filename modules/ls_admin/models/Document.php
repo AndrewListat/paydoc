@@ -34,7 +34,7 @@ class Document extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['nomber_1c', 'delivery_address', 'partner_id', 'company_id', 'total', 'paid', 'status_id', 'note'], 'required'],
+            [[ 'partner_id', 'company_id', 'total', 'paid', 'status_id'], 'required'],
             [['data_document'], 'safe'],
             [['delivery_address', 'note'], 'string'],
             [['partner_id', 'company_id', 'total', 'paid', 'status_id'], 'integer'],
@@ -52,8 +52,8 @@ class Document extends \yii\db\ActiveRecord
             'data_document' => 'Дата',
             'nomber_1c' => 'Номер из 1С',
             'delivery_address' => 'Адрес доставки',
-            'partner_id' => 'Partner ID',
-            'company_id' => 'Company ID',
+            'partner_id' => 'Контрагент',
+            'company_id' => 'Организация',
             'total' => 'Сумма документа',
             'paid' => 'Оплачено',
             'status_id' => 'Статус',

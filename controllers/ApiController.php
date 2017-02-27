@@ -116,21 +116,43 @@ class ApiController extends Controller{
         }
     }
 
-    public function actionDoc_pdf($id){
+    public function actionDoc_pdf($id=46,$type='rah'){
+        $headers = Yii::$app->response->headers;
+        $headers->add('Content-Type', 'application/pdf');
 
         $document = Document::findOne($id);
 
-        $content = $this->renderPartial('pdf',[
-            'document'=>$document,
-        ]);
+        $filename = '';
+
+        $orint = true;
+
+        switch ($type){
+            case 'act_b':
+                $content = $this->renderPartial('pdf_act_b',[
+                    'document'=>$document,
+                ]);
+                $orint = true;
+                $filename = 'Акт о передачи права без печати № '. $document->id .' от '. Yii::$app->formatter->asDate($document->data_document).'.pdf';
+                break;
+            case 'rah':
+                $orint = false;
+                $content = $this->renderPartial('pdf_rah',[
+                    'document'=>$document,
+                ]);
+                $filename = 'Акт о передачи права без печати № '. $document->id .' от '. Yii::$app->formatter->asDate($document->data_document).'.pdf';
+                break;
+        }
+
+
         $pdf = new Pdf([
-            'filename'=>'Счет на оплату № '. $document->id .' от "' . Yii::$app->formatter->asDate($document->data_document).'".pdf',
+            'filename'=>$filename,
             // set to use core fonts only
             'mode' => Pdf::MODE_UTF8,
             // A4 paper format
             'format' => Pdf::FORMAT_A4,
             // portrait orientation
-            'orientation' => Pdf::ORIENT_PORTRAIT,
+//            'orientation' => Pdf::ORIENT_PORTRAIT,
+            'orientation' => ($orint) ? Pdf::ORIENT_LANDSCAPE : Pdf::ORIENT_PORTRAIT,
             // stream to browser inline
             'destination' => Pdf::DEST_DOWNLOAD,
             // your html content input
@@ -140,12 +162,7 @@ class ApiController extends Controller{
             'cssFile' => '@vendor/kartik-v/yii2-mpdf/assets/kv-mpdf-bootstrap.min.css',
             //'cssFile' => '@web/frontend/css/main.css',
             // any css to be embedded if required
-            'cssInline' => '.sum_param{color: #a9a9a9;
-                                        float: left;
-                                        font-size: 15px;
-                                        line-height: 15px;
-                                        margin: 0 2% 20px 0;
-                                        width: 30%;}',
+            'cssInline' => '.img_p{position: absolute;left: 0; top: 0;}',
             // set mPDF properties on the fly
             //'options' => ['title' => 'Krajee Report Title'],
             // call mPDF methods on the fly

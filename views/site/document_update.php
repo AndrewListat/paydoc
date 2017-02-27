@@ -14,21 +14,6 @@ Yii::$app->formatter->locale = 'ru-RU';
 
 $this->title = 'Счет на оплату № '. $document->id .' от "' . Yii::$app->formatter->asDate($document->data_document).'"';
 
-$this->registerJs(
-    '$("document").ready(function(){
-            $("#new_partner").on("pjax:end", function() {
-            $.pjax.defaults.timeout = false;
-            $.pjax.reload({container:"#partnerId"});
-            $(\'#myModal\').modal("hide");
-//            $("#agenda-prospect_id").select2("data", {id: results.prospect_id, text: results.prospect_nome});
-            swal(
-              \'Контрагент создан!!\',
-              \'\',
-              \'success\'
-            )
-        });
-    });'
-);
 ?>
 <div class="row">
     <div class="col-md-7">

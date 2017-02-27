@@ -35,7 +35,7 @@ class Partner extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['INN', 'KPP', 'name', 'type_partner', 'business_address', 'mail_address', 'tel', 'bik', 'payment_account', 'note'], 'required'],
+            [['INN', 'name', 'type_partner', 'business_address', 'mail_address', 'tel', 'bik', 'payment_account'], 'required'],
             [['INN', 'KPP', 'type_partner'], 'integer'],
             [['business_address', 'mail_address', 'note'], 'string'],
             [['name'], 'string', 'max' => 1000],
@@ -58,7 +58,7 @@ class Partner extends \yii\db\ActiveRecord
             'name' => 'Наименование',
             'type_partner' => 'Юр. / физ. лицо',
             'business_address' => 'Юридический адрес',
-            'mail_address' => 'Почтовый адрес',
+            'mail_address' => 'Email',
             'tel' => 'Тел.',
             'bik' => 'Бик банка',
             'payment_account' => 'Расчетный счет',

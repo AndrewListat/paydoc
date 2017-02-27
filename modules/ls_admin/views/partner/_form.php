@@ -14,6 +14,11 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'INN')->textInput() ?>
 
+    <button id="btn_inn" type="button" disabled="disabled" onclick="search_company()" class="btn btn-info">
+        <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+        <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+    </button>
+
     <?= $form->field($model, 'KPP')->textInput() ?>
 
     <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>

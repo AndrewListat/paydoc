@@ -55,6 +55,7 @@ class SiteController extends Controller
 
     public function actionIndex()
     {
+        Yii::$app->session->set('id_doc_create', false);
         if(Yii::$app->user->isGuest)
             return $this->render('index');
         else{
@@ -129,7 +130,9 @@ class SiteController extends Controller
             if ($kontrahent->load(Yii::$app->request->post()))
                 if ($kontrahent->save()){
                     $document->partner_id = $kontrahent->id;
-                    Yii::$app->session->setFlash('modalKontrahent');
+                    Yii::$app->session->set('savePartner',true);
+                }else{
+                    Yii::$app->session->set('savePartner',false);
                 }
         }
 
@@ -156,23 +159,43 @@ class SiteController extends Controller
 
     public function actionDocument()
     {
-        $document = new Document();
-        $document->status_id=0;
-        $document->paid=0;
+        if ($_POST){
+            if(Yii::$app->session->get('id_doc_create')){
+                $document = Document::findOne(Yii::$app->session->get('id_doc_create'));
+                $document->load(Yii::$app->request->post());
+            }else{
+                $document = Document::findOne($_POST['Document']['id']);
+                $document->load(Yii::$app->request->post());
+            }
 
+        } else {
+            if (Yii::$app->session->get('id_doc_create')){
+                $document = Document::findOne(Yii::$app->session->get('id_doc_create'));
+            } else {
+                $document = new Document();
+                $document->status_id = 0;
+                $document->paid = 0;
+                $document->total = 0;
+                $document->company_id = 0;
+                $document->partner_id = 0;
+                $document->save();
+                Yii::$app->session->set('id_doc_create', $document->id);
+            }
+        }
 
         if (!Yii::$app->user->isGuest){
             $document->partner_id = Yii::$app->user->identity['partner_id'];
+        }else{
+            $document->partner_id = null;
         }
 
         $kontrahent = new Partner();
 
-        $documentItems = new DocumentItemSearch(['order_id'=> 0-Yii::$app->user->id]);
+        $documentItems = new DocumentItemSearch(['order_id'=>$document->id]);
         $documentItemsDataProvider = $documentItems->search(Yii::$app->request->queryParams);
 
-        $temp = DocumentItem::findAll(['order_id'=> 0-Yii::$app->user->id]);
+        $temp = DocumentItem::findAll(['order_id'=> $document->id]);
 
-        $document->total=0;
         foreach ($temp as $item){
             $document->total += $item->price * $item->quantity;
         }
@@ -193,8 +216,19 @@ class SiteController extends Controller
         if (isset($_POST['add_document'])){
             if ($document->load(Yii::$app->request->post()))
                 if ($document->save()){
-                    DocumentItem::updateAll(['order_id' => $document->id], ['order_id' => 0-Yii::$app->user->id]);
-                    return $this->redirect('/index');
+//                    DocumentItem::updateAll(['order_id' => $document->id], ['order_id' => 0-Yii::$app->user->id]);
+//                    return $this->redirect('/index');
+
+                    switch ($_POST['add_document']){
+                        case 'act_b':
+                            $this->redirect('/api/doc_pdf?id='.$document->id.'&type=act_b');
+                            break;
+                        case 'dohovor_b':
+                            $this->redirect('/api/doc_pdf?id='.$document->id.'&type=dohovor_b');
+                            break;
+                    }
+                    Yii::$app->session->set('id_doc_create', false);
+
                 }
         }
 

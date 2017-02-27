@@ -24,6 +24,7 @@ class AppAsset extends AssetBundle
     public $js = [
         'frontend/js/login.js',
         'sweetalert2/sweetalert2.js',
+        'js/company_inn.js',
     ];
     public $depends = [
         'yii\web\YiiAsset',
