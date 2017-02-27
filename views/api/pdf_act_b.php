@@ -552,5 +552,6 @@
         </div>
     </div>
 </div>
-
-<!--<img style="position: absolute; left: 0; top: 0; width: 150px" class="img_p"  src="/images/pechat.png">-->
+<?php if($image){?>
+    <img style="position: absolute; right: 0; width: 150px" class="img_p"  src="/images/pechat.png">
+<?php } ?>

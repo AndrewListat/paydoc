@@ -14,6 +14,7 @@ use yii\bootstrap\Html;
         'style'=>'margin: 5px; border:0',
         'name'=>'add_document',
         'data-toggle'=>'tooltip',
+        'value'=>'rah_b',
     ]);?>
     <?php echo Html::submitButton('<img class="left" width="48px" src="/images/filetype_pdf.png" /><p>Акт о передачи<br> права без печати</p>', [
         'class'=>'btn btn-default pull-right',
@@ -36,6 +37,7 @@ use yii\bootstrap\Html;
         'style'=>'margin: 5px; border:0',
         'name'=>'add_document',
         'data-toggle'=>'tooltip',
+        'value'=>'rah_z',
     ]);?>
     <?php echo Html::submitButton('<img class="left" width="48px" src="/images/filetype_pdf.png" /><p>Акт о передачи<br> права с печать</p>',  [
         'class'=>'btn btn-default pull-right',

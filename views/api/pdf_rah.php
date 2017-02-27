@@ -175,5 +175,7 @@
         <div class="col-xs-2 col-sm-2 col-md-2" style="margin: 0; margin-left: 5px; padding: 0"><strong>Заказчик</strong></div>
         <div class="col-xs-4 col-sm-4 col-md-4" style="border-bottom: 1px solid black;margin: 0; padding: 0"><br></div>
     </div>
-
+    <?php if($image){?>
+        <img style="position: absolute; right: 0; width: 150px" class="img_p"  src="/images/pechat.png">
+    <?php } ?>
 </div>
