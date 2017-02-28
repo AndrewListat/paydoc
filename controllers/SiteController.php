@@ -175,22 +175,12 @@ class SiteController extends Controller
             $document->total += $item->price * $item->quantity;
         }
 
-        if (isset($_POST['add_partner'])){
-            if ($kontrahent->load(Yii::$app->request->post()))
-                if ($kontrahent->save()){
-                    $document->partner_id = $kontrahent->id;
-                    Yii::$app->session->set('savePartner',true);
-                }else{
-                    Yii::$app->session->set('savePartner',false);
-                }
-        }
+
 
         $productSearch = new ProductSearch();
         $productDataProvider = $productSearch->search(Yii::$app->request->queryParams);
 
         if (isset($_POST['add_document'])){
-            if ($document->load(Yii::$app->request->post()))
-                if ($document->save()){
                     switch ($_POST['add_document']){
                         case 'act_b':
                             $this->redirect('/api/doc_pdf?id='.$document->id.'&type=act_b');
@@ -214,7 +204,7 @@ class SiteController extends Controller
                             return $this->goHome();
                     }
 
-                }
+
         }
 
 
