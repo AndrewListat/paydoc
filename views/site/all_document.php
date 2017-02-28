@@ -24,7 +24,7 @@ Yii::$app->formatter->locale = 'ru-RU';
             'dataProvider' => $dataProvider,
             'rowOptions' => function ($model, $key, $index, $grid){
                 return [
-                    'ondblclick'=>'window.location = "/document_update?id='.$model->id.'"',
+                    'ondblclick'=>'window.location = "/document_view?id='.$model->id.'"',
                 ];
             },
 //        'filterModel' => $searchModel,

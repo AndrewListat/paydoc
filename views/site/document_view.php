@@ -21,22 +21,33 @@ $this->title = 'Счет на оплату № '. $id_doc .' от ' . Yii::$app-
 ?>
 
 
-
+<h3><?= Html::encode($this->title) ?></h3>
 
 
 <div class="pages-index">
     <?php $form = ActiveForm::begin(); ?>
     <div class="row">
         <div class="col-md-7">
-            <h3><?= Html::encode($this->title) ?></h3>
+            <?= ($document->nomber_1c) ? $form->field($document, 'nomber_1c')->textInput(['maxlength' => true,'disabled'=>true]) : $form->field($document, 'id')->textInput(['maxlength' => true,'disabled'=>true]) ?>
+            <?= $form->field($document, 'status_id')->dropDownList(\yii\helpers\ArrayHelper::map(\app\modules\ls_admin\models\StatusDocument::find()->all(),'id','name'),['disabled'=>true]) ?>
+            <?= $form->field($document, 'data_document')->textInput(['maxlength' => true, 'disabled'=>true]) ?>
         </div>
         <div class="col-md-5">
             <?=\app\widgets\ButtonPdfWidget::widget()?>
         </div>
     </div>
 
-    <?= ($document->nomber_1c) ? $form->field($document, 'nomber_1c')->textInput(['maxlength' => true,'disabled'=>true]) : $form->field($document, 'id')->textInput(['maxlength' => true,'disabled'=>true]) ?>
 
+    <?php
+    echo $form->field($document, 'company_id')->widget(Select2::classname(), [
+        'data' => \yii\helpers\ArrayHelper::map(\app\modules\ls_admin\models\Company::find()->all(),'id','name'),
+        'options' => ['placeholder' => 'Select ...'],
+        'disabled'=>true,
+        'pluginOptions' => [
+            'allowClear' => true
+        ],
+    ])->label('Организация');
+    ?>
 
     <div class="row">
         <div class="col-md-12">
@@ -69,18 +80,9 @@ $this->title = 'Счет на оплату № '. $id_doc .' от ' . Yii::$app-
         </div>
     </div>
 
-    <?php
-    echo $form->field($document, 'company_id')->widget(Select2::classname(), [
-        'data' => \yii\helpers\ArrayHelper::map(\app\modules\ls_admin\models\Company::find()->all(),'id','name'),
-        'options' => ['placeholder' => 'Select ...'],
-        'disabled'=>true,
-        'pluginOptions' => [
-            'allowClear' => true
-        ],
-    ])->label('Организация');
-    ?>
 
-    <?= $form->field($document, 'status_id')->textInput(['disabled'=>true]) ?>
+
+
 
     <div class="box">
         <?php \yii\widgets\Pjax::begin(['id' => 'productItems','timeout' => false, 'enablePushState' => false,]); ?>

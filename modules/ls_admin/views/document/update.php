@@ -23,20 +23,36 @@ $this->title = 'Счет на оплату № '. $id_doc .' от ' . Yii::$app-
 
     <div class="row">
         <div class="col-md-7">
-            <?= $form->field($document, 'id')->textInput(['maxlength' => true, 'disabled'=>true]) ?>
-            <?= $form->field($document, 'id')->hiddenInput()->label(false) ?>
+            <?= $form->field($document, 'id')->textInput() ?>
 
             <?= $form->field($document, 'paid')->checkbox() ?>
 
             <?= $form->field($document, 'status_id')->dropDownList(\yii\helpers\ArrayHelper::map(\app\modules\ls_admin\models\StatusDocument::find()->all(),'id','name')) ?>
 
-            <?= $form->field($document, 'data_document')->textInput(['maxlength' => true, 'disabled'=>true]) ?>
+            <?= $form->field($document, 'data_document')->textInput()->widget(\kartik\date\DatePicker::className(),[
+                'type' => \kartik\widgets\DatePicker::TYPE_INPUT,
+                'pluginOptions' => [
+                    'autoclose'=>true,
+                    'format' => 'yyyy-mm-dd'
+                ]
+            ])  ?>
         </div>
         <div class="col-md-5">
             <?=\app\widgets\ButtonPdfWidget::widget()?>
         </div>
     </div>
 
+
+    <?php
+    //        echo $form->field($document, 'company_id')->widget(Select2::classname(), [
+    //          'data' => \yii\helpers\ArrayHelper::map(\app\modules\ls_admin\models\Company::find()->all(),'id','name'),
+    //          'options' => ['placeholder' => 'Select ...'],
+    ////          'pluginOptions' => [
+    ////            'allowClear' => true
+    ////          ],
+    //        ])->label('Организация');
+    echo $form->field($document, 'company_id')->dropDownList(\yii\helpers\ArrayHelper::map(\app\modules\ls_admin\models\Company::find()->all(),'id','name'))->label('Организация');
+    ?>
 
     <div class="row">
         <div class="col-md-10">
@@ -78,16 +94,7 @@ $this->title = 'Счет на оплату № '. $id_doc .' от ' . Yii::$app-
 
     </div>
 
-    <?php
-    //        echo $form->field($document, 'company_id')->widget(Select2::classname(), [
-    //          'data' => \yii\helpers\ArrayHelper::map(\app\modules\ls_admin\models\Company::find()->all(),'id','name'),
-    //          'options' => ['placeholder' => 'Select ...'],
-    ////          'pluginOptions' => [
-    ////            'allowClear' => true
-    ////          ],
-    //        ])->label('Организация');
-    echo $form->field($document, 'company_id')->dropDownList(\yii\helpers\ArrayHelper::map(\app\modules\ls_admin\models\Company::find()->all(),'id','name'))->label('Организация');
-    ?>
+
 
     <!--<div class="form-group">
         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myTovar">
@@ -199,8 +206,6 @@ $this->title = 'Счет на оплату № '. $id_doc .' от ' . Yii::$app-
                     </div>
                 </div>
 
-                <?= $form->field($kontrahent, 'email')->textInput() ?>
-
                 <?= $form->field($kontrahent, 'KPP')->textInput() ?>
 
                 <?= $form->field($kontrahent, 'name')->textInput(['maxlength' => true]) ?>
@@ -211,16 +216,20 @@ $this->title = 'Счет на оплату № '. $id_doc .' от ' . Yii::$app-
 
                 <?= $form->field($kontrahent, 'mail_address')->textInput(['maxlength' => true]) ?>
 
+                <?= $form->field($kontrahent, 'email')->textInput() ?>
+
                 <?= $form->field($kontrahent, 'tel')->textInput(['maxlength' => true])->widget(\yii\widgets\MaskedInput::className(),[
                     'mask' => '(999) 999-9999'
                 ]) ?>
+
+                <?= $form->field($kontrahent, 'payment_account')->textInput(['maxlength' => true]) ?>
 
                 <?= $form->field($kontrahent, 'bik')->textInput(['maxlength' => true]) ?>
 
                 <p>кор. счет: <span id="ks"></span></p>
                 <p>Наименоание банка: <span id="name_bank"></span></p>
 
-                <?= $form->field($kontrahent, 'payment_account')->textInput(['maxlength' => true]) ?>
+
 
             </div>
             <div class="modal-footer">
