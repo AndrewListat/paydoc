@@ -18,7 +18,7 @@ use yii\bootstrap\Html;
     ]);?>
     <?php echo Html::submitButton('<img class="left" width="48px" src="/images/filetype_pdf.png" /><p>Акт о передачи права</p>', [
         'class'=>'btn btn-default pull-right',
-        'style'=>'margin: 5px; border:0;height:110px;width:130px;',
+        'style'=>'margin: 5px; border:0;height:110px;width:160px;',
         'name'=>'add_document',
         'data-toggle'=>'tooltip',
         'value'=>'act_b',
@@ -41,7 +41,7 @@ use yii\bootstrap\Html;
     ]);?>
     <?php echo Html::submitButton('<img class="left" width="48px" src="/images/filetype_pdf.png" /><p>Акт о передачи права</p>',  [
         'class'=>'btn btn-default pull-right',
-        'style'=>'margin: 5px; border:0;height:110px;width:130px;',
+        'style'=>'margin: 5px; border:0;height:110px;width:160px;',
         'name'=>'add_document',
         'data-toggle'=>'tooltip',
         'value'=>'act_z',
