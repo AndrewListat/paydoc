@@ -16,28 +16,28 @@ Yii::$app->session->set('id_doc_create_f',$document->id);
 
 $this->title = 'Счет на оплату № '. $id_doc .' от ' . Yii::$app->formatter->asDate($document->data_document);
 ?>
-
+<h3><?= Html::encode($this->title) ?></h3>
 <div class="pages-index">
     <?php $form = ActiveForm::begin(); ?>
 
 
     <div class="row">
         <div class="col-md-7">
-            <h3><?= Html::encode($this->title) ?></h3>
+            <?= $form->field($document, 'id')->textInput(['maxlength' => true, 'disabled'=>true]) ?>
+            <?= $form->field($document, 'id')->hiddenInput()->label(false) ?>
+
+            <?= $form->field($document, 'paid')->checkbox() ?>
+
+            <?= $form->field($document, 'status_id')->dropDownList(\yii\helpers\ArrayHelper::map(\app\modules\ls_admin\models\StatusDocument::find()->all(),'id','name')) ?>
+
+            <?= $form->field($document, 'data_document')->textInput(['maxlength' => true, 'disabled'=>true]) ?>
         </div>
         <div class="col-md-5">
             <?=\app\widgets\ButtonPdfWidget::widget()?>
         </div>
     </div>
 
-    <?= $form->field($document, 'id')->textInput(['maxlength' => true, 'disabled'=>true]) ?>
-    <?= $form->field($document, 'id')->hiddenInput()->label(false) ?>
 
-    <?= $form->field($document, 'paid')->checkbox() ?>
-
-    <?= $form->field($document, 'status_id')->dropDownList(\yii\helpers\ArrayHelper::map(\app\modules\ls_admin\models\StatusDocument::find()->all(),'id','name')) ?>
-
-    <?= $form->field($document, 'data_document')->textInput(['maxlength' => true, 'disabled'=>true]) ?>
     <div class="row">
         <div class="col-md-10">
             <?php
@@ -126,7 +126,7 @@ $this->title = 'Счет на оплату № '. $id_doc .' от ' . Yii::$app-
                 ],
                 //            'order_id',
                 [
-                    'label' => 'Сума',
+                    'label' => 'Сумма',
                     //                'format'=>'row',
                     'value' => function ($model, $key, $index, $widget) {
                         return $model->price * $model->quantity;
@@ -144,6 +144,29 @@ $this->title = 'Счет на оплату № '. $id_doc .' от ' . Yii::$app-
             ],
         ]); ?>
         <?php \yii\widgets\Pjax::end(); ?>
+    </div>
+
+    <div class="box" style="padding: 5px">
+        <div class="row">
+            <div class="col-md-2"> <?= $form->field($mail, 'data_send')->textInput()->widget(\kartik\date\DatePicker::className(),[
+                    'type' => \kartik\widgets\DatePicker::TYPE_INPUT,
+                    'pluginOptions' => [
+                        'autoclose'=>true,
+                        'format' => 'yyyy-mm-dd'
+                    ]
+                ])  ?></div>
+            <div class="col-md-2"><?= $form->field($mail, 'data_return')->textInput()->widget(\kartik\date\DatePicker::className(),[
+                    'type' => \kartik\widgets\DatePicker::TYPE_INPUT,
+                    'pluginOptions' => [
+                        'autoclose'=>true,
+                        'format' => 'yyyy-mm-dd'
+                    ]
+                ])  ?></div>
+            <div class="col-md-2"> <?= $form->field($mail, 'sheets')->input('number',['min'=>0])  ?></div>
+            <div class="col-md-2"><?= $form->field($mail, 'price')->input('number',['min'=>0])  ?></div>
+            <div class="col-md-2"> <?= $form->field($mail, 'type_id')->dropDownList(\yii\helpers\ArrayHelper::map(\app\modules\ls_admin\models\TypeMail::find()->all(),'id','name'))  ?></div>
+            <div class="col-md-2"> <?= $form->field($mail, 'return')->checkbox()  ?></div>
+        </div>
     </div>
 
     <?= $form->field($document, 'delivery_address')->textInput()  ?>

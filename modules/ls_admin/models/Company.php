@@ -18,6 +18,7 @@ use Yii;
  * @property string $bik
  * @property string $payment_account
  * @property string $note
+ * @property string $email
  */
 class Company extends \yii\db\ActiveRecord
 {
@@ -35,13 +36,13 @@ class Company extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['INN', 'KPP', 'name', 'type_partner', 'business_address', 'mail_address', 'tel', 'bik', 'payment_account', 'note'], 'required'],
+            [['INN', 'name', 'type_partner', 'business_address', 'mail_address','email', 'tel', 'bik', 'payment_account', 'note'], 'required'],
             [['INN', 'KPP', 'type_partner'], 'integer'],
             [['business_address', 'mail_address', 'note'], 'string'],
             [['name'], 'string', 'max' => 1000],
             [['tel', 'payment_account'], 'string', 'max' => 20],
             [['bik'], 'string', 'max' => 10],
-            ['mail_address', 'email'],
+            ['email', 'email'],
         ];
     }
 
@@ -62,6 +63,7 @@ class Company extends \yii\db\ActiveRecord
             'bik' => 'Бик банка',
             'payment_account' => 'Расчетный счет',
             'note' => 'Комментарий',
+            'email' => 'Email',
         ];
     }
 

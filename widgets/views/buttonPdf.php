@@ -11,21 +11,21 @@ use yii\bootstrap\Html;
 <div class="row">
     <?php echo Html::submitButton('<img class="left" width="48px" src="/images/filetype_pdf.png" /><p>Счет на оплата<br> без печати</p>', [
         'class'=>'btn btn-default pull-right',
-        'style'=>'margin: 5px; border:0',
+        'style'=>'margin: 5px; border:0;;height:110px;width:125px;',
         'name'=>'add_document',
         'data-toggle'=>'tooltip',
         'value'=>'rah_b',
     ]);?>
     <?php echo Html::submitButton('<img class="left" width="48px" src="/images/filetype_pdf.png" /><p>Акт о передачи<br> права без печати</p>', [
         'class'=>'btn btn-default pull-right',
-        'style'=>'margin: 5px; border:0',
+        'style'=>'margin: 5px; border:0;height:110px;width:125px;',
         'name'=>'add_document',
         'data-toggle'=>'tooltip',
         'value'=>'act_b',
     ]);?>
     <?php echo Html::submitButton('<img class="left" width="48px" src="/images/filetype_pdf.png" /><p>Договор без печати</p>',  [
         'class'=>'btn btn-default pull-right',
-        'style'=>'margin: 5px; border:0',
+        'style'=>'margin: 5px; border:0;width:150px;height:110px;',
         'name'=>'add_document',
         'data-toggle'=>'tooltip',
         'value'=>'dohovor_b',
@@ -34,21 +34,21 @@ use yii\bootstrap\Html;
 <div class="row">
     <?php echo Html::submitButton('<img class="left" width="48px" src="/images/filetype_pdf.png" /><p>Счет на оплату<br> с печатью</p>',  [
         'class'=>'btn btn-default pull-right',
-        'style'=>'margin: 5px; border:0',
+        'style'=>'margin: 5px; border:0;height:110px;width:125px;',
         'name'=>'add_document',
         'data-toggle'=>'tooltip',
         'value'=>'rah_z',
     ]);?>
     <?php echo Html::submitButton('<img class="left" width="48px" src="/images/filetype_pdf.png" /><p>Акт о передачи<br> права с печать</p>',  [
         'class'=>'btn btn-default pull-right',
-        'style'=>'margin: 5px; border:0',
+        'style'=>'margin: 5px; border:0;height:110px;width:125px;',
         'name'=>'add_document',
         'data-toggle'=>'tooltip',
         'value'=>'act_z',
     ]);?>
     <?php echo Html::submitButton(' <img class="left" width="48px" src="/images/filetype_pdf.png" /> <p>Договор c печати</p>',  [
         'class'=>'btn btn-default pull-right',
-        'style'=>'margin: 5px; border:0;padding:0',
+        'style'=>'margin: 5px; border:0;padding:0;width:150px;height:110px;',
         'name'=>'add_document',
         'data-toggle'=>'tooltip',
         'value'=>'dohovor_z',

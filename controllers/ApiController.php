@@ -283,7 +283,7 @@ class ApiController extends Controller{
 
         $bank = UiBanks::findOne(['bik'=>$_POST['bik']]);
         if ($bank){
-            $out = ['status'=>true, 'results' => ['kor_rah' => $bank->ks, 'name_bank' => $bank->name]];
+            $out = ['status'=>true, 'results' => ['kor_rah' => $bank->ks, 'name_bank' => htmlspecialchars_decode($bank->name)]];
         }
 
         return $out;

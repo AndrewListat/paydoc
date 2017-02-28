@@ -35,7 +35,7 @@ class Product extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['name', 'sky', 'group', 'unit', 'note', 'service','parent_id'], 'required'],
+            [['name', 'sky', 'group', 'unit', 'service','parent_id'], 'required'],
             [['group', 'service','onlyAdmin','parent_id'], 'integer'],
             [['date_added', 'date_modified'], 'safe'],
             [['note'], 'string'],
@@ -55,11 +55,11 @@ class Product extends \yii\db\ActiveRecord
             'name' => 'Наименование',
             'sky' => 'Артикул',
             'group' => 'Group',
-            'unit' => 'Unit',
+            'unit' => 'Еденица измерения',
             'date_added' => 'Дата добавления',
             'date_modified' => 'Дата модификации',
             'note' => 'Описание',
-            'service' => 'Service',
+            'service' => 'Услуга',
             'onlyAdmin ' => 'onlyAdmin ',
         ];
     }

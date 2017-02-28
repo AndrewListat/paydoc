@@ -20,17 +20,19 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'type_partner')->dropDownList(['1'=>'Физическое лицо','2'=>'Юридическое лицо']) ?>
 
-    <?= $form->field($model, 'business_address')->textarea(['rows' => 6]) ?>
+    <?= $form->field($model, 'business_address')->textInput() ?>
 
     <?= $form->field($model, 'mail_address')->textInput() ?>
+
+    <?= $form->field($model, 'email')->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($model, 'tel')->textInput(['maxlength' => true])->widget(\yii\widgets\MaskedInput::className(),[
         'mask' => '(999) 999-9999'
     ]) ?>
-
+    <?= $form->field($model, 'payment_account')->textInput(['maxlength' => true]) ?>
     <?= $form->field($model, 'bik')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'payment_account')->textInput(['maxlength' => true]) ?>
+
 
     <?= $form->field($model, 'note')->textarea(['rows' => 6]) ?>
 

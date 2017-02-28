@@ -4,6 +4,7 @@ namespace app\modules\ls_admin\controllers;
 
 use app\modules\ls_admin\models\DocumentItem;
 use app\modules\ls_admin\models\DocumentItemSearch;
+use app\modules\ls_admin\models\DocumentMail;
 use app\modules\ls_admin\models\Partner;
 use app\modules\ls_admin\models\ProductSearch;
 use Yii;
@@ -105,6 +106,14 @@ class DocumentController extends Controller
 
         $kontrahent = new Partner();
 
+        $mail = DocumentMail::findOne(['order_id'=>$id]);
+        if (!$mail){
+            $mail = new DocumentMail();
+            $mail->order_id = $id;
+        }
+
+
+
         $documentItems = new DocumentItemSearch(['order_id'=> $document->id]);
         $documentItemsDataProvider = $documentItems->search(Yii::$app->request->queryParams);
 
@@ -136,6 +145,8 @@ class DocumentController extends Controller
         if (isset($_POST['add_document'])){
             if ($document->load(Yii::$app->request->post()))
                 if ($document->save()){
+                    $mail->load(Yii::$app->request->post());
+                    $mail->save();
                     switch ($_POST['add_document']){
                         case 'act_b':
                             $this->redirect('/api/doc_pdf?id='.$document->id.'&type=act_b');
@@ -164,6 +175,7 @@ class DocumentController extends Controller
 
 
         return $this->render('update',[
+            'mail'=>$mail,
             'document' => $document,
             'kontrahent' => $kontrahent,
             'documentItems' => $documentItems,

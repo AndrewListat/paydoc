@@ -83,29 +83,22 @@ class ProductController extends Controller
         $productPrice = new ProductPrice();
         $productPrice->product_id = 0;
 
-        $productStock = new ProductStock();
-        $productStock->product_id = 0;
-
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            if($productPrice->load(Yii::$app->request->post()) && $productStock->load(Yii::$app->request->post()) ){
+            if($productPrice->load(Yii::$app->request->post()) ){
                 $productPrice->product_id = $model->id;
-                $productStock->product_id = $model->id;
                 $productPrice->save();
-                $productStock->save();
 
                 return $this->redirect(['index']);
             }else{
                 return $this->render('create', [
                     'model' => $model,
                     'productPrice' => $productPrice,
-                    'productStock' => $productStock,
                 ]);
             }
         } else {
             return $this->render('create', [
                 'model' => $model,
                 'productPrice' => $productPrice,
-                'productStock' => $productStock,
             ]);
         }
     }
@@ -121,27 +114,22 @@ class ProductController extends Controller
         $model = $this->findModel($id);
 
         $productPrice = ProductPrice::findOne(['product_id'=>$id]);
-        $productStock = ProductStock::findOne(['product_id'=>$id]);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            if($productPrice->load(Yii::$app->request->post()) && $productStock->load(Yii::$app->request->post()) ){
+            if($productPrice->load(Yii::$app->request->post()) ){
                 $productPrice->product_id = $model->id;
-                $productStock->product_id = $model->id;
                 $productPrice->save();
-                $productStock->save();
                 return $this->redirect(['index']);
             }else{
                 return $this->render('update', [
                     'model' => $model,
                     'productPrice' => $productPrice,
-                    'productStock' => $productStock,
                 ]);
             }
         } else {
             return $this->render('update', [
                 'model' => $model,
                 'productPrice' => $productPrice,
-                'productStock' => $productStock,
             ]);
         }
     }

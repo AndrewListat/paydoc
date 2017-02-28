@@ -129,23 +129,45 @@ class SiteController extends Controller
             $document->total += $item->price * $item->quantity;
         }
 
-        if (isset($_POST['add_partner'])){
-            if ($kontrahent->load(Yii::$app->request->post()))
-                if ($kontrahent->save()){
-                    $document->partner_id = $kontrahent->id;
-                    Yii::$app->session->set('savePartner',true);
-                }else{
-                    Yii::$app->session->set('savePartner',false);
-                }
+        if (isset($_GET['cat_id'])){
+            $productSearch = new ProductSearch(['parent_id'=>$_GET['cat_id']]);
+            $productDataProvider = $productSearch->search(Yii::$app->request->queryParams);
+        } else {
+            $productSearch = new ProductSearch(['parent_id'=>0]);
+            $productDataProvider = $productSearch->search(Yii::$app->request->queryParams);
         }
 
-        $productSearch = new ProductSearch();
-        $productDataProvider = $productSearch->search(Yii::$app->request->queryParams);
 
         if (isset($_POST['add_document'])){
             if ($document->load(Yii::$app->request->post()))
                 if ($document->save()){
-                    return $this->goHome();
+//                    DocumentItem::updateAll(['order_id' => $document->id], ['order_id' => 0-Yii::$app->user->id]);
+//                    return $this->redirect('/index');
+
+                    switch ($_POST['add_document']){
+                        case 'act_b':
+                            $this->redirect('/api/doc_pdf?id='.$document->id.'&type=act_b');
+                            break;
+                        case 'dohovor_b':
+                            $this->redirect('/api/doc_pdf?id='.$document->id.'&type=dohovor_b');
+                            break;
+                        case 'rah_b':
+                            $this->redirect('/api/doc_pdf?id='.$document->id.'&type=rah_b');
+                            break;
+                        case 'act_z':
+                            $this->redirect('/api/doc_pdf?id='.$document->id.'&type=act_z');
+                            break;
+                        case 'dohovor_z':
+                            $this->redirect('/api/doc_pdf?id='.$document->id.'&type=dohovor_z');
+                            break;
+                        case 'rah_z':
+                            $this->redirect('/api/doc_pdf?id='.$document->id.'&type=rah_z');
+                            break;
+                        case 'exit':
+                            return $this->redirect('/');
+                    }
+                    Yii::$app->session->set('id_doc_create', false);
+
                 }
         }
 

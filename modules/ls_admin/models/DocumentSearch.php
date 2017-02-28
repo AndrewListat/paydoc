@@ -75,7 +75,7 @@ class DocumentSearch extends Document
             ->andFilterWhere(['like', 'prefix_partner.name', $this->partner_id]);
 //            ->andFilterWhere(['like', 'note', $this->note]);
 
-        $query->orderBy(['id'=>SORT_DESC]);
+//        $query->orderBy(['id'=>SORT_DESC]);
 
         return $dataProvider;
     }

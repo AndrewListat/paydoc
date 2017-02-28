@@ -19,12 +19,12 @@ Yii::$app->formatter->locale = 'ru-RU';
         <?php /*Html::a('Create Document', ['create'], ['class' => 'btn btn-success']) */?>
     </p>-->
     <a href="/document" class="btn btn-primary">Выставить новый счет</a>
-    <div class="box">
+    <div class="box docs">
         <?= GridView::widget([
             'dataProvider' => $dataProvider,
             'rowOptions' => function ($model, $key, $index, $grid){
                 return [
-                    'ondblclick'=>'window.location = "/document_view?id='.$model->id.'"',
+                    'ondblclick'=>'window.location = "/document_update?id='.$model->id.'"',
                 ];
             },
 //        'filterModel' => $searchModel,

@@ -96,3 +96,7 @@ a.desc:after {
 .grid-view .empty{
     display: none;
 }
+
+.docs .grid-view tbody tr:hover{
+    background: #b5b5b5;
+}

@@ -3,6 +3,7 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use kartik\widgets\Select2; // or kartik\select2\Select2
 use yii\web\JsExpression;
+use app\widgets\ButtonPdfWidget;
 \app\assets\BaseAsset::register($this);
 /**
  * Created by PhpStorm.
@@ -10,79 +11,45 @@ use yii\web\JsExpression;
  * Date: 20.02.2017
  * Time: 12:24
  */
-Yii::$app->formatter->locale = 'ru-RU';
+$id_doc = ($document->nomber_1c) ? $document->nomber_1c : $document->id;
 
-$this->title = 'Счет на оплату № '. $document->id .' от "' . Yii::$app->formatter->asDate($document->data_document).'"';
-
+$this->title = 'Счет на оплату № '. $id_doc .' от ' . Yii::$app->formatter->asDate($document->data_document);
 ?>
-<div class="row">
-    <div class="col-md-7">
-        <h1><?= Html::encode($this->title) ?></h1>
-    </div>
-    <div class="col-md-5">
-        <?php echo Html::a('<img class="left" width="30px" src="/images/filetype_pdf.png" />', ['/api/doc_pdf?id='.$document->id], [
-            'class'=>'btn btn-default pull-right',
-            'style'=>'margin: 5px',
-            'target'=>'_blank',
-            'data-toggle'=>'tooltip',
-            'title'=>'Счет на оплата без печати'
-        ]);?>
-        <?php echo Html::a('<img class="left" width="30px" src="/images/filetype_pdf.png" />', ['/api/doc_pdf?id='.$document->id], [
-            'class'=>'btn btn-default pull-right',
-            'style'=>'margin: 5px',
-            'target'=>'_blank',
-            'data-toggle'=>'tooltip',
-            'title'=>'Счет на оплату с печатью'
-        ]);?>
-        <?php echo Html::a('<img class="left" width="30px" src="/images/filetype_pdf.png" />', ['/api/doc_pdf?id='.$document->id], [
-            'class'=>'btn btn-default pull-right',
-            'style'=>'margin: 5px',
-            'target'=>'_blank',
-            'data-toggle'=>'tooltip',
-            'title'=>'Акт о передачи права без печати'
-        ]);?>
-        <?php echo Html::a('<img class="left" width="30px" src="/images/filetype_pdf.png" />', ['/api/doc_pdf?id='.$document->id], [
-            'class'=>'btn btn-default pull-right',
-            'style'=>'margin: 5px',
-            'target'=>'_blank',
-            'data-toggle'=>'tooltip',
-            'title'=>'Акт о передачи права с печать'
-        ]);?>
-        <?php echo Html::a('<img class="left" width="30px" src="/images/filetype_pdf.png" />', ['/api/doc_pdf?id='.$document->id], [
-            'class'=>'btn btn-default pull-right',
-            'style'=>'margin: 5px',
-            'target'=>'_blank',
-            'data-toggle'=>'tooltip',
-            'title'=>'Договор без печати'
-        ]);?>
-        <?php echo Html::a('<img class="left" width="30px" src="/images/filetype_pdf.png" />', ['/api/doc_pdf?id='.$document->id], [
-            'class'=>'btn btn-default pull-right',
-            'style'=>'margin: 5px',
-            'target'=>'_blank',
-            'data-toggle'=>'tooltip',
-            'title'=>'Договор c печати'
-        ]);?>
-    </div>
-</div>
-
-
-
-
+<h3><?= Html::encode($this->title) ?></h3>
 <div class="pages-index">
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($document, 'nomber_1c')->textInput(['maxlength' => true]) ?>
-
-    <?= $form->field($document, 'delivery_address')->textarea(['rows' => 3]) ?>
     <div class="row">
-        <div class="col-md-10">
-            <?php \yii\widgets\Pjax::begin(['id' => 'partnerId','timeout' => false, 'enablePushState' => false,]); ?>
+        <div class="col-md-7">
+            <?= $form->field($document, 'id')->textInput(['maxlength' => true, 'disabled'=>true]) ?>
+            <?= $form->field($document, 'id')->hiddenInput()->label(false) ?>
+            <?= $form->field($document, 'status_id')->dropDownList(\yii\helpers\ArrayHelper::map(\app\modules\ls_admin\models\StatusDocument::find()->all(),'id','name'),['disabled'=>true]) ?>
+            <?= $form->field($document, 'data_document')->textInput(['maxlength' => true, 'disabled'=>true]) ?>
+        </div>
+        <div class="col-md-5">
+            <?=ButtonPdfWidget::widget()?>
+        </div>
+    </div>
+    <?php
+    //        echo $form->field($document, 'company_id')->widget(Select2::classname(), [
+    //          'data' => \yii\helpers\ArrayHelper::map(\app\modules\ls_admin\models\Company::find()->all(),'id','name'),
+    //          'options' => ['placeholder' => 'Select ...'],
+    ////          'pluginOptions' => [
+    ////            'allowClear' => true
+    ////          ],
+    //        ])->label('Организация');
+    echo $form->field($document, 'company_id')->dropDownList(\yii\helpers\ArrayHelper::map(\app\modules\ls_admin\models\Company::find()->all(),'id','name'),[ 'disabled'=>true])->label('Организация');
+    ?>
+    <div class="row">
+        <div class="col-md-<?=(!Yii::$app->user->isGuest)? '12': '10'?>">
             <?php
+            \yii\widgets\Pjax::begin(['id' => 'partnerId','timeout' => false, 'enablePushState' => true,]);
             $cusName =  empty($document->partner_id) ? '' : \app\modules\ls_admin\models\Partner::findOne($document->partner_id)->name;
             echo $form->field($document, 'partner_id')->widget(Select2::classname(), [
                 'initValueText' => $cusName, // set the initial display text
-
-                'options' => ['placeholder' => 'Search for ...'],
+//                'pluginLoading' => false,
+                'disabled' => !Yii::$app->user->isGuest,
+                'options' => ['placeholder' => 'Search for ...','id'=>'select2partner'],
                 'pluginOptions' => [
                     'allowClear' => true,
                     'minimumInputLength' => 3,
@@ -103,34 +70,24 @@ $this->title = 'Счет на оплату № '. $document->id .' от "' . Yii
             ?>
             <?php \yii\widgets\Pjax::end()?>
         </div>
-        <div class="col-md-2">
-            <div class="form-group" style="padding-top: 24px">
-                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
-                    Добавить контрагента
-                </button>
+        <?php if (Yii::$app->user->isGuest){?>
+            <div class="col-md-2">
+                <div class="form-group" style="padding-top: 24px">
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
+                        Добавить контрагента
+                    </button>
+                </div>
             </div>
-        </div>
+        <?php }?>
     </div>
 
-    <?php
-    echo $form->field($document, 'company_id')->widget(Select2::classname(), [
-        'data' => \yii\helpers\ArrayHelper::map(\app\modules\ls_admin\models\Company::find()->all(),'id','name'),
-        'options' => ['placeholder' => 'Select ...'],
-        'pluginOptions' => [
-            'allowClear' => true
-        ],
-    ])->label('Организация');
-    ?>
 
-    <?= $form->field($document, 'paid')->checkbox() ?>
 
-    <?= $form->field($document, 'status_id')->dropDownList(\yii\helpers\ArrayHelper::map(\app\modules\ls_admin\models\StatusDocument::find()->all(),'id','name')) ?>
-
-    <div class="form-group">
+    <!--<div class="form-group">
         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myTovar">
             Добавить продукт
         </button>
-    </div>
+    </div>-->
     <div class="box">
         <?php \yii\widgets\Pjax::begin(['id' => 'productItems','timeout' => false, 'enablePushState' => false,]); ?>
         <?= \yii\grid\GridView::widget([
@@ -138,46 +95,56 @@ $this->title = 'Счет на оплату № '. $document->id .' от "' . Yii
             'showFooter'=>TRUE,
             'footerRowOptions'=>['style'=>'font-weight:bold;'],
             'columns' => [
-                ['class' => 'yii\grid\SerialColumn'],
 
-                //            'id',
+                ['class' => 'yii\grid\SerialColumn'],
+                [
+                    'class' => 'yii\grid\CheckboxColumn',
+                    // you may configure additional properties here
+                    'checkboxOptions'=>['class'=>'checkboxes', 'onclick'=>'show_delete_bt()'],
+                    'footer'=>'<button type="button" id="delete_prod" onclick="delete_products()" class="btn btn-primary" >Удалить</button>'
+                ],
+//                'id',
                 //            'product_id',
+
                 [
                     //                'label' => 'Сума',
                     'attribute' => 'product.name',
+                    'footer'=>'<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myTovar">Добавить продукт</button>'
                 ],
                 'quantity',
+//                'price',
                 [
                     //                'label' => 'Сума',
                     'attribute' => 'price',
                     //                'footer' => 'Общая сумма:'
                 ],
+                //            'order_id',
                 [
-                    'label' => 'Сума',
+                    'label' => 'Сумма',
                     //                'format'=>'row',
                     'value' => function ($model, $key, $index, $widget) {
                         return $model->price * $model->quantity;
                     },
                     'footer' => $document->total ? 'Общая сумма: '.$document->total : '',
                 ],
-                [
+
+                /*[
                     'label'=>'',
                     'content'=>function($data){
                         return '<a><span class="glyphicon glyphicon-trash" aria-hidden="true" onclick="delete_product('.$data->id.')"></span></a>';
                     }
-                ],
+                ],*/
 
             ],
         ]); ?>
         <?php \yii\widgets\Pjax::end(); ?>
     </div>
 
-    <?= $form->field($document, 'note')->textarea(['rows' => 6]) ?>
+    <?= $form->field($document, 'delivery_address')->textInput()  ?>
 
-    <div class="form-group">
-        <?= Html::submitButton('Обновить' , ['name'=>'add_document','class' => 'btn btn-success' ]) ?>
-        <?= Html::a('Закрыть', ['index'] , ['name'=>'add_document','class' => 'btn btn-danger' ]) ?>
-    </div>
+    <?= $form->field($document, 'note')->textInput() ?>
+
+    <?= Html::submitButton('Закрыть', ['name'=>'add_document','value'=>'exit','class' =>  'btn btn-danger']) ?>
 
     <?php ActiveForm::end(); ?>
 </div>
@@ -192,8 +159,17 @@ $this->title = 'Счет на оплату № '. $document->id .' от "' . Yii
             </div>
             <?php $form = ActiveForm::begin(['options'=>['data-pjax' => '']]); ?>
             <div class="modal-body">
-
-                <?= $form->field($kontrahent, 'INN')->textInput() ?>
+                <div class="row">
+                    <div class="col-md-10">
+                        <?= $form->field($kontrahent, 'INN')->textInput() ?>
+                    </div>
+                    <div class="col-md-2">
+                        <button id="btn_inn" style="margin-top: 23px;" type="button" disabled="disabled" onclick="search_company()" class="btn btn-info">
+                            <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+                            <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+                        </button>
+                    </div>
+                </div>
 
                 <?= $form->field($kontrahent, 'KPP')->textInput() ?>
 
@@ -201,25 +177,28 @@ $this->title = 'Счет на оплату № '. $document->id .' от "' . Yii
 
                 <?= $form->field($kontrahent, 'type_partner')->dropDownList(['1'=>'Физическое лицо','2'=>'Юридическое лицо']) ?>
 
-                <?= $form->field($kontrahent, 'business_address')->textarea(['rows' => 6]) ?>
+                <?= $form->field($kontrahent, 'business_address')->textInput(['maxlength' => true]) ?>
 
                 <?= $form->field($kontrahent, 'mail_address')->textInput(['maxlength' => true]) ?>
+                <?= $form->field($kontrahent, 'email')->textInput() ?>
 
                 <?= $form->field($kontrahent, 'tel')->textInput(['maxlength' => true])->widget(\yii\widgets\MaskedInput::className(),[
                     'mask' => '(999) 999-9999'
                 ]) ?>
+                <?= $form->field($kontrahent, 'payment_account')->textInput(['maxlength' => true]) ?>
 
                 <?= $form->field($kontrahent, 'bik')->textInput(['maxlength' => true]) ?>
 
-                <?= $form->field($kontrahent, 'payment_account')->textInput(['maxlength' => true]) ?>
+                <p>кор. счет: <span id="ks"></span></p>
+                <p>Наименоание банка: <span id="name_bank"></span></p>
 
-                <?= $form->field($kontrahent, 'note')->textarea(['rows' => 6]) ?>
+
 
             </div>
             <div class="modal-footer">
                 <?= Html::submitButton('Создать' , ['name'=>'add_partner','class' =>  'btn btn-primary']) ?>
                 <button type="button" class="btn btn-default" data-dismiss="modal">Закрыть</button>
-                <button type="button" class="btn btn-primary">Напечатать конверт</button>
+                <!--                        <button type="button" class="btn btn-primary">Напечатать конверт</button>-->
             </div>
             <?php ActiveForm::end(); ?>
         </div>
@@ -229,7 +208,7 @@ $this->title = 'Счет на оплату № '. $document->id .' от "' . Yii
 
 <!-- Modal tovar -->
 <div class="modal fade bs-example-modal-lg" id="myTovar" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-    <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-dialog modal-lg" style="min-width: 80%;" role="document">
 
         <div class="modal-content">
             <div class="modal-header">
@@ -237,42 +216,51 @@ $this->title = 'Счет на оплату № '. $document->id .' от "' . Yii
                 <h4 class="modal-title" id="myModalLabel">Продукты</h4>
             </div>
             <div class="modal-body">
-                <?php \yii\widgets\Pjax::begin(['id' => 'admin-crud-id', 'timeout' => false,
-                    'enablePushState' => false,]); ?>
+                <div class="row">
+                    <div class="col-md-3">
+                        <div id="tree_cat"></div>
+                    </div>
+                    <div class="col-md-9">
+                        <?php \yii\widgets\Pjax::begin(['id' => 'admin-crud-id', 'timeout' => false,
+                            'enablePushState' => false,]); ?>
 
-                <?= \yii\grid\GridView::widget([
-                    'dataProvider' => $productDataProvider,
-//                    'filterModel' => $productSearch,
-                    'columns' => [
-                        ['class' => 'yii\grid\SerialColumn'],
+                        <?= \yii\grid\GridView::widget([
+                            'dataProvider' => $productDataProvider,
+//                        'filterModel' => $productSearch,
+                            'columns' => [
+                                ['class' => 'yii\grid\SerialColumn'],
 
-                        'name',
-                        'sky',
-//                        'group',
-                        'unit',
-//                        'date_added',
-//                        'date_modified',
-//                        'note:ntext',
-//                        'service',
-                        'price.price',
-                        [
+                                'name',
+                                'sky',
+//                            'group',
+                                'unit',
+//                            'date_added',
+//                            'date_modified',
+//                            'note:ntext',
+//                            'service',
+                                'price.price',
+                                [
 //                                'attribute'=>'parent_id',
-                            'label'=>'Количество',
-                            'content'=>function($data){
-                                return '<input type="number" id="count-'.$data->id.'" min="1" value="1"/>';
-                            }
-                        ],
-                        [
+                                    'label'=>'Количество',
+                                    'content'=>function($data){
+                                        return '<input type="number" id="count-'.$data->id.'" min="1" value="1"/>';
+                                    }
+                                ],
+                                [
 //                                'attribute'=>'parent_id',
-                            'label'=>'#',
-                            'content'=>function($data){
-                                return '<span class="glyphicon glyphicon-plus" aria-hidden="true" onclick="add_product_up('.$data->id.','.$_GET['id'].')"></span>';
-                            }
-                        ],
+                                    'label'=>'#',
+                                    'content'=>function($data){
+                                        return '<span class="glyphicon glyphicon-plus" aria-hidden="true" onclick="add_product_up('.$data->id.','.$_GET['id'].')"></span>';
+                                    }
+                                ],
 //                            ['class' => 'yii\grid\ActionColumn'],
-                    ],
-                ]); ?>
-                <?php \yii\widgets\Pjax::end(); ?>
+                            ],
+                        ]); ?>
+                        <?php \yii\widgets\Pjax::end(); ?>
+                    </div>
+                </div>
+
+
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Закрыть</button>
@@ -281,3 +269,28 @@ $this->title = 'Счет на оплату № '. $document->id .' от "' . Yii
 
     </div>
 </div>
+
+<script>
+    $(document).ready(function() {
+
+
+
+        $.getJSON('/api/get_category1',function (data) {
+            $('#tree_cat').treeview({data: data});
+        });
+
+        $(document).on('click','.node-tree_cat',function () {
+            console.log( $('#tree_cat').treeview('getSelected'));
+            var select_el = $('#tree_cat').treeview('getSelected');
+            if (select_el.length){
+                console.log('ok',select_el[0].cat_id);
+                console.log('ok');
+                $.pjax.defaults.timeout = false;
+                $.pjax.reload({container: "#admin-crud-id", url: "/document_update?id=<?=$_GET['id']?>&cat_id="+select_el[0].cat_id});
+            }else{
+                console.log('err')
+            }
+        });
+
+    });
+</script>

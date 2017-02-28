@@ -19,7 +19,6 @@ $this->title = 'Создание номенклатуры';
     <?= $this->render('_form', [
         'model' => $model,
         'productPrice' => $productPrice,
-        'productStock' => $productStock,
     ]) ?>
 
 </div>

@@ -18,7 +18,7 @@ Yii::$app->formatter->locale = 'ru-RU';
    <!-- <p>
         <?php /*Html::a('Create Document', ['create'], ['class' => 'btn btn-success']) */?>
     </p>-->
-    <div class="box">
+    <div class="box docs">
         <?= GridView::widget([
             'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,

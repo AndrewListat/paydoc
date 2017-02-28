@@ -18,7 +18,6 @@ $this->title = 'Номенклатура: ' . $model->name;
     <?= $this->render('_form', [
         'model' => $model,
         'productPrice' => $productPrice,
-        'productStock' => $productStock,
     ]) ?>
 
 </div>
