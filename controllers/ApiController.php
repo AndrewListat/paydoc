@@ -227,7 +227,14 @@ class ApiController extends Controller{
         $model->email = $_POST['email'];
         $model->password = $_POST['kod'];
         if ($model->login()) {
+            $user = User::findOne(['email'=>$_POST['email']]);
+            if ($user){
+                $user->password =Yii::$app->getSecurity()->generateRandomString(6);
+                $user->setPassword($user->password);
+                $user->save();
+            }
             return true;
+
         }
         return false;
     }
