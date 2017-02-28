@@ -15,7 +15,7 @@ class DocumentSearch extends Document
     /**
      * @inheritdoc
      */
-    public $partner_name;
+    public $partner_id2;
 
     public function rules()
     {
@@ -34,6 +34,7 @@ class DocumentSearch extends Document
         return Model::scenarios();
     }
 
+
     /**
      * Creates data provider instance with search query applied
      *
@@ -51,6 +52,7 @@ class DocumentSearch extends Document
             'query' => $query,
         ]);
 
+        var_dump($this->partner_id2);
         $this->load($params);
 
         if (!$this->validate()) {
@@ -63,7 +65,7 @@ class DocumentSearch extends Document
         $query->andFilterWhere([
             'id' => $this->id,
             'data_document' => $this->data_document,
-//            'partner_id' => $this->partner_id,
+            'partner_id' => $this->partner_id2,
             'company_id' => $this->company_id,
 //            'total' => $this->total,
             'paid' => $this->paid,

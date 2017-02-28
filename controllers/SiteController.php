@@ -60,7 +60,7 @@ class SiteController extends Controller
         if(Yii::$app->user->isGuest)
             return $this->render('index');
         else{
-            $searchModel = new DocumentSearch(['partner_id'=>Yii::$app->user->identity['partner_id']]);
+            $searchModel = new DocumentSearch(['partner_id2'=>Yii::$app->user->identity['partner_id']]);
             $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
             $dataProvider->sort=false;
 
