@@ -143,7 +143,7 @@ class ApiController extends Controller{
                     'image' => false,
                 ]);
                 $orint = true;
-                $filename = 'Акт о передачи права без печати № '. $document->id .' от '. Yii::$app->formatter->asDate($document->data_document).'.pdf';
+                $filename = 'Акт о передачи права № '. $document->id .' от '. Yii::$app->formatter->asDate($document->data_document).'.pdf';
                 break;
             case 'rah_b':
                 $orint = false;
@@ -151,7 +151,7 @@ class ApiController extends Controller{
                     'document'=>$document,
                     'image' => false,
                 ]);
-                $filename = 'Счет на оплату без печати № '. $document->id .' от '. Yii::$app->formatter->asDate($document->data_document).'.pdf';
+                $filename = 'Счет на оплату № '. $document->id .' от '. Yii::$app->formatter->asDate($document->data_document).'.pdf';
                 break;
             case 'act_z':
                 $content = $this->renderPartial('pdf_act_b',[
@@ -159,7 +159,7 @@ class ApiController extends Controller{
                     'image' => true,
                 ]);
                 $orint = true;
-                $filename = 'Акт о передачи права c печатю № '. $document->id .' от '. Yii::$app->formatter->asDate($document->data_document).'.pdf';
+                $filename = 'Акт о передачи права № '. $document->id .' от '. Yii::$app->formatter->asDate($document->data_document).'.pdf';
                 break;
             case 'rah_z':
                 $orint = false;
@@ -167,7 +167,7 @@ class ApiController extends Controller{
                     'document'=>$document,
                     'image' => true,
                 ]);
-                $filename = 'Счет на оплату c печатю № '. $document->id .' от '. Yii::$app->formatter->asDate($document->data_document).'.pdf';
+                $filename = 'Счет на оплату № '. $document->id .' от '. Yii::$app->formatter->asDate($document->data_document).'.pdf';
                 break;
             case 'dohovor_z':
                 $orint = false;
@@ -175,7 +175,7 @@ class ApiController extends Controller{
                     'document'=>$document,
                     'image' => true,
                 ]);
-                $filename = 'Договор c печатю № '. $document->id .' от '. Yii::$app->formatter->asDate($document->data_document).'.pdf';
+                $filename = 'Договор  № '. $document->id .' от '. Yii::$app->formatter->asDate($document->data_document).'.pdf';
                 break;
             case 'dohovor_b':
                 $orint = false;
@@ -183,7 +183,7 @@ class ApiController extends Controller{
                     'document'=>$document,
                     'image' => false,
                 ]);
-                $filename = 'Договор без печати № '. $document->id .' от '. Yii::$app->formatter->asDate($document->data_document).'.pdf';
+                $filename = 'Договор  № '. $document->id .' от '. Yii::$app->formatter->asDate($document->data_document).'.pdf';
                 break;
         }
 
