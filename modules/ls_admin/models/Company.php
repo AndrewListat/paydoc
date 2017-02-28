@@ -64,4 +64,9 @@ class Company extends \yii\db\ActiveRecord
             'note' => 'Комментарий',
         ];
     }
+
+    public function getBank()
+    {
+        return $this->hasOne(UiBanks::className(), ['bik' => 'bik']);
+    }
 }

@@ -169,6 +169,22 @@ class ApiController extends Controller{
                 ]);
                 $filename = 'Счет на оплату c печати № '. $document->id .' от '. Yii::$app->formatter->asDate($document->data_document).'.pdf';
                 break;
+            case 'dohovor_z':
+                $orint = false;
+                $content = $this->renderPartial('pdf_dohovor',[
+                    'document'=>$document,
+                    'image' => true,
+                ]);
+                $filename = 'Счет на оплату c печати № '. $document->id .' от '. Yii::$app->formatter->asDate($document->data_document).'.pdf';
+                break;
+            case 'dohovor_b':
+                $orint = false;
+                $content = $this->renderPartial('pdf_dohovor',[
+                    'document'=>$document,
+                    'image' => false,
+                ]);
+                $filename = 'Счет на оплату c печати № '. $document->id .' от '. Yii::$app->formatter->asDate($document->data_document).'.pdf';
+                break;
         }
 
 

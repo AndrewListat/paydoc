@@ -118,4 +118,8 @@ class Partner extends \yii\db\ActiveRecord
         }
 
     }
+    public function getBank()
+    {
+        return $this->hasOne(UiBanks::className(), ['bik' => 'bik']);
+    }
 }

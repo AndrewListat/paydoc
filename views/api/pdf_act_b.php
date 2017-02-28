@@ -11,7 +11,7 @@
             Лицензиар
         </div>
         <div style="border-bottom: 1px solid black;width: 77%; float: left;">
-            asdasd<br>asdasd
+            <?=$document->company['name']?>, ИНН <?=$document->company['INN']?>, <?=$document->company['mail_address']?>, тел.: <?=$document->company['tel']?>, р/с <?=$document->company['payment_account']?>, в банке <?=$document->company->bank['name']?>, БИК <?=$document->company['bik']?>, к/с <?=$document->company->bank['ks']?>
         </div>
     </div>
     <div class="row">
@@ -19,7 +19,7 @@
             Лицензиар
         </div>
         <div style="border-bottom: 1px solid black;width: 77%; float: left;">
-            asdasd<br>asdasd
+            <?=$document->partner['name']?>, ИНН <?=$document->partner['INN']?>, <?=$document->partner['mail_address']?>, тел.: <?=$document->partner['tel']?>, р/с <?=$document->partner['payment_account']?>, в банке <?=$document->partner->bank['name']?>, БИК <?=$document->partner['bik']?>, к/с <?=$document->partner->bank['ks']?>
         </div>
     </div>
     <div class="row">
@@ -27,7 +27,7 @@
             Плательщик
         </div>
         <div style="border-bottom: 1px solid black;width: 77%; float: left;">
-            asdasd<br>asdasd
+            <?=$document->partner['name']?>, ИНН <?=$document->partner['INN']?>, <?=$document->partner['mail_address']?>, тел.: <?=$document->partner['tel']?>, р/с <?=$document->partner['payment_account']?>, в банке <?=$document->partner->bank['name']?>, БИК <?=$document->partner['bik']?>, к/с <?=$document->partner->bank['ks']?>
         </div>
     </div>
     <div class="row">
@@ -62,7 +62,7 @@
         </div>
     </div>
     <div class="row">
-        ИП Ефимов и ООО «ТД ОЛИМПИЯ» составили и подписали настоящий Акт приема-передачи о том, что ИП Ефимов передал, а ООО «ТД ОЛИМПИЯ» принял(о) неисключительные (ограниченные) права, как они описаны в Лицензионном договоре между сторонами, на указанные ниже, программы для ЭВМ и базы данных в составе:
+        <?=$document->company['name']?> и <?=$document->partner['name']?> составили и подписали настоящий Акт приема-передачи о том, что <?=$document->company['name']?> передал, а <?=$document->partner['name']?> принял(о) неисключительные (ограниченные) права, как они описаны в Лицензионном договоре между сторонами, на указанные ниже, программы для ЭВМ и базы данных в составе:
     </div>
     <div class="row">
         <table border="1" class="" cellspacing="0" cellpadding="0" width="100%"  style="font-size: 8pt">
@@ -403,7 +403,7 @@
 
 </div>
 <div style="padding: 0;margin: 0; width: 100%;font-size: 8pt;">
-    <div class="" style="border-right:  1px solid black; width: 45%; float: left">
+    <div class="" style="border-right:  1px solid black; width: 45%; float: left;<?=($image)? 'min-height: 300px; background-position: 190px 10px; background-image: url(\'/images/pechat.png\'); background-repeat: no-repeat; background-size: 300px;':''?>">
         <div class="col-xs-12 col-sm-12 col-md-12" style="padding: 0;margin: 0;">
             <div class="col-xs-7 col-sm-7 col-md-7" style="padding: 0;margin: 0;">
                 Приложение (паспорта, сертификаты и т.п.) нa
@@ -552,6 +552,3 @@
         </div>
     </div>
 </div>
-<?php if($image){?>
-    <img style="position: absolute; right: 0; width: 150px" class="img_p"  src="/images/pechat.png">
-<?php } ?>
