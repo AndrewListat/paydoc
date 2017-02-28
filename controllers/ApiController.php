@@ -159,7 +159,7 @@ class ApiController extends Controller{
                     'image' => true,
                 ]);
                 $orint = true;
-                $filename = 'Акт о передачи права c печати № '. $document->id .' от '. Yii::$app->formatter->asDate($document->data_document).'.pdf';
+                $filename = 'Акт о передачи права c печатю № '. $document->id .' от '. Yii::$app->formatter->asDate($document->data_document).'.pdf';
                 break;
             case 'rah_z':
                 $orint = false;
@@ -167,7 +167,7 @@ class ApiController extends Controller{
                     'document'=>$document,
                     'image' => true,
                 ]);
-                $filename = 'Счет на оплату c печати № '. $document->id .' от '. Yii::$app->formatter->asDate($document->data_document).'.pdf';
+                $filename = 'Счет на оплату c печатю № '. $document->id .' от '. Yii::$app->formatter->asDate($document->data_document).'.pdf';
                 break;
             case 'dohovor_z':
                 $orint = false;
@@ -175,7 +175,7 @@ class ApiController extends Controller{
                     'document'=>$document,
                     'image' => true,
                 ]);
-                $filename = 'Счет на оплату c печати № '. $document->id .' от '. Yii::$app->formatter->asDate($document->data_document).'.pdf';
+                $filename = 'Договор c печатю № '. $document->id .' от '. Yii::$app->formatter->asDate($document->data_document).'.pdf';
                 break;
             case 'dohovor_b':
                 $orint = false;
@@ -183,7 +183,7 @@ class ApiController extends Controller{
                     'document'=>$document,
                     'image' => false,
                 ]);
-                $filename = 'Счет на оплату c печати № '. $document->id .' от '. Yii::$app->formatter->asDate($document->data_document).'.pdf';
+                $filename = 'Договор без печати № '. $document->id .' от '. Yii::$app->formatter->asDate($document->data_document).'.pdf';
                 break;
         }
 
