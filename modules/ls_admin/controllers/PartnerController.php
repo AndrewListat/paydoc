@@ -116,8 +116,9 @@ class PartnerController extends Controller
     {
         $partner = $this->findModel($id);
 
-        $user = User::findOne(['email'=>$partner->mail_address]);
-        $user->delete();
+        $user = User::findOne(['email'=>$partner->email]);
+        if($user)
+            $user->delete();
         $partner->delete();
 
         return $this->redirect(['index']);
