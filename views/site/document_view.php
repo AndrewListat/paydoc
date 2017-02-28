@@ -24,48 +24,7 @@ $this->title = 'Счет на оплату № '. $id_doc .' от ' . Yii::$app-
         <h3><?= Html::encode($this->title) ?></h3>
     </div>
     <div class="col-md-5">
-        <?php echo Html::a('<img class="left" width="30px" src="/images/filetype_pdf.png" />', ['/api/doc_pdf?id='.$document->id], [
-            'class'=>'btn btn-default pull-right',
-            'style'=>'margin: 5px',
-            'target'=>'_blank',
-            'data-toggle'=>'tooltip',
-            'title'=>'Счет на оплата без печати'
-        ]);?>
-        <?php echo Html::a('<img class="left" width="30px" src="/images/filetype_pdf.png" />', ['/api/doc_pdf?id='.$document->id], [
-            'class'=>'btn btn-default pull-right',
-            'style'=>'margin: 5px',
-            'target'=>'_blank',
-            'data-toggle'=>'tooltip',
-            'title'=>'Счет на оплату с печатью'
-        ]);?>
-        <?php echo Html::a('<img class="left" width="30px" src="/images/filetype_pdf.png" />', ['/api/doc_pdf?id='.$document->id], [
-            'class'=>'btn btn-default pull-right',
-            'style'=>'margin: 5px',
-            'target'=>'_blank',
-            'data-toggle'=>'tooltip',
-            'title'=>'Акт о передачи права без печати'
-        ]);?>
-        <?php echo Html::a('<img class="left" width="30px" src="/images/filetype_pdf.png" />', ['/api/doc_pdf?id='.$document->id], [
-            'class'=>'btn btn-default pull-right',
-            'style'=>'margin: 5px',
-            'target'=>'_blank',
-            'data-toggle'=>'tooltip',
-            'title'=>'Акт о передачи права с печать'
-        ]);?>
-        <?php echo Html::a('<img class="left" width="30px" src="/images/filetype_pdf.png" />', ['/api/doc_pdf?id='.$document->id], [
-            'class'=>'btn btn-default pull-right',
-            'style'=>'margin: 5px',
-            'target'=>'_blank',
-            'data-toggle'=>'tooltip',
-            'title'=>'Договор без печати'
-        ]);?>
-        <?php echo Html::a('<img class="left" width="30px" src="/images/filetype_pdf.png" />', ['/api/doc_pdf?id='.$document->id], [
-            'class'=>'btn btn-default pull-right',
-            'style'=>'margin: 5px',
-            'target'=>'_blank',
-            'data-toggle'=>'tooltip',
-            'title'=>'Договор c печати'
-        ]);?>
+        <?=\app\widgets\ButtonPdfWidget::widget()?>
     </div>
 </div>
 

@@ -52,7 +52,6 @@ class DocumentSearch extends Document
             'query' => $query,
         ]);
 
-        var_dump($this->partner_id2);
         $this->load($params);
 
         if (!$this->validate()) {
