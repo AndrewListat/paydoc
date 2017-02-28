@@ -146,7 +146,7 @@ $this->title = 'Счет на оплату № '. $id_doc .' от ' . Yii::$app-
 
     <?= $form->field($document, 'note')->textInput() ?>
 
-    <?= Html::a('Закрыть', '/' , ['class' =>  'btn btn-danger']) ?>
+    <?= Html::submitButton('Закрыть', ['name'=>'add_document','value'=>'exit','class' =>  'btn btn-danger']) ?>
 
   <?php ActiveForm::end(); ?>
 </div>

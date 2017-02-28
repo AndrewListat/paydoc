@@ -297,6 +297,8 @@ class SiteController extends Controller
                         case 'rah_z':
                             $this->redirect('/api/doc_pdf?id='.$document->id.'&type=rah_z');
                             break;
+                        case 'exit':
+                            return $this->redirect('/');
                     }
                     Yii::$app->session->set('id_doc_create', false);
 

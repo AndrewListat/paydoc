@@ -118,6 +118,7 @@ class DocumentController extends Controller
             if ($kontrahent->load(Yii::$app->request->post()))
                 if ($kontrahent->save()){
                     $document->partner_id = $kontrahent->id;
+                    $document->save();
                     Yii::$app->session->set('savePartner',true);
                 }else{
                     Yii::$app->session->set('savePartner',false);
@@ -154,6 +155,8 @@ class DocumentController extends Controller
                         case 'rah_z':
                             $this->redirect('/api/doc_pdf?id='.$document->id.'&type=rah_z');
                             break;
+                        case 'exit':
+                            return $this->redirect('/admin/document/index');
                     }
 //                    return $this->redirect('document/index');
                 }

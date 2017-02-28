@@ -178,13 +178,8 @@ class DefaultController extends Controller
                 $document->partner_id = 0;
                 $document->save();
                 Yii::$app->session->set('id_doc_create', $document->id);
+                Yii::$app->session->set('savePartner_id',false);
             }
-        }
-
-        if (!Yii::$app->user->isGuest){
-            $document->partner_id = Yii::$app->user->identity['partner_id'];
-        }else{
-            $document->partner_id = null;
         }
 
         $kontrahent = new Partner();
@@ -202,7 +197,9 @@ class DefaultController extends Controller
             if ($kontrahent->load(Yii::$app->request->post()))
                 if ($kontrahent->save()){
                     $document->partner_id = $kontrahent->id;
+                    $document->save();
                     Yii::$app->session->set('savePartner',true);
+
                 }else{
                     Yii::$app->session->set('savePartner',false);
                 }
@@ -241,6 +238,8 @@ class DefaultController extends Controller
                         case 'rah_z':
                             $this->redirect('/api/doc_pdf?id='.$document->id.'&type=rah_z');
                             break;
+                        case 'exit':
+                            return $this->redirect('/admin');
                     }
                     Yii::$app->session->set('id_doc_create', false);
 

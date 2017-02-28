@@ -306,7 +306,7 @@ class ApiController extends Controller{
     public function actionGet_category1(){
         \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
 
-        $out[] = ['text'=>'Главная', 'cat_id'=> 0, 'state' => ['checked' => true] ,'selectable' => true, 'selectedIcon' => "glyphicon glyphicon-check", 'icon' => "glyphicon glyphicon-unchecked", 'nodes'=>[]];
+        $out[] = ['text'=>'Главная', 'cat_id'=> 0, 'state' => ['checked' => true] ,'selectable' => true, 'selectedIcon' => "glyphicon glyphicon-folder-open", 'icon' => "glyphicon glyphicon-folder-open", 'nodes'=>[]];
 
 
         $out[0]['nodes'] = $this->parent_cat1(0);
@@ -342,9 +342,9 @@ class ApiController extends Controller{
 //                var_dump($key);
 //                var_dump($name);
                 if (array_key_exists($key, $result)){
-                    $array[]= ['text'=>$name, 'cat_id'=> $key, 'selectedIcon' => "glyphicon glyphicon-check", 'icon' => "glyphicon glyphicon-unchecked",'nodes'=> $this->parent_cat1($key)];
+                    $array[]= ['text'=>$name, 'cat_id'=> $key, 'selectedIcon' => "glyphicon glyphicon-folder-open", 'icon' => "glyphicon glyphicon-folder-open",'nodes'=> $this->parent_cat1($key)];
                 } else {
-                    $array[]= ['text'=>$name, 'cat_id'=> $key, 'selectedIcon' => "glyphicon glyphicon-check", 'icon' => "glyphicon glyphicon-unchecked"];
+                    $array[]= ['text'=>$name, 'cat_id'=> $key, 'selectedIcon' => "glyphicon glyphicon-folder-open", 'icon' => "glyphicon glyphicon-folder-open"];
                 }
             }
         }
