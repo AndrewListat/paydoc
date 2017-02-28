@@ -38,7 +38,7 @@ class Partner extends \yii\db\ActiveRecord
         return [
             [['INN', 'name', 'type_partner', 'business_address', 'mail_address','email', 'tel', 'bik', 'payment_account'], 'required'],
             [['INN', 'KPP', 'type_partner'], 'integer'],
-            [['business_address', 'mail_address', 'note', 'name_bank', 'kor_rah'], 'string'],
+            [['business_address', 'mail_address', 'note'], 'string'],
             [['name'], 'string', 'max' => 1000],
             [['tel', 'payment_account'], 'string', 'max' => 20],
             [['bik'], 'string', 'max' => 10],

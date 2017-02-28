@@ -213,7 +213,7 @@ $this->title = 'Счет на оплату № '. $id_doc .' от ' . Yii::$app-
 
 <!-- Modal tovar -->
 <div class="modal fade bs-example-modal-lg" id="myTovar" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-    <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-dialog modal-lg" style="min-width: 80%" role="document">
 
         <div class="modal-content">
             <div class="modal-header">
@@ -221,50 +221,60 @@ $this->title = 'Счет на оплату № '. $id_doc .' от ' . Yii::$app-
                 <h4 class="modal-title" id="myModalLabel">Продукты</h4>
             </div>
             <div class="modal-body">
-                <div id="tree_cat"></div>
-                <?php \yii\widgets\Pjax::begin(['id' => 'admin-crud-id', 'timeout' => false,
-                    'enablePushState' => false,]); ?>
+                <div class="row">
+                    <div class="col-md-3">
+                        <div id="tree_cat"></div>
+                    </div>
+                    <div class="col-md-9">
+                        <div id="tree_cat">
+                            <?php \yii\widgets\Pjax::begin(['id' => 'admin-crud-id', 'timeout' => false,
+                                'enablePushState' => false,]); ?>
 
-                <?= \yii\grid\GridView::widget([
-                    'dataProvider' => $productDataProvider,
+                            <?= \yii\grid\GridView::widget([
+                                'dataProvider' => $productDataProvider,
 //                        'filterModel' => $productSearch,
-                    'columns' => [
-                        ['class' => 'yii\grid\SerialColumn'],
+                                'columns' => [
+                                    ['class' => 'yii\grid\SerialColumn'],
 
-                        'name',
-                        'sky',
+                                    'name',
+                                    'sky',
 //                            'group',
-                        'unit',
+                                    'unit',
 //                            'date_added',
 //                            'date_modified',
 //                            'note:ntext',
 //                            'service',
 //                        'price.price',
-                        [
+                                    [
 //                                'attribute'=>'parent_id',
-                            'label'=>'Количество',
-                            'content'=>function($data){
-                                return '<input type="number" id="price-'.$data->id.'" min="1" value="'.$data->price['price'].'"/>';
-                            }
-                        ],
-                        [
+                                        'label'=>'Количество',
+                                        'content'=>function($data){
+                                            return '<input type="number" id="price-'.$data->id.'" min="1" value="'.$data->price['price'].'"/>';
+                                        }
+                                    ],
+                                    [
 //                                'attribute'=>'parent_id',
-                            'label'=>'Количество',
-                            'content'=>function($data){
-                                return '<input type="number" id="count-'.$data->id.'" min="1" value="1"/>';
-                            }
-                        ],
-                        [
+                                        'label'=>'Количество',
+                                        'content'=>function($data){
+                                            return '<input type="number" id="count-'.$data->id.'" min="1" value="1"/>';
+                                        }
+                                    ],
+                                    [
 //                                'attribute'=>'parent_id',
-                            'label'=>'#',
-                            'content'=>function($data){
-                                return '<span class="glyphicon glyphicon-plus" aria-hidden="true" onclick="add_product_up('.$data->id.','.Yii::$app->session->get('id_doc_create_f').')"></span>';
-                            }
-                        ],
+                                        'label'=>'#',
+                                        'content'=>function($data){
+                                            return '<span class="glyphicon glyphicon-plus" aria-hidden="true" onclick="add_product_up('.$data->id.','.Yii::$app->session->get('id_doc_create_f').')"></span>';
+                                        }
+                                    ],
 //                            ['class' => 'yii\grid\ActionColumn'],
-                    ],
-                ]); ?>
-                <?php \yii\widgets\Pjax::end(); ?>
+                                ],
+                            ]); ?>
+                            <?php \yii\widgets\Pjax::end(); ?>
+                        </div>
+                    </div>
+                </div>
+
+
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Закрыть</button>

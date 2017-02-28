@@ -12,6 +12,7 @@ use app\modules\ls_admin\models\DocumentItem;
 use app\modules\ls_admin\models\LoginForm;
 use app\modules\ls_admin\models\Partner;
 use app\modules\ls_admin\models\Product;
+use app\modules\ls_admin\models\ProductPrice;
 use app\modules\ls_admin\models\RegForm;
 use app\modules\ls_admin\models\UiBanks;
 use app\modules\ls_admin\models\User;
@@ -77,7 +78,13 @@ class ApiController extends Controller{
             $documentItem->order_id = $_POST['doc_id'];
             $documentItem->product_id=$_POST['id'];
             $documentItem->quantity=$_POST['count'];
-            $documentItem->price = $_POST['price'];
+
+            if(isset($_POST['price'])){
+                $documentItem->price = $_POST['price'];
+            }else{
+                $documentItem->price = ProductPrice::findOne(['product_id'=>$_POST['id']])->price;
+            }
+
             if ($documentItem->save())
                 return true;
             else
