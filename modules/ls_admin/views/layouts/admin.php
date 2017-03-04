@@ -96,13 +96,13 @@ MainAsset::register($this);
                         </a>
                     </li>
                 </ul>-->
-                <!-- <ul class="sidebar-menu">
+                 <ul class="sidebar-menu">
                     <li class="treeview">
-                        <a href="<?/*=Url::toRoute('user/index');*/?>">
-                            <i class="fa fa-folder-open"></i> <span>Users</span>
+                        <a href="<?=Url::toRoute('user/index');?>">
+                            <i class="fa fa-folder-open"></i> <span>Администраторы</span>
                         </a>
                     </li>
-                </ul>-->
+                </ul>
                 <!--<ul class="sidebar-menu">
                     <li class="treeview">
                         <a href="<?/*=Url::toRoute('pages/index');*/?>">

@@ -7,7 +7,7 @@ use yii\grid\GridView;
 /* @var $searchModel app\modules\ls_admin\models\UserSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Users';
+$this->title = 'Администраторы';
 ?>
 <div class="user-index">
 
@@ -15,11 +15,11 @@ $this->title = 'Users';
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
-        <?= Html::a('Create User', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Создать администратора', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
-        'filterModel' => $searchModel,
+//        'filterModel' => $searchModel,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
@@ -39,13 +39,17 @@ $this->title = 'Users';
                 },
                 'filter' => array("10"=>"доступен","1"=>"заблокирован"),
             ],
-             'role',
+//             'role',
             // 'auth_key',
             // 'secret_key',
             // 'created_at',
             // 'updated_at',
 
-            ['class' => 'yii\grid\ActionColumn'],
+            [
+                'class' => 'yii\grid\ActionColumn',
+//                'header'=>'Действия',
+                'template' => '{update} {delete}',
+            ],
         ],
     ]); ?>
 </div>

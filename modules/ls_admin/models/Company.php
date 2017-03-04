@@ -36,7 +36,7 @@ class Company extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['INN', 'name', 'type_partner', 'business_address', 'mail_address','email', 'tel', 'bik', 'payment_account', 'note'], 'required'],
+            [['INN', 'KPP', 'name', 'type_partner', 'business_address', 'mail_address','email', 'tel', 'bik', 'payment_account'], 'required'],
             [['INN', 'KPP', 'type_partner'], 'integer'],
             [['business_address', 'mail_address', 'note'], 'string'],
             [['name'], 'string', 'max' => 1000],

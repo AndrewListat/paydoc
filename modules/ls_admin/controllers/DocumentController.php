@@ -43,6 +43,9 @@ class DocumentController extends Controller
               ],
             ],
           ],
+            'auth'=>[
+                'class' =>'app\commands\Auth',
+            ],
         ];
     }
 
@@ -54,8 +57,14 @@ class DocumentController extends Controller
     {
         Yii::$app->session->set('id_doc_create', false);
         $searchModel = new DocumentSearch();
+
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-//        $dataProvider->sort=false;
+
+        $dataProvider->sort->defaultOrder= ['id' => SORT_DESC];
+
+        /*$dataProvider->sort->attributes['id'] = [
+            'default' => SORT_DESC
+        ];*/
 
         return $this->render('index', [
             'searchModel' => $searchModel,
@@ -135,10 +144,10 @@ class DocumentController extends Controller
         }
 
         if (isset($_GET['cat_id'])){
-            $productSearch = new ProductSearch(['parent_id'=>$_GET['cat_id']]);
+            $productSearch = new ProductSearch(['parent_id'=>$_GET['cat_id'],'group'=>0]);
             $productDataProvider = $productSearch->search(Yii::$app->request->queryParams);
         } else {
-            $productSearch = new ProductSearch(['parent_id'=>0]);
+            $productSearch = new ProductSearch(['parent_id'=>0,'group'=>0]);
             $productDataProvider = $productSearch->search(Yii::$app->request->queryParams);
         }
 
@@ -194,6 +203,9 @@ class DocumentController extends Controller
     public function actionDelete($id)
     {
         $this->findModel($id)->delete();
+
+        DocumentItem::deleteAll(['order_id' => $id]);
+        DocumentMail::deleteAll(['order_id' => $id]);
 
         return $this->redirect(['index']);
     }

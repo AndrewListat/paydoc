@@ -13,6 +13,7 @@ use yii\web\ForbiddenHttpException;
 class Auth extends ActionFilter
 {
     public $user = 'user';
+    public $not_rule_actions = [];
     public function init()
     {
         parent::init();
@@ -22,10 +23,13 @@ class Auth extends ActionFilter
 
     public function beforeAction($action)
     {
-        if ($this->user->identity->role == 'admin007') {
-             return true;
-        } else {
-            throw new ForbiddenHttpException(Yii::t('yii', 'You are not allowed to perform this action.'));
-        }
+        if (in_array($action->id, $this->not_rule_actions)) {
+            return true;
+        }else
+            if ($this->user->identity->role == 'admin') {
+                 return true;
+            } else {
+                throw new ForbiddenHttpException(Yii::t('yii', 'You are not allowed to perform this action.'));
+            }
     }
 }

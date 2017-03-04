@@ -28,15 +28,28 @@ $this->title = 'Контрагенты';
             'INN',
             'KPP',
             'name',
-            'type_partner',
+            [
+                'attribute'=> 'type_partner',
+                'filter' => ['1'=>'Физическое лицо','2'=>'Юридическое лицо'],
+                'content'=>function($data){
+                    if($data->type_partner == 1){
+                        return 'Физическое лицо';
+                    } else {
+                        return 'Юридическое лицо';
+                    }
+                }
+            ],
              'business_address:ntext',
              'mail_address:ntext',
              'tel',
              'bik',
              'payment_account',
-             'note:ntext',
+             'note',
 
-            ['class' => 'yii\grid\ActionColumn'],
+            [
+                'class' => 'yii\grid\ActionColumn',
+                'template' => ' {update} {delete}',
+            ],
         ],
     ]); ?>
     </div>

@@ -126,7 +126,7 @@ class ApiController extends Controller{
         }
     }
 
-    public function actionDoc_pdf($id=46,$type='rah'){
+    public function actionDoc_pdf($id,$type){
         $headers = Yii::$app->response->headers;
         $headers->add('Content-Type', 'application/pdf');
 
@@ -187,6 +187,51 @@ class ApiController extends Controller{
                 break;
         }
 
+
+        $pdf = new Pdf([
+            'filename'=>$filename,
+            // set to use core fonts only
+            'mode' => Pdf::MODE_UTF8,
+            // A4 paper format
+            'format' => Pdf::FORMAT_A4,
+            // portrait orientation
+//            'orientation' => Pdf::ORIENT_PORTRAIT,
+            'orientation' => ($orint) ? Pdf::ORIENT_LANDSCAPE : Pdf::ORIENT_PORTRAIT,
+            // stream to browser inline
+            'destination' => Pdf::DEST_DOWNLOAD,
+            // your html content input
+            'content' => $content,
+            // format content from your own css file if needed or use the
+            // enhanced bootstrap css built by Krajee for mPDF formatting
+            'cssFile' => '@vendor/kartik-v/yii2-mpdf/assets/kv-mpdf-bootstrap.min.css',
+            //'cssFile' => '@web/frontend/css/main.css',
+            // any css to be embedded if required
+            'cssInline' => '.img_p{position: absolute;left: 0; top: 0;}',
+            // set mPDF properties on the fly
+            //'options' => ['title' => 'Krajee Report Title'],
+            // call mPDF methods on the fly
+//            'methods' => [
+//                'SetHeader'=>['Krajee Report Header'],
+//                'SetFooter'=>['{PAGENO}'],
+//            ]
+        ]);
+
+        // return the pdf output as per the destination setting
+        return $pdf->render();
+    }
+
+    public function actionDoc_pdf_konvert($id){
+        $headers = Yii::$app->response->headers;
+        $headers->add('Content-Type', 'application/pdf');
+
+        $partner = Partner::findOne($id);
+
+        $orint = true;
+        $filename = 'Конверт.pdf';
+
+        $content = $this->renderPartial('pdf_konvert',[
+            'partner'=>$partner
+        ]);
 
         $pdf = new Pdf([
             'filename'=>$filename,
@@ -326,13 +371,17 @@ class ApiController extends Controller{
         return $array;
     }
 
-    public function actionGet_category1(){
+    public function actionGet_category1($select_id=null){
         \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
 
-        $out[] = ['text'=>'Главная', 'cat_id'=> 0, 'state' => ['checked' => true] ,'selectable' => true, 'selectedIcon' => "glyphicon glyphicon-folder-open", 'icon' => "glyphicon glyphicon-folder-open", 'nodes'=>[]];
+        $out[] = ['text'=>'Главная', 'cat_id'=> 0, 'selectedIcon' => "glyphicon glyphicon-folder-open", 'icon' => "glyphicon glyphicon-folder-open", 'nodes'=>[]];
 
+        if ($select_id){
+            $out[0]['nodes'] = $this->parent_cat1(0, $select_id);
+        } else {
+            $out[0]['nodes'] = $this->parent_cat1(0);
+        }
 
-        $out[0]['nodes'] = $this->parent_cat1(0);
         $categories = Product::find()->select(['id','name','parent_id'])->where(['group'=>1])->orderBy(['parent_id'=>SORT_ASC])->asArray()->all();
         $result = ArrayHelper::map($categories, 'id', 'name', 'parent_id');
 
@@ -346,13 +395,28 @@ class ApiController extends Controller{
         }*/
 
 //        $this->parent_cat1(0);
-
+        /*$out[0]['nodes'][] = [
+            'text' => "Node 1",
+//            'icon' => "glyphicon glyphicon-stop",
+//            'selectedIcon' => "glyphicon glyphicon-stop",
+//            'color' => "#000000",
+//            'backColor' => "#FFFFFF",
+//            'href' => "#node-1",
+//            'selectable' => true,
+              'state' => [
+//                  'checked'=> true,
+//                  'disabled'=> true,
+//                  'expanded'=> true,
+                  'selected'=> true,
+              ],
+//            'tags' => ['available'],
+            ];*/
 
         return $out;
 
     }
 
-    public function parent_cat1($id){
+    public function parent_cat1($id, $select_id = null){
         $categories = Product::find()->select(['id','name','parent_id'])->where(['group'=>1])->orderBy(['parent_id'=>SORT_ASC])->asArray()->all();
 
         $result = ArrayHelper::map($categories, 'id', 'name', 'parent_id');
@@ -365,9 +429,15 @@ class ApiController extends Controller{
 //                var_dump($key);
 //                var_dump($name);
                 if (array_key_exists($key, $result)){
-                    $array[]= ['text'=>$name, 'cat_id'=> $key, 'selectedIcon' => "glyphicon glyphicon-folder-open", 'icon' => "glyphicon glyphicon-folder-open",'nodes'=> $this->parent_cat1($key)];
+                    if($key == $select_id)
+                        $array[]= ['text'=>$name, 'cat_id'=> $key, 'selectedIcon' => "glyphicon glyphicon-folder-open", 'icon' => "glyphicon glyphicon-folder-open",'state' => ['selected'=>true], 'nodes'=> $this->parent_cat1($key,$select_id)];
+                    else
+                        $array[]= ['text'=>$name, 'cat_id'=> $key, 'selectedIcon' => "glyphicon glyphicon-folder-open", 'icon' => "glyphicon glyphicon-folder-open",'nodes'=> $this->parent_cat1($key,$select_id)];
                 } else {
-                    $array[]= ['text'=>$name, 'cat_id'=> $key, 'selectedIcon' => "glyphicon glyphicon-folder-open", 'icon' => "glyphicon glyphicon-folder-open"];
+                    if($key == $select_id)
+                        $array[]= ['text'=>$name, 'cat_id'=> $key, 'selectedIcon' => "glyphicon glyphicon-folder-open", 'icon' => "glyphicon glyphicon-folder-open", 'state' => ['selected'=>true]];
+                    else
+                        $array[]= ['text'=>$name, 'cat_id'=> $key, 'selectedIcon' => "glyphicon glyphicon-folder-open", 'icon' => "glyphicon glyphicon-folder-open"];
                 }
             }
         }

@@ -250,7 +250,7 @@ $this->title = 'Счет на оплату № '. $id_doc .' от ' . Yii::$app-
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="myModalLabel">Продукты</h4>
+                <h4 class="modal-title" id="myModalLabel">Номенклатура</h4>
             </div>
             <div class="modal-body">
                 <div class="row">
@@ -285,7 +285,7 @@ $this->title = 'Счет на оплату № '. $id_doc .' от ' . Yii::$app-
                                 ],
                                 [
 //                                'attribute'=>'parent_id',
-                                    'label'=>'Количество',
+                                    'label'=>'Цена',
                                     'content'=>function($data){
                                         return '<input type="number" id="count-'.$data->id.'" min="1" value="1"/>';
                                     }

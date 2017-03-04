@@ -40,6 +40,9 @@ class ProductController extends Controller
               ],
             ],
           ],
+            'auth'=>[
+                'class' =>'app\commands\Auth',
+            ],
         ];
     }
 

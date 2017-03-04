@@ -40,7 +40,10 @@ $this->title = 'Номенклатура';
 //            'note:ntext',
 //            'service',
 
-            ['class' => 'yii\grid\ActionColumn'],
+            [
+                'class' => 'yii\grid\ActionColumn',
+                'template' => ' {update} {delete}',
+            ],
         ],
     ]); ?>
     </div>

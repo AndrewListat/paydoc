@@ -37,6 +37,9 @@ class StatusdocumentController extends Controller
                 ],
               ],
             ],
+            'auth'=>[
+                'class' =>'app\commands\Auth',
+            ],
         ];
     }
 

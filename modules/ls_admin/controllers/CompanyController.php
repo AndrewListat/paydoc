@@ -39,6 +39,9 @@ class CompanyController extends Controller
               ],
             ],
           ],
+            'auth'=>[
+                'class' =>'app\commands\Auth',
+            ],
         ];
     }
 

@@ -298,10 +298,10 @@ class SiteController extends Controller
         }
 
         if (isset($_GET['cat_id'])){
-            $productSearch = new ProductSearch(['parent_id'=>$_GET['cat_id']]);
+            $productSearch = new ProductSearch(['parent_id'=>$_GET['cat_id'],'group'=>0, 'onlyAdmin'=>0]);
             $productDataProvider = $productSearch->search(Yii::$app->request->queryParams);
         } else {
-            $productSearch = new ProductSearch(['parent_id'=>0]);
+            $productSearch = new ProductSearch(['parent_id'=>0,'group'=>0, 'onlyAdmin'=>0]);
             $productDataProvider = $productSearch->search(Yii::$app->request->queryParams);
         }
 

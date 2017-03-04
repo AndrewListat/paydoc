@@ -4,9 +4,21 @@
 
 
 $(document).ready(function() {
-    $.getJSON('/api/get_category1',function (data) {
-        $('#tree').treeview({data: data});
-    })
+
+    console.log($('#update_prod').val());
+    if (typeof update_prod == 'undefined'){
+        // console.log('update_prod', update_prod);
+        $.getJSON('/api/get_category1',function (data) {
+            $('#tree').treeview({data: data});
+        })
+    } else {
+        console.log('update_prod', update_prod);
+        $.getJSON('/api/get_category1?select_id='+update_prod,function (data) {
+            console.log(data);
+            $('#tree').treeview({data: data,levels: 5});
+        })
+    }
+
 
     // $('#tree').treeview({data: getTree()});
 

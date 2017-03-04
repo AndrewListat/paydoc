@@ -39,6 +39,9 @@ class PartnerController extends Controller
               ],
             ],
           ],
+            'auth'=>[
+                'class' =>'app\commands\Auth',
+            ],
         ];
     }
 
@@ -98,7 +101,10 @@ class PartnerController extends Controller
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['index']);
+            if (isset($_POST['print_kobvert'])){
+                return $this->redirect('/api/doc_pdf_konvert?id='.$id);
+            } else
+                return $this->redirect(['index']);
         } else {
             return $this->render('update', [
                 'model' => $model,

@@ -37,6 +37,9 @@ class TypemailController extends Controller
               ],
             ],
           ],
+            'auth'=>[
+                'class' =>'app\commands\Auth',
+            ],
         ];
     }
 

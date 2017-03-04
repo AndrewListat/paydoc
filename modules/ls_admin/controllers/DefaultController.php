@@ -19,6 +19,31 @@ use app\modules\ls_admin\models\RegForm;
 class DefaultController extends Controller
 {
     public $layout = 'admin';
+
+    public function behaviors()
+    {
+        return [
+            'access' => [
+                'class' => AccessControl::className(),
+                'rules' => [
+                    [
+                        'allow' => true,
+                        'roles' => ['@'],
+                    ],
+                    [
+                        'allow' => true,
+                        'actions' => ['signin'],
+                        'roles' => ['?'],
+                    ],
+                ],
+            ],
+            'auth'=>[
+                'class' =>'app\commands\Auth',
+                'not_rule_actions'=> ['signin']
+            ],
+        ];
+    }
+
     public function actionIndex()
     {
         Yii::$app->session->set('id_doc_create', false);
@@ -206,10 +231,10 @@ class DefaultController extends Controller
         }
 
         if (isset($_GET['cat_id'])){
-            $productSearch = new ProductSearch(['parent_id'=>$_GET['cat_id']]);
+            $productSearch = new ProductSearch(['parent_id'=>$_GET['cat_id'],'group'=>0]);
             $productDataProvider = $productSearch->search(Yii::$app->request->queryParams);
         } else {
-            $productSearch = new ProductSearch(['parent_id'=>0]);
+            $productSearch = new ProductSearch(['parent_id'=>0,'group'=>0]);
             $productDataProvider = $productSearch->search(Yii::$app->request->queryParams);
         }
 

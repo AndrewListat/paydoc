@@ -11,10 +11,6 @@ $this->title = 'Контрагент: ' . $model->name;
 
     <h1><?= Html::encode($this->title) ?></h1>
 
-    <p>
-      <?= Html::a('Назад', ['index'], ['class' => 'btn btn-primary']) ?>
-    </p>
-
     <?= $this->render('_form', [
         'model' => $model,
     ]) ?>

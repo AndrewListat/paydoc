@@ -46,7 +46,7 @@ class UserController extends Controller
      */
     public function actionIndex()
     {
-        $searchModel = new UserSearch();
+        $searchModel = new UserSearch(['role'=>'admin']);
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
@@ -80,7 +80,7 @@ class UserController extends Controller
             $model->setPassword($model->password);
             $model->generateAuthKey();
             $model->save();
-            return $this->redirect(['view', 'id' => $model->id]);
+            return $this->redirect(['index']);
         } else {
             return $this->render('create', [
                 'model' => $model,
@@ -102,7 +102,7 @@ class UserController extends Controller
             $model->setPassword($model->password);
             $model->generateAuthKey();
             $model->save();
-            return $this->redirect(['view', 'id' => $model->id]);
+            return $this->redirect(['index']);
         } else {
             return $this->render('update', [
                 'model' => $model,

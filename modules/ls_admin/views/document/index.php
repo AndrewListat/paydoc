@@ -31,23 +31,30 @@ Yii::$app->formatter->locale = 'ru-RU';
             'columns' => [
 //                ['class' => 'yii\grid\SerialColumn'],
 
-                'id',
-                'nomber_1c',
                 [
-                        'label'=>'Дата документа',
-                        'attribute'=>'data_document',
-                        'content'=>function($document){
-                            return Yii::$app->formatter->asDate($document->data_document);
-                        },
-                        'filter' => \kartik\widgets\DatePicker::widget([
-                            'model' => $searchModel,
-                            'attribute' => 'data_document',
-                            'type' => \kartik\widgets\DatePicker::TYPE_INPUT,
-                            'pluginOptions' => [
-                                'autoclose'=>true,
-                                'format' => 'yyyy-mm-dd'
-                            ]
-        ]),
+                    'attribute'=>'id',
+                    'headerOptions' => ['style' => 'width: 50px;'],
+                ],
+                [
+                    'attribute'=>'nomber_1c',
+                    'headerOptions' => ['style' => 'width: 50px;'],
+                ],
+                [
+                    'label'=>'Дата документа',
+                    'attribute'=>'data_document',
+                    'content'=>function($document){
+                        return Yii::$app->formatter->asDate($document->data_document);
+                    },
+                    'filter' => \kartik\widgets\DatePicker::widget([
+                        'model' => $searchModel,
+                        'attribute' => 'data_document',
+                        'type' => \kartik\widgets\DatePicker::TYPE_INPUT,
+                        'pluginOptions' => [
+                            'autoclose'=>true,
+                            'format' => 'yyyy-mm-dd'
+                        ]
+                    ]),
+                    'headerOptions' => ['style' => 'width: 50px;'],
                 ],
                 [
                     'attribute'=>'delivery_address',
